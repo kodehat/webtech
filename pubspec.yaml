@@ -1,8 +1,10 @@
 name: RabbitRun
-description: An absolute bare-bones web app.
+description: A maze game created with Dartlang.
 version: 0.0.1
-#homepage: https://www.example.com
-#author: CRhod <email@example.com>
+homepage: https://github.com/Salpico/WebTech
+author:
+- Claas R. <bengt.claas.rhodgess@stud.fh-luebeck.de>
+- Marc-Niclas H. <dev@codehat.de>
 
 environment:
   sdk: '>=1.20.1 <2.0.0'
