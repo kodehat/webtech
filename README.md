@@ -2,6 +2,13 @@
 
 A maze game written in Dartlang.
 
+## JSON Level reference
+
+- `t`: Terrain
+- `h`: Hedge
+- `g`: Goal (rabbit hole)
+- `s`: Start
+
 ## Helpful sites
 
 - [How to Write Dart Comments](https://www.dartlang.org/guides/language/effective-dart/documentation#doc-comments)

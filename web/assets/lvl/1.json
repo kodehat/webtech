@@ -1,0 +1,35 @@
+{
+  "name": "level_1",
+  "name_clean": "Level 1",
+  "time": "15",
+  "tiles": [
+    {
+      "pos": {
+        "row": 0,
+        "col": 0
+      },
+      "type": "s"
+    },
+    {
+      "pos": {
+        "row": 0,
+        "col": 1
+      },
+      "type": "t"
+    },
+    {
+      "pos": {
+        "row": 0,
+        "col": 2
+      },
+      "type": "t"
+    },
+    {
+      "pos": {
+        "row": 0,
+        "col": 3
+      },
+      "type": "t"
+    }
+  ]
+}

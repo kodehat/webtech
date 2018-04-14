@@ -16,8 +16,8 @@ void generateGameField(int size) {
     table += "<tr>";
     for (int col = 0; col < size; col++) {
       final pos = "field_${row}_${col}";
-
-      table += "<td id='$pos' class='field'>X</td>";
+      var hedge = col % 2 == 0 ? " terrain" : " hedge";
+      table += "<td id='$pos' class='field$hedge'></td>";
     }
     table += "</tr>";
   }

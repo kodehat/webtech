@@ -53,13 +53,22 @@ html, body {
 #game {
     border: 4px solid #A3CB38;
     border-collapse: collapse;
-    margin: 0 auto; /* margin: 0 auto; */
+    margin: 0 auto;
 }
 
 #game .field {
     text-align: center;
     vertical-align: middle;
-    background-color: #B33771;
+    /* background-color: #B33771; */
     width: 32px;
     height: 32px;
+    padding: 0;
+}
+
+.hedge {
+    background: url("assets/img/hedge.png") no-repeat;
+}
+
+.terrain {
+    background-color: #663931;
 }
