@@ -65,6 +65,10 @@ html, body {
     padding: 0;
 }
 
+.rabbit {
+    background: url("assets/img/rabbit.png") no-repeat;
+}
+
 .hedge {
     background: url("assets/img/hedge.png") no-repeat;
 }
