@@ -1,7 +1,8 @@
 {
   "name": "level_1",
   "name_clean": "Level 1",
-  "time": "15",
+  "time": 15,
+  "possible_goals": 3,
   "tiles": [
     {
       "pos": {

@@ -16,7 +16,7 @@ html, body {
 }
 
 .button {
-    padding: 12px 32px;
+    padding: 12px 28px;
     background-color: #6D214F;
     color: #F8EFBA;
     text-shadow: 3px 3px #B33771;
@@ -51,15 +51,17 @@ html, body {
 }
 
 #game {
-    border: 4px solid #A3CB38;
+    border: 4px solid #B33771;
     border-collapse: collapse;
     margin: 0 auto;
+    /* box-shadow: 4px 2px #A3CB38; */
 }
 
 #game .field {
     text-align: center;
     vertical-align: middle;
     /* background-color: #B33771; */
+    background-position: center;
     width: 32px;
     height: 32px;
     padding: 0;
@@ -73,6 +75,29 @@ html, body {
     background: url("assets/img/hedge.png") no-repeat;
 }
 
+.hole {
+    background: url("assets/img/hole.png") no-repeat;
+}
+
 .terrain {
     background-color: #663931;
+}
+
+#progressbar {
+    background-color: #B33771;
+    border-radius: 13px; /* (height of inner div) / 2 + padding */
+    padding: 3px;
+    margin: 0 4rem;
+}
+
+#progressbar > div {
+    background-color: #58B19F;
+    width: 100%;
+    height: 20px;
+    border-radius: 10px;
+}
+
+.label {
+    display: block;
+    margin-bottom: 5px;
 }

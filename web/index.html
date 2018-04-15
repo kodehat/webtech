@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RabbitRun</title>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="favicon.ico">
     <script defer src="main.dart" type="application/dart"></script>
@@ -14,10 +15,16 @@
 </head>
 
 <body>
-    <div class="container has-text-centered margin-top-big">
-        <h1>RabbitRun</h1>
+    <div class="container has-text-centered margin-top-small">
+        <h1 class="animated bounceInDown">RabbitRun</h1>
         <h3 class="subtitle">Guide the rabbit through the maze to find its hole.</h3>
         <button id="btn_start" type="button" class="button">Start</button>
+    </div>
+    <div class="has-text-centered">
+        <span class="label">15 sec</span>
+        <div id="progressbar">
+            <div></div>
+        </div>
     </div>
     <div class="container">
         <table id="game">
