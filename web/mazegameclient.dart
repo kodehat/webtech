@@ -1,4 +1,5 @@
 import 'dart:html';
+import 'package:RabbitRun/mazegame.dart';
 
 final HtmlElement startBtn = querySelector("#btn_start");
 HtmlElement rabbit = querySelector("#field_7_0");
@@ -18,11 +19,20 @@ bool calibrated = false;
 bool hasMoved = false;
 
 void main() {
+  window.onLoad.listen((e) {
+    print("Finished converting Dart to JS!");
+
+    startBtn.text = "Start";
+    startBtn.attributes.remove("disabled");
+  });
+
   generateGameField(8);
 
   startBtn.onClick.listen(onStartBtnClick);
 
   window.onDeviceOrientation.listen(onDeviceMove);
+
+  new MazeGameController();
 }
 
 /// Generates the game field with the given size.
@@ -49,6 +59,10 @@ void generateGameField(int size) {
 void onStartBtnClick(MouseEvent e) {
   print("Start button clicked!");
   startBtn.remove();
+  querySelector("#subtitle").classes.toggle("invisible");
+  querySelector("#title").text = "Level 1";
+  querySelector("#progress").classes.toggle("invisible");
+  querySelector("#game_field").classes.toggle("invisible");
 
   rabbit.classes.toggle("rabbit");
   calibrated = true;
