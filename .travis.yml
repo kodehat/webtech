@@ -8,5 +8,6 @@ deploy:
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
   local_dir: build/web
+  keep-history: true
   on:
     branch: master
