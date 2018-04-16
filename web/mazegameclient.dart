@@ -1,5 +1,5 @@
 import 'dart:html';
-import 'package:RabbitRun/mazegame.dart';
+import 'package:rabbitrun/mazegame.dart';
 
 final HtmlElement startBtn = querySelector("#btn_start");
 HtmlElement rabbit = querySelector("#field_7_0");
