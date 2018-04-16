@@ -1,0 +1,42 @@
+<!DOCTYPE html><html><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RabbitRun | A-maze-ing</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico">
+    <script defer="" src="mazegameclient.dart.js"></script>
+    
+</head>
+
+<body>
+    <div class="container has-text-centered margin-top-small">
+        <h1 class="animated bounceInDown" id="title">RabbitRun</h1>
+        <h3 class="subtitle" id="subtitle">Guide the rabbit through the maze to find its hole.</h3>
+        <button id="btn_start" type="button" class="button" disabled="">Loading...</button>
+    </div>
+    <div class="has-text-centered invisible" id="progress">
+        <span class="label">15 sec</span>
+        <div id="progressbar">
+            <div></div>
+        </div>
+    </div>
+    <div class="modal invisible" id="score">
+        <div class="modal-content has-text-centered">
+            <h2>Game Over!</h2>
+            <p>You reached level <strong>6</strong>!</p>
+            <button id="btn_close_modal" type="button" class="button">Close</button>
+        </div>
+    </div>
+    <div class="container invisible" id="game_field">
+        <table id="game">
+        </table>
+    </div>
+    <div class="footer has-text-centered">
+        <p>Copyright © 2018 Marc-Niclas H. &amp; Claas R.</p>
+    </div>
+
+
+</body></html>

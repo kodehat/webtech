@@ -1,0 +1,143 @@
+@import url(https://fonts.googleapis.com/css?family=Press+Start+2P);
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    color: #F8EFBA;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 3px 3px #B33771;
+    background-color: #6D214F;
+}
+
+p {
+    line-height: 1.6;
+}
+
+.container {
+    padding: 1rem;
+}
+
+.button {
+    padding: 12px 28px;
+    background-color: #6D214F;
+    color: #F8EFBA;
+    text-shadow: 3px 3px #B33771;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    border: 3px solid #F8EFBA;
+    transition-duration: 0.4s;
+}
+
+.button:hover {
+    background-color: #B33771;
+    text-shadow: 3px 3px #6D214F;
+}
+
+.subtitle {
+    font-size: 16px;
+    opacity: 0.9;
+    line-height: 1.3;
+}
+
+.has-text-centered {
+    text-align: center;
+}
+
+.margin-top-big {
+    margin-top: 2rem;
+}
+
+.margin-top-small {
+    margin-top: 1rem;
+}
+
+#game {
+    border: 4px solid #B33771;
+    border-collapse: collapse;
+    margin: 0 auto;
+    /* box-shadow: 4px 2px #A3CB38; */
+}
+
+#game .field {
+    text-align: center;
+    vertical-align: middle;
+    /* background-color: #B33771; */
+    background-position: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+}
+
+.rabbit {
+    background: url("assets/img/rabbit.png") no-repeat;
+}
+
+.hedge {
+    background: url("assets/img/hedge.png") no-repeat;
+}
+
+.hole {
+    background: url("assets/img/hole.png") no-repeat;
+}
+
+.terrain {
+    background-color: #663931;
+}
+
+#progressbar {
+    background-color: #B33771;
+    border-radius: 13px; /* (height of inner div) / 2 + padding */
+    padding: 3px;
+    margin: 0 auto;
+    width: 60%;
+}
+
+#progressbar > div {
+    background-color: #58B19F;
+    width: 100%;
+    height: 20px;
+    border-radius: 10px;
+}
+
+.label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #6D214F;
+    margin: 20% auto;
+    padding: 20px;
+    border: 3px solid #B33771;
+    width: 60%
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: .5rem;
+    width: 100%;
+}
+
+.footer > p {
+    font-size: .5rem;
+}
+
+.invisible {
+    display: none;
+}
