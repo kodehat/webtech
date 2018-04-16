@@ -1,10 +1,10 @@
-name: RabbitRun
+name: rabbitrun
 description: A maze game created with Dartlang.
 version: 0.0.1
 homepage: https://github.com/Salpico/WebTech
 author:
 - Claas R. <bengt.claas.rhodgess@stud.fh-luebeck.de>
-- Marc-Niclas H. <dev@codehat.de>
+- Marc-Niclas H. <marc-niclas.harm@stud.fh-luebeck.de>
 
 environment:
   sdk: '>=1.20.1 <2.0.0'

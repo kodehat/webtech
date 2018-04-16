@@ -91,7 +91,8 @@ p {
     background-color: #B33771;
     border-radius: 13px; /* (height of inner div) / 2 + padding */
     padding: 3px;
-    margin: 0 4rem;
+    margin: 0 auto;
+    width: 60%;
 }
 
 #progressbar > div {
