@@ -65,6 +65,7 @@ p {
     text-align: center;
     vertical-align: middle;
     /* background-color: #B33771; */
+    /*background-img: url("assets/img/grass-bg.png");*/
     background-position: center;
     width: 32px;
     height: 32px;
@@ -72,7 +73,7 @@ p {
 }
 
 .rabbit {
-    background: url("assets/img/rabbit.png") no-repeat;
+    background: url("assets/img/rabbit.png"), url("assets/img/ground.png") no-repeat;
 }
 
 .hedge {
@@ -85,6 +86,7 @@ p {
 
 .terrain {
     background-color: #663931;
+    background: url("assets/img/ground.png") no-repeat transparent;
 }
 
 #progressbar {
