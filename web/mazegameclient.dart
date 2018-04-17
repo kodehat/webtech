@@ -138,7 +138,7 @@ void onDeviceMove(DeviceOrientationEvent e) {
     else if(gamma >= gammaToggleLeft) {
       hasMoved = false;
     }
-    else (gamma <= gammaToggleRight) {
+    else {
       hasMoved = false;
     }
   }
