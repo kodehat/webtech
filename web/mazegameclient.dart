@@ -2,7 +2,7 @@ import 'dart:html';
 import 'package:rabbitrun/mazegame.dart';
 
 final HtmlElement startBtn = querySelector("#btn_start");
-HtmlElement rabbit = querySelector("#field_7_0");
+HtmlElement rabbit = querySelector("#field_3_3");
 
 int row = 7;
 int col = 0;
@@ -65,7 +65,8 @@ void onStartBtnClick(MouseEvent e) {
   querySelector("#game_field").classes.toggle("invisible");
 
   rabbit.classes.toggle("rabbit");
-  rabbit.classes.remove("terrain");
+  if (rabbit.classes.contains("terrain")) rabbit.classes.remove("terrain");
+  else rabbit.classes.remove("hedge");
   calibrated = true;
 }
 
@@ -98,7 +99,7 @@ void onDeviceMove(DeviceOrientationEvent e) {
 
      hasMoved = true;
     }
-    else if(beta >= betaToggleDown){
+    else if(beta >= betaToggleDown){ //Move Down
       rabbit.classes.remove("rabbit");
       rabbit.classes.add("terrain");
       row += 1;
@@ -108,7 +109,7 @@ void onDeviceMove(DeviceOrientationEvent e) {
 
       hasMoved = true;
     }
-    else if(gamma <= gammaToggleLeft) {
+    else if(gamma <= gammaToggleLeft) { //Move Left
       rabbit.classes.remove("rabbit");
       rabbit.classes.add("terrain");
       col -= 1;
@@ -118,7 +119,7 @@ void onDeviceMove(DeviceOrientationEvent e) {
 
       hasMoved = true;
     }
-    else if(gamma >= gammaToggleRight) {
+    else if(gamma >= gammaToggleRight) { //Move Right
       rabbit.classes.remove("rabbit");
       rabbit.classes.add("terrain");
       col += 1;
