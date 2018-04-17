@@ -98,8 +98,41 @@ void onDeviceMove(DeviceOrientationEvent e) {
 
      hasMoved = true;
     }
+    else if(beta >= betaToggleDown){
+      rabbit.classes.remove("rabbit");
+      rabbit.classes.add("terrain");
+      row += 1;
+      rabbit = querySelector("#field_${row}_${col}");
+      rabbit.classes.remove("terrain");
+      rabbit.classes.add("rabbit");
+    }
+    else if(gamma <= gammaToggleLeft) {
+      rabbit.classes.remove("rabbit");
+      rabbit.classes.add("terrain");
+      col -= 1;
+      rabbit = querySelector("#field_${row}_${col}");
+      rabbit.classes.remove("terrain");
+      rabbit.classes.add("rabbit");
+    }
+    else if(gamma >= gammaToggleRight) {
+      rabbit.classes.remove("rabbit");
+      rabbit.classes.add("terrain");
+      col += 1;
+      rabbit = querySelector("#field_${row}_${col}");
+      rabbit.classes.remove("terrain");
+      rabbit.classes.add("rabbit");
+    }
   } else {
     if (beta >= betaToggleUp) {
+      hasMoved = false;
+    }
+    else if(beta <= betaToggleDown) {
+      hasMoved = false;
+    }
+    else if(gamma >= gammaToggleLeft) {
+      hasMoved = false;
+    }
+    else if(gamma <= gammaToggleRight) {
       hasMoved = false;
     }
   }
