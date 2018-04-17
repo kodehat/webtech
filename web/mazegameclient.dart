@@ -2,7 +2,7 @@ import 'dart:html';
 import 'package:rabbitrun/mazegame.dart';
 
 final HtmlElement startBtn = querySelector("#btn_start");
-HtmlElement rabbit = querySelector("#field_3_3");
+HtmlElement rabbit = querySelector("#field_7_0");
 
 int row = 7;
 int col = 0;
@@ -65,8 +65,7 @@ void onStartBtnClick(MouseEvent e) {
   querySelector("#game_field").classes.toggle("invisible");
 
   rabbit.classes.toggle("rabbit");
-  if (rabbit.classes.contains("terrain")) rabbit.classes.remove("terrain");
-  else rabbit.classes.remove("hedge");
+  rabbit.classes.remove("terrain");
   calibrated = true;
 }
 
