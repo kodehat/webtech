@@ -65,6 +65,7 @@ void onStartBtnClick(MouseEvent e) {
   querySelector("#game_field").classes.toggle("invisible");
 
   rabbit.classes.toggle("rabbit");
+  rabbit.classes.remove("terrain");
   calibrated = true;
 }
 
@@ -89,8 +90,10 @@ void onDeviceMove(DeviceOrientationEvent e) {
   if (!hasMoved) {
     if (beta <= betaToggleUp) { // Move UP
      rabbit.classes.remove("rabbit");
+     rabbit.classes.add("terrain");
      row -= 1;
      rabbit = querySelector("#field_${row}_${col}");
+     rabbit.classes.remove("terrain");
      rabbit.classes.add("rabbit");
 
      hasMoved = true;
