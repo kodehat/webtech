@@ -105,6 +105,8 @@ void onDeviceMove(DeviceOrientationEvent e) {
       rabbit = querySelector("#field_${row}_${col}");
       rabbit.classes.remove("terrain");
       rabbit.classes.add("rabbit");
+
+      hasMoved = true;
     }
     else if(gamma <= gammaToggleLeft) {
       rabbit.classes.remove("rabbit");
@@ -113,6 +115,8 @@ void onDeviceMove(DeviceOrientationEvent e) {
       rabbit = querySelector("#field_${row}_${col}");
       rabbit.classes.remove("terrain");
       rabbit.classes.add("rabbit");
+
+      hasMoved = true;
     }
     else if(gamma >= gammaToggleRight) {
       rabbit.classes.remove("rabbit");
@@ -121,6 +125,8 @@ void onDeviceMove(DeviceOrientationEvent e) {
       rabbit = querySelector("#field_${row}_${col}");
       rabbit.classes.remove("terrain");
       rabbit.classes.add("rabbit");
+
+      hasMoved = true;
     }
   } else {
     if (beta >= betaToggleUp) {
