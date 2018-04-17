@@ -1,36 +1,456 @@
 {
   "name": "level_1",
-  "name_clean": "Level 1",
+  "nameClean": "Level 1",
   "time": 15,
-  "possible_goals": 3,
+  "possibleGoals": 2,
   "tiles": [
     {
-      "pos": {
+      "position": {
         "row": 0,
         "col": 0
       },
-      "type": "s"
+      "type": "GOAL"
     },
     {
-      "pos": {
+      "position": {
         "row": 0,
         "col": 1
       },
-      "type": "t"
+      "type": "TERRAIN"
     },
     {
-      "pos": {
+      "position": {
         "row": 0,
         "col": 2
       },
-      "type": "t"
+      "type": "TERRAIN"
     },
     {
-      "pos": {
+      "position": {
         "row": 0,
         "col": 3
       },
-      "type": "t"
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 0,
+        "col": 4
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 0,
+        "col": 5
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 0,
+        "col": 6
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 0,
+        "col": 7
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 1,
+        "col": 0
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 1,
+        "col": 1
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 1,
+        "col": 2
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 1,
+        "col": 3
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 1,
+        "col": 4
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 1,
+        "col": 5
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 1,
+        "col": 6
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 1,
+        "col": 7
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 2,
+        "col": 0
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 2,
+        "col": 1
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 2,
+        "col": 2
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 2,
+        "col": 3
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 2,
+        "col": 4
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 2,
+        "col": 5
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 2,
+        "col": 6
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 2,
+        "col": 7
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 3,
+        "col": 0
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 3,
+        "col": 1
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 3,
+        "col": 2
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 3,
+        "col": 3
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 3,
+        "col": 4
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 3,
+        "col": 5
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 3,
+        "col": 6
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 3,
+        "col": 7
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 4,
+        "col": 0
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 4,
+        "col": 1
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 4,
+        "col": 2
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 4,
+        "col": 3
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 4,
+        "col": 4
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 4,
+        "col": 5
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 4,
+        "col": 6
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 4,
+        "col": 7
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 5,
+        "col": 0
+      },
+      "type": "GOAL"
+    },
+    {
+      "position": {
+        "row": 5,
+        "col": 1
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 5,
+        "col": 2
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 5,
+        "col": 3
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 5,
+        "col": 4
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 5,
+        "col": 5
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 5,
+        "col": 6
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 5,
+        "col": 7
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 6,
+        "col": 0
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 6,
+        "col": 1
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 6,
+        "col": 2
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 6,
+        "col": 3
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 6,
+        "col": 4
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 6,
+        "col": 5
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 6,
+        "col": 6
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 6,
+        "col": 7
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 7,
+        "col": 0
+      },
+      "type": "START"
+    },
+    {
+      "position": {
+        "row": 7,
+        "col": 1
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 7,
+        "col": 2
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 7,
+        "col": 3
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 7,
+        "col": 4
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 7,
+        "col": 5
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 7,
+        "col": 6
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 7,
+        "col": 7
+      },
+      "type": "TERRAIN"
     }
   ]
 }
