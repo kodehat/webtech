@@ -2,6 +2,10 @@
 
 A maze game written in Dartlang.
 
+## Current Status
+
+[![Build Status](https://travis-ci.com/Salpico/WebTech.svg?token=cXn1vrecA8q2u82rwMVy&branch=master)](https://travis-ci.com/Salpico/WebTech)
+
 ## JSON Level reference
 
 - `t`: Terrain
