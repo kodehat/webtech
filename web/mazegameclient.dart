@@ -26,7 +26,7 @@ void main() {
     startBtn.attributes.remove("disabled");
   });
 
-  generateGameField(8);
+  generateGameField(8, 10);
 
   startBtn.onClick.listen(onStartBtnClick);
 
@@ -39,13 +39,13 @@ void main() {
 ///
 /// The [size] parameter defines the amount of
 /// columns and rows.
-void generateGameField(int size) {
+void generateGameField(int rows, int cols) {
   var game = querySelector("#game");
   String table = "";
 
-  for (int row = 0; row < size; row++) {
+  for (int row = 0; row < rows; row++) {
     table += "<tr>";
-    for (int col = 0; col < size; col++) {
+    for (int col = 0; col < cols; col++) {
       final pos = "field_${row}_${col}";
       var hedge = col % 2 == 0 ? " terrain" : " hedge";
       table += "<td id='$pos' class='field$hedge'></td>";
