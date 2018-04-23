@@ -67,8 +67,8 @@ p {
     /* background-color: #B33771; */
     /*background-img: url("assets/img/grass-bg.png");*/
     background-position: center;
-    width: 32px;
-    height: 32px;
+    width: 38px;
+    height: 38px;
     padding: 0;
 }
 
@@ -85,7 +85,6 @@ p {
 }
 
 .terrain {
-    background-color: #663931;
     background: url("assets/img/ground.png") no-repeat transparent;
 }
 

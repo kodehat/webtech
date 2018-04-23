@@ -3530,14 +3530,14 @@ $isl:1,
 $isd:1,
 "%":"SVGComponentTransferFunctionElement|SVGDescElement|SVGDiscardElement|SVGFEDistantLightElement|SVGFEFuncAElement|SVGFEFuncBElement|SVGFEFuncGElement|SVGFEFuncRElement|SVGFEMergeNodeElement|SVGFEPointLightElement|SVGFESpotLightElement|SVGMetadataElement|SVGStopElement|SVGStyleElement|SVGTitleElement;SVGElement"},iJ:{"^":"ay;",$isd:1,"%":"SVGSVGElement"},iK:{"^":"l;",$isd:1,"%":"SVGSymbolElement"},eQ:{"^":"ay;","%":"SVGTSpanElement|SVGTextElement|SVGTextPositioningElement;SVGTextContentElement"},iO:{"^":"eQ;",$isd:1,"%":"SVGTextPathElement"},iP:{"^":"ay;",$isd:1,"%":"SVGUseElement"},iQ:{"^":"l;",$isd:1,"%":"SVGViewElement"},iZ:{"^":"l;",$isd:1,"%":"SVGGradientElement|SVGLinearGradientElement|SVGRadialGradientElement"},j3:{"^":"l;",$isd:1,"%":"SVGCursorElement"},j4:{"^":"l;",$isd:1,"%":"SVGFEDropShadowElement"},j5:{"^":"l;",$isd:1,"%":"SVGMPathElement"}}],["","",,P,{"^":""}],["","",,P,{"^":""}],["","",,P,{"^":""}],["","",,U,{"^":"",
 ja:[function(){W.b4(window,"load",new U.hu(),!1,W.ax)
-U.hb(8)
+U.hb(8,10)
 var z=J.dz($.$get$bf())
 W.b4(z.a,z.b,U.hx(),!1,H.K(z,0))
 W.b4(window,"deviceorientation",U.hw(),!1,W.aP)},"$0","dl",0,0,2],
-hb:function(a){var z,y,x,w,v,u
+hb:function(a,b){var z,y,x,w,v,u
 z=document.querySelector("#game")
 for(y="",x=0;x<a;++x){y+="<tr>"
-for(w=0;w<a;++w){v="field_"+x+"_"+w
+for(w=0;w<b;++w){v="field_"+x+"_"+w
 u=w%2===0?" terrain":" hedge"
 y+="<td id='"+v+"' class='field"+u+"'></td>"}y+="</tr>"}J.dF(z,y)},
 jc:[function(a){var z
