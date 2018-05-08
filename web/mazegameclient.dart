@@ -19,6 +19,12 @@ bool calibrated = false;
 bool hasMoved = false;
 
 void main() {
+//  LevelLoader.load(1, (Level level) {
+//    print("Level name is: ${level.nameClean}");
+//    print(level.tiles.length);
+//  });
+
+
 //  print("Width: ${window.innerWidth}, Height: ${window.innerHeight}");
 //  var possibleFields = (window.innerWidth / 32).ceil();
 //  print("Possible fields with width in mind: ${possibleFields}");
@@ -32,9 +38,9 @@ void main() {
     startBtn.attributes.remove("disabled");
   });
 
-  generateGameField(8, 10);
+  //generateGameField(8, 10);
 
-  startBtn.onClick.listen(onStartBtnClick);
+  //startBtn.onClick.listen(onStartBtnClick);
 
   window.onDeviceOrientation.listen(onDeviceMove);
 

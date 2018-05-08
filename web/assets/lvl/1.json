@@ -3,6 +3,8 @@
   "nameClean": "Level 1",
   "time": 15,
   "possibleGoals": 2,
+  "rows": 8,
+  "cols": 8,
   "tiles": [
     {
       "position": {

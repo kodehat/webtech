@@ -18,6 +18,8 @@ class LevelLoader {
       ..nameClean = data["nameClean"]
       ..time = data["time"]
       ..possibleGoals = data["possibleGoals"]
+      ..rows = data["rows"]
+      ..cols = data["cols"]
       ..tiles = _tilesFromMap(data["tiles"]);
 
     return level;
@@ -28,7 +30,10 @@ class LevelLoader {
     data.forEach((p) {
       Tile tile = new Tile()
         ..position = _positionFromMap(p["position"])
-        ..type = p["type"];
+        ..type = TileType.values.firstWhere((t) {
+          print(t.toString());
+          return t.toString().substring(t.toString().indexOf(".") + 1) == p["type"];
+        });
       tiles.add(tile);
     });
     return tiles;

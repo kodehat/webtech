@@ -18,7 +18,17 @@
     <div class="container has-text-centered margin-top-small">
         <h1 class="animated bounceInDown" id="title">RabbitRun</h1>
         <h3 class="subtitle" id="subtitle">Guide the rabbit through the maze to find its hole.</h3>
-        <button id="btn_start" type="button" class="button" disabled>Loading...</button>
+        <div class="button-group">
+            <div class="button-wrapper">
+                <button id="btn_start" type="button" class="button" disabled>Loading...</button>
+            </div>
+            <div class="button-wrapper">
+                <button id="btn_tutorial" type="button" class="button" disabled>Tutorial</button>
+            </div>
+            <div class="button-wrapper">
+                <button id="btn_about" type="button" class="button" disabled>About</button>
+            </div>
+        </div>
     </div>
     <div class="has-text-centered invisible" id="progress">
         <span class="label">15 sec</span>
@@ -26,14 +36,14 @@
             <div></div>
         </div>
     </div>
-    <div class="modal invisible" id="score">
+    <div class="modal invisible" id="overlay">
         <div class="modal-content has-text-centered">
             <h2>Game Over!</h2>
             <p>You reached level <strong>6</strong>!</p>
             <button id="btn_close_modal" type="button" class="button">Close</button>
         </div>
     </div>
-    <div class="container invisible" id="game_field">
+    <div class="container" id="game_field">
         <table id="game">
         </table>
     </div>

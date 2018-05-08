@@ -16,5 +16,3 @@ part 'src/levelloader.dart';
 part 'src/position.dart';
 part 'src/rabbit.dart';
 part 'src/tile.dart';
-
-const gamesize = 8;
