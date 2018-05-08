@@ -73,7 +73,7 @@ p {
 }
 
 .rabbit {
-    background: url("assets/img/rabbit.png"), url("assets/img/ground.png") no-repeat;
+    background: url("assets/img/rabbit.png") no-repeat, url("assets/img/ground.png") no-repeat;
 }
 
 .hedge {

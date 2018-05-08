@@ -19,6 +19,12 @@ bool calibrated = false;
 bool hasMoved = false;
 
 void main() {
+//  print("Width: ${window.innerWidth}, Height: ${window.innerHeight}");
+//  var possibleFields = (window.innerWidth / 32).ceil();
+//  print("Possible fields with width in mind: ${possibleFields}");
+//  var game = querySelector("#game");
+//  game.style.width = "${32 * (possibleFields - 1)}px";
+
   window.onLoad.listen((e) {
     print("Finished converting Dart to JS!");
 
