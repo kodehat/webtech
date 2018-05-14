@@ -82,19 +82,19 @@ p {
 }
 
 .start {
-    background: url("assets/img/rabbit.png") no-repeat, url("assets/img/ground.png") no-repeat;
+    background: url("assets/img/rabbit2.png") no-repeat, url("assets/img/ground2.png") no-repeat;
 }
 
 .hedge {
-    background: url("assets/img/hedge.png") no-repeat;
+    background: url("assets/img/hedge2.png") no-repeat;
 }
 
 .goal {
-    background: url("assets/img/hole.png") no-repeat, url("assets/img/ground.png") no-repeat;
+    background: url("assets/img/hole2.png") no-repeat, url("assets/img/ground2.png") no-repeat;
 }
 
 .terrain {
-    background: url("assets/img/ground.png") no-repeat transparent;
+    background: url("assets/img/ground2.png") no-repeat transparent;
 }
 
 #progressbar {
