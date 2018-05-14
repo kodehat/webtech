@@ -3,7 +3,7 @@ part of mazegame;
 class Tile extends GameObject {
 
   Position position;
-  TileType type;
+  String type;
 
   Tile();
 
@@ -18,9 +18,19 @@ class Tile extends GameObject {
   }
 }
 
-enum TileType {
-  HEDGE,
-  TERRAIN,
-  GOAL,
-  START,
+class TileType {
+
+  static final String HEDGE = "HEDGE";
+  static final String TERRAIN = "TERRAIN";
+  static final String GOAL = "GOAL";
+  static final String START = "START";
+  static final String FOX = "FOX";
+
+  static List<String> get types => [
+    HEDGE,
+    TERRAIN,
+    GOAL,
+    START,
+    FOX,
+  ];
 }

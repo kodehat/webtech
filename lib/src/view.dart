@@ -37,9 +37,6 @@ class MazeGameView {
   void generateField(MazeGameModel game) {
     final Level level = game.level;
     String table = "";
-    bool hasGoalFound = false;
-    int seenGoals = 0;
-    var rnd = new Random();
 
     print("Level rows: ${level.rows}, cols: ${level.cols}");
     for (int row = 0; row < level.rows; row++) {
@@ -49,23 +46,8 @@ class MazeGameView {
         final Tile tile = level.tiles.firstWhere((t) {
           return t.position.row == row && t.position.col == col;
         });
-        print(tile.type is TileType);
-        if (tile.type == TileType.GOAL && !hasGoalFound && (seenGoals + 1) < level.possibleGoals) {
-          print("Possible goal!");
-          if (rnd.nextInt(4) >= 2) { // ~ 50% chance
-            print("Goal found ($row, $col)");
-            hasGoalFound = true;
-          } else {
-            seenGoals++;
-            tile.type = TileType.TERRAIN;
-          }
-        } else if (tile.type == TileType.GOAL && hasGoalFound) {
-          tile.type = TileType.TERRAIN;
-        } else if (tile.type == TileType.GOAL && !hasGoalFound && (seenGoals + 1) == level.possibleGoals) {
-          hasGoalFound = true;
-        }
 
-        table += "<td id='$pos' class='field ${tile.type.toString().substring(tile.type.toString().indexOf(".") + 1).toLowerCase()}'></td>";
+        table += "<td id='$pos' class='field ${tile.type.toLowerCase()}'></td>";
       }
       table += "</tr>";
     }

@@ -20,20 +20,36 @@ class LevelLoader {
       ..possibleGoals = data["possibleGoals"]
       ..rows = data["rows"]
       ..cols = data["cols"]
-      ..tiles = _tilesFromMap(data["tiles"]);
+      ..tiles = _tilesFromMap(data["tiles"], data["possibleGoals"]);
 
     return level;
   }
 
-  static List<Tile> _tilesFromMap(List<Map> data) {
+  static List<Tile> _tilesFromMap(List<Map> data, int possibleGoals) {
     List<Tile> tiles = new List();
+    bool hasGoalFound = false;
+    int seenGoals = 0;
+    var rnd = new Random();
+
     data.forEach((p) {
       Tile tile = new Tile()
         ..position = _positionFromMap(p["position"])
-        ..type = TileType.values.firstWhere((t) {
-          print(t.toString());
-          return t.toString().substring(t.toString().indexOf(".") + 1) == p["type"];
-        });
+        ..type = p["type"];
+
+      if (tile.type == TileType.GOAL && !hasGoalFound && (seenGoals + 1) < possibleGoals) {
+        print("Possible goal!");
+        if (rnd.nextInt(4) >= 2) { // ~ 50% chance
+          hasGoalFound = true;
+        } else {
+          seenGoals++;
+          tile.type = TileType.TERRAIN;
+        }
+      } else if (tile.type == TileType.GOAL && hasGoalFound) {
+        tile.type = TileType.TERRAIN;
+      } else if (tile.type == TileType.GOAL && !hasGoalFound && (seenGoals + 1) == possibleGoals) {
+        hasGoalFound = true;
+      }
+
       tiles.add(tile);
     });
     return tiles;
