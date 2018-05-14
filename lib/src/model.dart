@@ -3,7 +3,7 @@ part of mazegame;
 class MazeGameModel {
 
   // Current level number
-  int _levelNo;
+   int _levelNo;
 
   // Current level
   Level _level;
@@ -27,7 +27,7 @@ class MazeGameModel {
     });
   }
 
-  Level get level => this._level;
+   Level get level => this._level;
 
   Stream<Level> get levelStream => _levelBroadCast.stream;
 
