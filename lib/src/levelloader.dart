@@ -32,9 +32,8 @@ class LevelLoader {
     var rnd = new Random();
 
     data.forEach((p) {
-      Tile tile = new Tile()
-        ..position = _positionFromMap(p["position"])
-        ..type = p["type"];
+      Position position = _positionFromMap(p["position"]);
+      Tile tile = new Tile.fromCoordinates(p["type"], position.row, position.col);
 
       if (tile.type == TileType.GOAL && !hasGoalFound && (seenGoals + 1) < possibleGoals) {
         print("Possible goal!");

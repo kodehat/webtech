@@ -1,10 +1,14 @@
 part of mazegame;
 
+const levelCountdown = const Duration(seconds: 1);
+
 class MazeGameController {
 
   MazeGameModel game = new MazeGameModel();
 
   MazeGameView view = new MazeGameView();
+
+  Timer levelCountdownTrigger;
 
   MazeGameController() {
     // Listen to new level given into level-stream
@@ -18,16 +22,23 @@ class MazeGameController {
   }
 
   void onClickStartButton(MouseEvent e) {
-    print("Start button clicked!");
-    view.startButton.text = "Restart?!";
-    view.tutorialButton.classes.toggle("invisible");
-    querySelectorAll(".button-wrapper > .button:not([id='btn_start'])").classes.toggle("invisible", true);
+    if (game.running) {
 
-    view.subtitle.classes.toggle("invisible");
-    view.title.text = game.level.nameClean;
-    view.progressbarContainer.classes.toggle("invisible");
-    view.gameField.classes.toggle("invisible");
+    } else {
+      querySelectorAll(".button-wrapper > .button").classes.toggle("invisible", true);
 
+      view.subtitle.text = "RUN!!!";
+      view.title.text = game.level.nameClean;
+      view.progressbarContainer.classes.toggle("invisible");
+      view.gameField.classes.toggle("invisible");
+
+      game.start();
+
+      levelCountdownTrigger = new Timer.periodic(levelCountdown, (_) {
+        game.timeLeft -= 1;
+        view.update(game, true);
+      });
+    }
   }
 
   void onStreamNewLevel(Level level) {
