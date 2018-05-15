@@ -1,6 +1,7 @@
 part of mazegame;
 
 const levelCountdown = const Duration(seconds: 1);
+const miniInfoDur = const Duration(seconds: 5);
 
 class MazeGameController {
 
@@ -9,6 +10,7 @@ class MazeGameController {
   MazeGameView view = new MazeGameView();
 
   Timer levelCountdownTrigger;
+  Timer miniInfoTrigger;
 
   int betaOrientation = null;
   int betaToggleUp = null;
@@ -18,6 +20,7 @@ class MazeGameController {
   int gammaToggleLeft = null;
   int gammaToggleRight = null;
 
+  bool calibrated = false;
   bool hasMoved = false;
 
   MazeGameController() {
@@ -34,6 +37,8 @@ class MazeGameController {
 
     // If the device is oriented
     window.onDeviceOrientation.listen(onDeviceMove);
+
+    window.onTouchEnd.listen(onTouchDisplay);
 
     // Listen to keyboard to control the rabbit
     window.onKeyDown.listen((KeyboardEvent e) {
@@ -58,13 +63,21 @@ class MazeGameController {
     });
   }
 
+  void onTouchDisplay(TouchEvent e) {
+    if (game.stopped) return;
+    view.miniInfo.text = "Device orientation re-calibrated!";
+    updateMiniInfo();
+    calibrated = false;
+    hasMoved = false;
+  }
+
   void onDeviceMove(DeviceOrientationEvent e) {
     if (e.beta == null || e.gamma == null) return;
 
     final int beta = e.beta.toInt();
     final int gamma = e.gamma.toInt();
 
-    if (game.stopped) {
+    if (!calibrated) {
       betaOrientation = beta;
       betaToggleUp = betaOrientation - 20;
       betaToggleDown = betaOrientation + 20;
@@ -73,7 +86,11 @@ class MazeGameController {
       gammaToggleLeft = gammaOrientation - 20;
       gammaToggleRight = gammaOrientation + 20;
 
-      return;
+      if (game.stopped) {
+        return;
+      } else {
+        calibrated = true;
+      }
     }
 
     if (!hasMoved) {
@@ -102,39 +119,33 @@ class MazeGameController {
         hasMoved = true;
       }
     } else {
-      if (beta >= betaToggleUp) {
+      if (beta >= betaToggleUp
+          && beta <= betaToggleDown
+          && gamma >= gammaToggleLeft
+          && gamma <= gammaToggleRight) {
         hasMoved = false;
-      }
-      else if(beta <= betaToggleDown) {
-        hasMoved = false;
-      }
-      else if(gamma >= gammaToggleLeft) {
-        hasMoved = false;
-      }
-      else {
-        //hasMoved = false;
       }
     }
   }
 
   void onClickStartButton(MouseEvent e) {
-    if (game.running) {
+    if (game.running) return;
 
-    } else {
-      querySelectorAll(".button-wrapper > .button").classes.toggle("invisible", true);
+    querySelectorAll(".button-wrapper > .button").classes.toggle("invisible", true);
 
-      view.subtitle.text = "RUN!!!";
-      view.title.text = game.level.nameClean;
-      view.progressbarContainer.classes.toggle("invisible");
-      view.gameField.classes.toggle("invisible");
+    view.subtitle.text = "RUN!!!";
+    view.title.text = game.level.nameClean;
+    view.progressbarContainer.classes.toggle("invisible");
+    view.gameField.classes.toggle("invisible");
 
-      game.start();
+    game.start();
 
-      levelCountdownTrigger = new Timer.periodic(levelCountdown, (_) {
-        game.timeLeft -= 1;
-        view.update(game, true);
-      });
-    }
+    calibrated = true;
+
+    levelCountdownTrigger = new Timer.periodic(levelCountdown, (_) {
+      game.timeLeft -= 1;
+      view.update(game, true);
+    });
   }
 
   void onStreamNewLevel(Level level) {
@@ -144,6 +155,15 @@ class MazeGameController {
   void onClickOverlayCloseButton(MouseEvent e) {
     print("Overlay close button clicked!");
     view.closeOverlay();
+  }
+
+  void updateMiniInfo() {
+    if (miniInfoTrigger == null) {
+      miniInfoTrigger = new Timer(miniInfoDur, () => view.miniInfo.text = "");
+    } else if (miniInfoTrigger.isActive) {
+      miniInfoTrigger.cancel();
+      miniInfoTrigger = new Timer(miniInfoDur, () => view.miniInfo.text = "");
+    }
   }
 
 }

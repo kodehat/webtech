@@ -2,6 +2,8 @@ part of mazegame;
 
 class MazeGameView {
 
+  final miniInfo = querySelector("#mini_info");
+
   final overlay = querySelector("#overlay");
 
   final overlayTitle = querySelector("#overlay h2");
@@ -29,6 +31,8 @@ class MazeGameView {
   HtmlElement get aboutButton => querySelector("#btn_about");
 
   HtmlElement get overlayCloseButton => querySelector("#btn_close_modal");
+
+  HtmlElement get overlayNextLevelButton => querySelector("#btn_next_level");
 
   List<List<HtmlElement>> fields;
 
