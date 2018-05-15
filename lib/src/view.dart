@@ -8,11 +8,13 @@ class MazeGameView {
 
   final overlayDescription = querySelector("#overlay p");
 
-  final title = querySelector("title");
+  final title = querySelector("#title");
 
-  final subtitle = querySelector("subtitle");
+  final subtitle = querySelector("#subtitle");
   
   final progressbarTitle = querySelector("#progress .label");
+
+  final progressbarContainer = querySelector("#progress");
 
   final progressbar = querySelector("#progressbar > div");
 

@@ -27,7 +27,7 @@ class MazeGameModel {
     });
   }
 
-   Level get level => this._level;
+  Level get level => this._level;
 
   Stream<Level> get levelStream => _levelBroadCast.stream;
 

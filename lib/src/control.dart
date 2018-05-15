@@ -7,29 +7,36 @@ class MazeGameController {
   MazeGameView view = new MazeGameView();
 
   MazeGameController() {
-    game.levelStream.listen((Level level) {
-      view.generateField(game);
-    });
+    // Listen to new level given into level-stream
+    game.levelStream.listen(onStreamNewLevel);
 
     // Listen to mouse clicks on the overlay's close button
-    view.overlayCloseButton.onClick.listen((event) {
-      print("Overlay close button clicked!");
-      view.closeOverlay();
-    });
+    view.overlayCloseButton.onClick.listen(onClickOverlayCloseButton);
 
-    void onStartBtnClick(MouseEvent e) {
-      print("Start button clicked!");
-      view.startButton.remove();
-      view.subtitle.classes.toggle("invisible");
-      view.title.text = game.level.nameClean;
-      view.progressbar.classes.toggle("invisible");
-      view.gameField.classes.toggle("invisible");
+    // Listen to mouse clicks on start button
+    view.startButton.onClick.listen(onClickStartButton);
+  }
 
-     // rabbit.classes.toggle("rabbit");
-     // rabbit.classes.remove("terrain");
-     // calibrated = true;
-    }
+  void onClickStartButton(MouseEvent e) {
+    print("Start button clicked!");
+    view.startButton.text = "Restart?!";
+    view.tutorialButton.classes.toggle("invisible");
+    querySelectorAll(".button-wrapper > .button:not([id='btn_start'])").classes.toggle("invisible", true);
 
+    view.subtitle.classes.toggle("invisible");
+    view.title.text = game.level.nameClean;
+    view.progressbarContainer.classes.toggle("invisible");
+    view.gameField.classes.toggle("invisible");
+
+  }
+
+  void onStreamNewLevel(Level level) {
+    view.generateField(game);
+  }
+
+  void onClickOverlayCloseButton(MouseEvent e) {
+    print("Overlay close button clicked!");
+    view.closeOverlay();
   }
 
 }

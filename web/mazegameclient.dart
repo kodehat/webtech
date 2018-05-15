@@ -2,6 +2,8 @@ import 'dart:html';
 import 'package:rabbitrun/mazegame.dart';
 
 final HtmlElement startBtn = querySelector("#btn_start");
+final HtmlElement tutorialBtn = querySelector("#btn_tutorial");
+final HtmlElement aboutBtn = querySelector("#btn_about");
 HtmlElement rabbit = querySelector("#field_7_0");
 
 int row = 7;
@@ -36,6 +38,8 @@ void main() {
 
     startBtn.text = "Start";
     startBtn.attributes.remove("disabled");
+    tutorialBtn.attributes.remove("disabled");
+    aboutBtn.attributes.remove("disabled");
   });
 
   //generateGameField(8, 10);
