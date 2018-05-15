@@ -41,6 +41,7 @@ class MazeGameView {
       progressbarTitle.text = "${game.timeLeft} sec";
       int timeInPerc = ((game.timeLeft / game.level.time) * 100).floor();
       progressbar.style.width = "$timeInPerc%";
+      querySelectorAll(".field").style.filter = "brightness(${max(timeInPerc, 15)}%)";
       return;
     }
 
