@@ -160,7 +160,7 @@ class MazeGameController {
   void updateMiniInfo() {
     if (miniInfoTrigger == null) {
       miniInfoTrigger = new Timer(miniInfoDur, () => view.miniInfo.text = "");
-    } else if (miniInfoTrigger.isActive) {
+    } else {
       miniInfoTrigger.cancel();
       miniInfoTrigger = new Timer(miniInfoDur, () => view.miniInfo.text = "");
     }
