@@ -4050,7 +4050,7 @@ eA:[function(a){P.z("Overlay close button clicked!")
 J.ap(this.b.b).T(0,"invisible",!0)},"$1","ge4",2,0,7],
 eo:function(){var z=this.d
 if(z==null)this.d=P.bQ(C.k,new G.fy(this))
-else if(z.c!=null){z.a7()
+else{z.a7()
 this.d=P.bQ(C.k,new G.fz(this))}},
 cD:function(){var z,y
 z=this.a
