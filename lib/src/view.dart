@@ -40,8 +40,23 @@ class MazeGameView {
       return;
     }
 
+    print("Update field!");
 
-
+    // Update the field
+    final level = game.level;
+    print("Level rows: ${level.rows}, cols: ${level.cols}");
+    for (int row = 0; row < level.rows; row++) {
+      for (int col = 0; col < level.cols; col++) {
+        final Tile tile = level.tiles.firstWhere((t) {
+          return t.position.row == row && t.position.col == col;
+        });
+        final td = fields[row][col];
+        if (td != null) {
+          td.classes.clear();
+          td.classes.addAll(["field", tile.type.toLowerCase()]);
+        }
+      }
+    }
   }
 
   void generateField(MazeGameModel game) {

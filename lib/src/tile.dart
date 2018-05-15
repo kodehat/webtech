@@ -20,6 +20,7 @@ class TileType {
   static final String GOAL = "GOAL";
   static final String START = "START";
   static final String FOX = "FOX";
+  static final String WALL = "WALL";
 
   static List<String> get types => [
     HEDGE,
@@ -27,5 +28,6 @@ class TileType {
     GOAL,
     START,
     FOX,
+    WALL,
   ];
 }

@@ -35,6 +35,7 @@ class LevelLoader {
       Position position = _positionFromMap(p["position"]);
       Tile tile = new Tile.fromCoordinates(p["type"], position.row, position.col);
 
+      // TODO: Rewrite into own function!
       if (tile.type == TileType.GOAL && !hasGoalFound && (seenGoals + 1) < possibleGoals) {
         print("Possible goal!");
         if (rnd.nextInt(4) >= 2) { // ~ 50% chance
