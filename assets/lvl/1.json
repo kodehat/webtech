@@ -1,6 +1,7 @@
 {
   "name": "level_1",
   "nameClean": "Level 1",
+  "description": "Let's start with an easy one.",
   "time": 15,
   "possibleGoals": 2,
   "rows": 8,
@@ -11,7 +12,7 @@
         "row": 0,
         "col": 0
       },
-      "type": "FOX"
+      "type": "GOAL"
     },
     {
       "position": {
