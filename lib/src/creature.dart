@@ -6,7 +6,7 @@ abstract class Creature extends GameObject {
 
   Creature(MazeGameModel this._game, int row, int col) : super(row, col);
 
-  void moveTo(int newRow, int newCol) {
+  void _moveTo(int newRow, int newCol) {
     // Update object at previous/own position.
     _game.level.objects[super.position.row][super.position.col] = _game.level.objects[newRow][newCol];
 
@@ -34,7 +34,7 @@ abstract class Creature extends GameObject {
     print("Try to move at: $newRow, $newCol. Type is $collisionType");
 
     if (collisionType == TileType.TERRAIN) {
-      moveTo(newRow, newCol);
+      _moveTo(newRow, newCol);
     } else if (collisionType == TileType.GOAL) {
       _game.level.done = true;
       _game.stop();
