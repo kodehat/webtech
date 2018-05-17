@@ -4,11 +4,11 @@ class Level {
 
   String name;
   String nameClean;
+  String description;
   int time;
   int possibleGoals;
   int rows;
   int cols;
-  List<Tile> tiles;
-  List<Creature> creatures;
+  List<List<GameObject>> objects;
 
 }

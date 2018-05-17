@@ -33,14 +33,14 @@ class MazeGameModel {
       this._level = level;
 
       timeLeft = level.time;
-      Position rabbitPos = level.tiles.firstWhere((t) => t.type == TileType.START).position;
-      print("Rabbit position: " + rabbitPos.toString());
-      rabbit = new Rabbit(this, rabbitPos.row, rabbitPos.col);
-      List<Tile> enemyTiles = level.tiles.where((t) => t.type == TileType.FOX);
-      enemyTiles.forEach((et) => enemies.add(new Fox(this, et.position.row, et.position.col)));
+//      Position rabbitPos = level.tiles.firstWhere((t) => t.type == TileType.START).position;
+//      print("Rabbit position: " + rabbitPos.toString());
+//      rabbit = new Rabbit(this, rabbitPos.row, rabbitPos.col);
+//      List<Tile> enemyTiles = level.tiles.where((t) => t.type == TileType.FOX);
+//      enemyTiles.forEach((et) => enemies.add(new Fox(this, et.position.row, et.position.col)));
 
       _levelBroadCast.add(level);
-    });
+    }, this);
   }
 
   Level get level => this._level;

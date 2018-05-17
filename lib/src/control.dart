@@ -1,7 +1,8 @@
 part of mazegame;
 
 const levelCountdown = const Duration(seconds: 1);
-const miniInfoDur = const Duration(seconds: 5);
+const miniInfoDur = const Duration(seconds: 3);
+const deviceMotionToggleValue = 22;
 
 class MazeGameController {
 
@@ -79,12 +80,12 @@ class MazeGameController {
 
     if (!calibrated) {
       betaOrientation = beta;
-      betaToggleUp = betaOrientation - 20;
-      betaToggleDown = betaOrientation + 20;
+      betaToggleUp = betaOrientation - deviceMotionToggleValue;
+      betaToggleDown = betaOrientation + deviceMotionToggleValue;
 
       gammaOrientation = gamma;
-      gammaToggleLeft = gammaOrientation - 20;
-      gammaToggleRight = gammaOrientation + 20;
+      gammaToggleLeft = gammaOrientation - deviceMotionToggleValue;
+      gammaToggleRight = gammaOrientation + deviceMotionToggleValue;
 
       if (game.stopped) {
         return;
@@ -119,10 +120,11 @@ class MazeGameController {
         hasMoved = true;
       }
     } else {
-      if (beta >= betaToggleUp
-          && beta <= betaToggleDown
-          && gamma >= gammaToggleLeft
-          && gamma <= gammaToggleRight) {
+      // Adding a fixed value to prevent moving very fast at a certain position of the mobile.
+      if (beta >= betaToggleUp + 2
+          && beta <= betaToggleDown - 2
+          && gamma >= gammaToggleLeft + 2
+          && gamma <= gammaToggleRight - 2) {
         hasMoved = false;
       }
     }
@@ -133,7 +135,7 @@ class MazeGameController {
 
     querySelectorAll(".button-wrapper > .button").classes.toggle("invisible", true);
 
-    view.subtitle.text = "RUN!!!";
+    view.subtitle.text = game.level.description;
     view.title.text = game.level.nameClean;
     view.progressbarContainer.classes.toggle("invisible");
     view.gameField.classes.toggle("invisible");

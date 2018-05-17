@@ -2,59 +2,83 @@ part of mazegame;
 
 class LevelLoader {
 
-  static void load(final int levelNo, final Function callback) {
+  static void load(final int levelNo, final Function callback, final MazeGameModel game) {
     final String path = "assets/lvl/$levelNo.json";
 
     HttpRequest.getString(path).then((lvlJson) {
       Map data = JSON.decode(lvlJson);
-      Level level = _levelFromMap(data);
+      Level level = _levelFromMap(data, game);
       callback(level);
     });
   }
 
-  static Level _levelFromMap(Map data) {
+  static Level _levelFromMap(final Map data, final MazeGameModel game) {
     Level level = new Level()
       ..name = data["name"]
       ..nameClean = data["nameClean"]
+      ..description = data["description"]
       ..time = data["time"]
       ..possibleGoals = data["possibleGoals"]
       ..rows = data["rows"]
       ..cols = data["cols"]
-      ..tiles = _tilesFromMap(data["tiles"], data["possibleGoals"]);
+      ..objects = _tilesFromMap(data["tiles"], data["possibleGoals"], data["rows"], data["cols"], game);
 
     return level;
   }
 
-  static List<Tile> _tilesFromMap(List<Map> data, int possibleGoals) {
-    List<Tile> tiles = new List();
+  static List<List<GameObject>> _tilesFromMap(List<Map> data, int possibleGoals, int rows, int cols, final MazeGameModel game) {
+    List<List<GameObject>> objects = new Iterable.generate(rows, (row) {
+      return new Iterable.generate(cols, (col) => null).toList();
+    }).toList();
+
+    data.forEach((t) {
+      Position position = _positionFromMap(t["position"]);
+      String type = t["type"];
+
+      switch (type) {
+        case TileType.HEDGE:
+        case TileType.TERRAIN:
+        case TileType.GOAL:
+          objects[position.row][position.col] = new Tile.fromCoordinates(type, position.row, position.col);
+          break;
+        case TileType.START:
+          Rabbit rabbit = new Rabbit(game, position.row, position.col);
+          game.rabbit = rabbit;
+          print("Found rabbit at: ${rabbit.position}");
+          objects[position.row][position.col] = rabbit;
+          break;
+        case TileType.FOX:
+          objects[position.row][position.col] = new Fox(game, position.row, position.col);
+          break;
+      }
+    });
+    _chooseRandomGoal(objects, possibleGoals);
+
+    return objects;
+  }
+
+  static Position _positionFromMap(Map data) => new Position.fromCoordinates(data["row"], data["col"]);
+
+  static void _chooseRandomGoal(List<List<GameObject>> objects, int possibleGoals) {
     bool hasGoalFound = false;
     int seenGoals = 0;
     var rnd = new Random();
 
-    data.forEach((p) {
-      Position position = _positionFromMap(p["position"]);
-      Tile tile = new Tile.fromCoordinates(p["type"], position.row, position.col);
-
-      // TODO: Rewrite into own function!
-      if (tile.type == TileType.GOAL && !hasGoalFound && (seenGoals + 1) < possibleGoals) {
-        print("Possible goal!");
-        if (rnd.nextInt(4) >= 2) { // ~ 50% chance
+    // Iterate through the entire field an find all possible goals.
+    objects.forEach((gl) => gl.where((g) => g is Tile).map((g) => g as Tile).where((t) => t.type == TileType.GOAL).forEach((goal) {
+      if (!hasGoalFound && (seenGoals + 1) < possibleGoals) {
+        if (rnd.nextInt(2) == 0) { // 50% chance
           hasGoalFound = true;
         } else {
           seenGoals++;
-          tile.type = TileType.TERRAIN;
+          goal.type = TileType.TERRAIN;
         }
-      } else if (tile.type == TileType.GOAL && hasGoalFound) {
-        tile.type = TileType.TERRAIN;
-      } else if (tile.type == TileType.GOAL && !hasGoalFound && (seenGoals + 1) == possibleGoals) {
+      } else if (hasGoalFound) {
+        goal.type = TileType.TERRAIN;
+      } else if(!hasGoalFound && (seenGoals + 1) == possibleGoals) {
         hasGoalFound = true;
       }
-
-      tiles.add(tile);
-    });
-    return tiles;
+    }));
   }
-
-  static Position _positionFromMap(Map data) => new Position.fromCoordinates(data["row"], data["col"]);
 
 }

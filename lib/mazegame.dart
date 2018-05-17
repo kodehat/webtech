@@ -1,6 +1,7 @@
 library mazegame;
 
 import 'dart:html';
+import 'dart:core';
 import 'dart:convert';
 import 'dart:async';
 import 'dart:math';

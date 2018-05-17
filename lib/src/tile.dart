@@ -15,12 +15,12 @@ class Tile extends GameObject {
 
 class TileType {
 
-  static final String HEDGE = "HEDGE";
-  static final String TERRAIN = "TERRAIN";
-  static final String GOAL = "GOAL";
-  static final String START = "START";
-  static final String FOX = "FOX";
-  static final String WALL = "WALL";
+  static const String HEDGE = "HEDGE";
+  static const String TERRAIN = "TERRAIN";
+  static const String GOAL = "GOAL";
+  static const String START = "START";
+  static const String FOX = "FOX";
+  static const String WALL = "WALL";
 
   static List<String> get types => [
     HEDGE,

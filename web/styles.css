@@ -70,7 +70,9 @@ p {
 }
 
 #game {
+    background-color: #663931;
     border: 4px solid #B33771;
+    /* border-spacing: 0; */
     border-collapse: collapse;
     margin: 0 auto;
     /* box-shadow: 4px 2px #A3CB38; */
@@ -79,6 +81,8 @@ p {
 #game .field {
     text-align: center;
     vertical-align: middle;
+    border: none;
+    /* border-spacing: 0; */
     /* background-color: #B33771; */
     /*background-img: url("assets/img/grass-bg.png");*/
     background-position: center;
@@ -125,7 +129,7 @@ p {
 
 .label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: .5rem;
 }
 
 .modal {

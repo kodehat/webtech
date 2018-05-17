@@ -49,16 +49,15 @@ class MazeGameView {
 
     // Update the field
     final level = game.level;
-    print("Level rows: ${level.rows}, cols: ${level.cols}");
     for (int row = 0; row < level.rows; row++) {
       for (int col = 0; col < level.cols; col++) {
-        final Tile tile = level.tiles.firstWhere((t) {
-          return t.position.row == row && t.position.col == col;
-        });
+        final GameObject go = level.objects[row][col];
+        String type = GameObject.getType(go);
+
         final td = fields[row][col];
         if (td != null) {
           td.classes.clear();
-          td.classes.addAll(["field", tile.type.toLowerCase()]);
+          td.classes.addAll(["field", type.toLowerCase()]);
         }
       }
     }
@@ -73,11 +72,10 @@ class MazeGameView {
       table += "<tr>";
       for (int col = 0; col < level.cols; col++) {
         final String pos = "field_${row}_${col}";
-        final Tile tile = level.tiles.firstWhere((t) {
-          return t.position.row == row && t.position.col == col;
-        });
+        final GameObject go = level.objects[row][col];
+        String type = GameObject.getType(go);
 
-        table += "<td id='$pos' class='field ${tile.type.toLowerCase()}'></td>";
+        table += "<td id='$pos' class='field ${type.toLowerCase()}'></td>";
       }
       table += "</tr>";
     }
