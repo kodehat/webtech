@@ -33,6 +33,9 @@ class MazeGameController {
     // Listen to mouse clicks on the overlay's close button
     view.overlayCloseButton.onClick.listen(onClickOverlayCloseButton);
 
+    // Listen to mouse clicks on next level button
+    view.overlayNextLevelButton.onClick.listen(onClickOverlayNextLevel);
+
     // Listen to mouse clicks on start button
     view.startButton.onClick.listen(onClickStartButton);
 
@@ -145,7 +148,16 @@ class MazeGameController {
     calibrated = true;
 
     levelCountdownTrigger = new Timer.periodic(levelCountdown, (_) {
+      if (game.level.done) {
+        levelCountdownTrigger.cancel();
+        return;
+      }
       game.timeLeft -= 1;
+      if (game.timeLeft <= 0) {
+        game.level.gameOver = true;
+        levelCountdownTrigger.cancel();
+        game.stop();
+      }
       view.update(game, true);
     });
   }
@@ -157,6 +169,36 @@ class MazeGameController {
   void onClickOverlayCloseButton(MouseEvent e) {
     print("Overlay close button clicked!");
     view.closeOverlay();
+  }
+
+  void onClickOverlayNextLevel(MouseEvent e) {
+    if (game.running || !game.level.done) return;
+    view.closeOverlay();
+    game.levelNo++;
+    game.loadLevel(game.levelNo);
+
+    view.subtitle.text = game.level.description;
+    view.title.text = game.level.nameClean;
+    //view.progressbarTitle.text = "${game.level.time} sec";
+    view.progressbar.style.width = "100%";
+
+    game.start();
+
+    calibrated = true;
+
+    levelCountdownTrigger = new Timer.periodic(levelCountdown, (_) {
+      if (game.level.done) {
+        levelCountdownTrigger.cancel();
+        return;
+      }
+      game.timeLeft -= 1;
+      if (game.timeLeft <= 0) {
+        game.level.gameOver = true;
+        levelCountdownTrigger.cancel();
+        game.stop();
+      }
+      view.update(game, true);
+    });
   }
 
   void updateMiniInfo() {

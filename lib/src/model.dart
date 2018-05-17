@@ -3,7 +3,7 @@ part of mazegame;
 class MazeGameModel {
 
   // Current level number
-  int levelNo = 1;
+  int levelNo;
 
   // Current level
   Level _level;
@@ -28,8 +28,8 @@ class MazeGameModel {
 
   MazeGameModel([this.levelNo = 1]);
 
-  void loadLevel(int levelNo) {
-    LevelLoader.load(this.levelNo, (Level level) {
+  loadLevel(int levelNo) async {
+    await LevelLoader.load(this.levelNo, (Level level) {
       this._level = level;
 
       timeLeft = level.time;

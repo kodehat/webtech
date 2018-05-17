@@ -34,9 +34,27 @@ class MazeGameView {
 
   HtmlElement get overlayNextLevelButton => querySelector("#btn_next_level");
 
+  HtmlElement get overlayMainMenuButton => querySelector("#btn_main_menu");
+
   List<List<HtmlElement>> fields;
 
   void update(MazeGameModel game, [bool timerOnly = false]) {
+    if (game.level.gameOver) {
+      overlayTitle.text = "Game Over!";
+      overlayDescription.innerHtml = "You reached level <strong>${game.levelNo}</strong>!";
+      overlayMainMenuButton.classes.toggle("invisible", false);
+
+      openOverlay();
+    }
+
+    if (game.level.done) {
+      overlayTitle.text = "Level Completed!";
+      overlayDescription.innerHtml = "You completed level <strong>${game.levelNo}</strong> with <strong>${game.timeLeft}</strong> sec left!";
+      overlayNextLevelButton.classes.toggle("invisible", false);
+
+      openOverlay();
+    }
+
     if (timerOnly) {
       progressbarTitle.text = "${game.timeLeft} sec";
       int timeInPerc = ((game.timeLeft / game.level.time) * 100).floor();
@@ -93,5 +111,6 @@ class MazeGameView {
   }
 
   closeOverlay() => overlay.classes.toggle("invisible", true);
+  openOverlay() => overlay.classes.toggle("invisible", false);
 
 }

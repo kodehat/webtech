@@ -9,6 +9,8 @@ class Level {
   int possibleGoals;
   int rows;
   int cols;
+  bool gameOver = false;
+  bool done = false;
   List<List<GameObject>> objects;
 
 }

@@ -35,6 +35,9 @@ abstract class Creature extends GameObject {
 
     if (collisionType == TileType.TERRAIN) {
       moveTo(newRow, newCol);
+    } else if (collisionType == TileType.GOAL) {
+      _game.level.done = true;
+      _game.stop();
     }
 
     return collisionObj;
