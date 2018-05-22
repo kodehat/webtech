@@ -2,14 +2,18 @@ part of mazegame;
 
 class LevelLoader {
 
-  static void load(final int levelNo, final Function callback, final MazeGameModel game) {
+  static Future<Level> load(final int levelNo, final MazeGameModel game) async {
     final String path = "assets/lvl/$levelNo.json";
 
-    HttpRequest.getString(path).then((lvlJson) {
+    var req = await HttpRequest.getString(path);
+    Map data = JSON.decode(req);
+    Level level = _levelFromMap(data, game);
+    return level;
+    /*HttpRequest.getString(path).then((lvlJson) {
       Map data = JSON.decode(lvlJson);
       Level level = _levelFromMap(data, game);
       callback(level);
-    });
+    });*/
   }
 
   static Level _levelFromMap(final Map data, final MazeGameModel game) {

@@ -49,14 +49,14 @@ class MazeGameView {
 
     if (game.level.done) {
       overlayTitle.text = "Level Completed!";
-      overlayDescription.innerHtml = "You completed level <strong>${game.levelNo}</strong> with <strong>${game.timeLeft}</strong> sec left!";
+      overlayDescription.innerHtml = "You completed level <strong>${game.levelNo}</strong> with <strong>${game.timeLeft.floor()}</strong> sec left!";
       overlayNextLevelButton.classes.toggle("invisible", false);
 
       openOverlay();
     }
 
     if (timerOnly) {
-      progressbarTitle.text = "${game.timeLeft} sec";
+      progressbarTitle.text = "${game.timeLeft.floor()} sec";
       int timeInPerc = ((game.timeLeft / game.level.time) * 100).floor();
       progressbar.style.width = "$timeInPerc%";
       querySelectorAll(".field").style.filter = "brightness(${max(timeInPerc, 15)}%)";

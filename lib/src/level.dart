@@ -5,7 +5,7 @@ class Level {
   String name;
   String nameClean;
   String description;
-  int time;
+  double time;
   int possibleGoals;
   int rows;
   int cols;

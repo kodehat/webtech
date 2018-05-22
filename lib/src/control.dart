@@ -1,6 +1,6 @@
 part of mazegame;
 
-const levelCountdown = const Duration(seconds: 1);
+const levelCountdown = const Duration(milliseconds: 200);
 const miniInfoDur = const Duration(seconds: 3);
 const deviceMotionToggleValue = 22;
 
@@ -152,8 +152,8 @@ class MazeGameController {
         levelCountdownTrigger.cancel();
         return;
       }
-      game.timeLeft -= 1;
-      if (game.timeLeft <= 0) {
+      game.timeLeft -= 0.2;
+      if (game.timeLeft.floor() <= 0) {
         game.level.gameOver = true;
         levelCountdownTrigger.cancel();
         game.stop();
@@ -171,11 +171,11 @@ class MazeGameController {
     view.closeOverlay();
   }
 
-  void onClickOverlayNextLevel(MouseEvent e) {
+  Future onClickOverlayNextLevel(MouseEvent e) async {
     if (game.running || !game.level.done) return;
     view.closeOverlay();
     game.levelNo++;
-    game.loadLevel(game.levelNo);
+    await game.loadLevel(game.levelNo);
 
     view.subtitle.text = game.level.description;
     view.title.text = game.level.nameClean;
@@ -191,8 +191,8 @@ class MazeGameController {
         levelCountdownTrigger.cancel();
         return;
       }
-      game.timeLeft -= 1;
-      if (game.timeLeft <= 0) {
+      game.timeLeft -= 0.2;
+      if (game.timeLeft.floor() <= 0) {
         game.level.gameOver = true;
         levelCountdownTrigger.cancel();
         game.stop();

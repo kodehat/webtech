@@ -8,7 +8,7 @@ class MazeGameModel {
   // Current level
   Level _level;
 
-  int timeLeft;
+  double timeLeft;
 
   Rabbit rabbit;
 
@@ -27,13 +27,12 @@ class MazeGameModel {
   MazeGameModel([this.levelNo = 1]);
 
   loadLevel(int levelNo) async {
-    await LevelLoader.load(this.levelNo, (Level level) {
-      this._level = level;
+    Level level = await LevelLoader.load(this.levelNo, this);
+    this._level = level;
 
-      timeLeft = level.time;
+    timeLeft = level.time;
 
-      _levelBroadCast.add(level);
-    }, this);
+    _levelBroadCast.add(level);
   }
 
   Level get level => this._level;
