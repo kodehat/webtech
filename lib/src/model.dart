@@ -2,6 +2,9 @@ part of mazegame;
 
 class MazeGameModel {
 
+  // Local storage
+  static Storage local = window.localStorage;
+
   // Current level number
   int levelNo;
 
@@ -36,6 +39,8 @@ class MazeGameModel {
   }
 
   Level get level => this._level;
+
+  set levelNr(int i) => levelNo = i;
 
   Stream<Level> get levelStream => _levelBroadCast.stream;
 

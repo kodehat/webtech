@@ -135,6 +135,8 @@ class MazeGameController {
 
   void onClickStartButton(MouseEvent e) {
     if (game.running) return;
+    MazeGameModel.local.clear();
+    game.levelNr = 1;
 
     querySelectorAll(".button-wrapper > .button").classes.toggle("invisible", true);
 
@@ -175,6 +177,7 @@ class MazeGameController {
     if (game.running || !game.level.done) return;
     view.closeOverlay();
     game.levelNo++;
+    MazeGameModel.local['level'] = game.levelNo.toString();
     await game.loadLevel(game.levelNo);
 
     view.subtitle.text = game.level.description;
