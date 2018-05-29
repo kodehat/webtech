@@ -24,12 +24,9 @@ class MazeGameController {
   bool calibrated = false;
   bool hasMoved = false;
 
+  int savedLevelNo = null;
+
   MazeGameController() {
-    // Listen to new level given into level-stream
-    game.levelStream.listen(onStreamNewLevel);
-
-    game.loadLevel(game.levelNo);
-
     // Listen to mouse clicks on the overlay's close button
     view.overlayCloseButton.onClick.listen(onClickOverlayCloseButton);
 
@@ -38,6 +35,9 @@ class MazeGameController {
 
     // Listen to mouse clicks on start button
     view.startButton.onClick.listen(onClickStartButton);
+
+    // Listen to mouse clicks on continue button
+    view.continueButton.onClick.listen(onClickContinueButton);
 
     // If the device is oriented
     window.onDeviceOrientation.listen(onDeviceMove);
@@ -133,11 +133,13 @@ class MazeGameController {
     }
   }
 
-  void onClickStartButton(MouseEvent e) {
+  onClickStartButton(MouseEvent e) async {
     if (game.running) return;
     //Needed to choose the right level, after continuing a previous game and after that starting a new game.
-    MazeGameModel.local.clear();
-    game.levelNr = 1;
+    game.levelNr = savedLevelNo ?? 1;
+    await game.loadLevel(game.levelNo);
+
+    view.generateField(game);
 
     querySelectorAll(".button-wrapper > .button").classes.toggle("invisible", true);
 
@@ -165,8 +167,9 @@ class MazeGameController {
     });
   }
 
-  void onStreamNewLevel(Level level) {
-    view.generateField(game);
+  void onClickContinueButton(MouseEvent e) {
+    savedLevelNo = int.parse(game.local['level']);
+    onClickStartButton(e);
   }
 
   void onClickOverlayCloseButton(MouseEvent e) {
@@ -178,7 +181,7 @@ class MazeGameController {
     if (game.running || !game.level.done) return;
     view.closeOverlay();
     game.levelNo++;
-    MazeGameModel.local['level'] = game.levelNo.toString();
+    game.local['level'] = game.levelNo.toString();
     await game.loadLevel(game.levelNo);
 
     view.subtitle.text = game.level.description;

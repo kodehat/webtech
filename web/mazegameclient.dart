@@ -2,6 +2,7 @@ import 'dart:html';
 import 'package:rabbitrun/mazegame.dart';
 
 final HtmlElement startBtn = querySelector("#btn_start");
+final HtmlElement continueBtn = querySelector("#btn_continue");
 final HtmlElement tutorialBtn = querySelector("#btn_tutorial");
 final HtmlElement aboutBtn = querySelector("#btn_about");
 
@@ -14,6 +15,8 @@ void main() {
 
     startBtn.text = "Start";
     startBtn.attributes.remove("disabled");
+    continueBtn.classes.toggle("invisible");
+    continueBtn.attributes.remove("disabled");
     tutorialBtn.classes.toggle("invisible");
     tutorialBtn.attributes.remove("disabled");
     aboutBtn.classes.toggle("invisible");

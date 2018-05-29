@@ -36,6 +36,8 @@ class MazeGameView {
 
   HtmlElement get overlayMainMenuButton => querySelector("#btn_main_menu");
 
+  HtmlElement get continueButton => querySelector("#btn_continue");
+
   List<List<HtmlElement>> fields;
 
   void update(MazeGameModel game, [bool timerOnly = false]) {
