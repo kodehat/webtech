@@ -4,7 +4,7 @@ abstract class Creature extends GameObject {
 
   final MazeGameModel _game;
 
-  Creature(MazeGameModel this._game, int row, int col) : super(row, col);
+  Creature(MazeGameModel this._game, String type, int row, int col) : super(type, row, col);
 
   void _moveTo(int newRow, int newCol) {
     // Update object at previous/own position.
@@ -24,12 +24,12 @@ abstract class Creature extends GameObject {
     GameObject collisionObj;
 
     try {
-      collisionObj = _game.level.objects[newRow][newCol] ?? new Tile.fromCoordinates(TileType.WALL, newRow, newCol);
+      collisionObj = _game.level.objects[newRow][newCol] ?? new Wall.fromCoordinates(newRow, newCol);
     } on RangeError catch(_) {
-      collisionObj = new Tile.fromCoordinates(TileType.WALL, newRow, newCol);
+      collisionObj = new Wall.fromCoordinates(newRow, newCol);
     }
 
-    String collisionType = GameObject.getType(collisionObj);
+    String collisionType = collisionObj.type;
 
     print("Try to move at: $newRow, $newCol. Type is $collisionType");
 
@@ -64,6 +64,10 @@ abstract class Creature extends GameObject {
   }
 }
 
-class Enemy {
+abstract class Enemy extends Creature {
+
+  Enemy(MazeGameModel game, String type, int row, int col) : super(game, type, row, col);
+
+  void move();
 
 }

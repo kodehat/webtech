@@ -1,10 +1,8 @@
 part of mazegame;
 
-class Tile extends GameObject {
+abstract class Tile extends GameObject {
 
-  String type;
-
-  Tile.fromCoordinates(this.type, int row, int col) : super(row, col) {
+  Tile.fromCoordinates(String type, int row, int col) : super(type, row, col) {
     this.position = new Position.fromCoordinates(row, col);
   }
 
@@ -13,21 +11,22 @@ class Tile extends GameObject {
   }
 }
 
-class TileType {
+class Hedge extends Tile {
 
-  static const String HEDGE = "HEDGE";
-  static const String TERRAIN = "TERRAIN";
-  static const String GOAL = "GOAL";
-  static const String START = "START";
-  static const String FOX = "FOX";
-  static const String WALL = "WALL";
+  Hedge.fromCoordinates(int row, int col) : super.fromCoordinates(TileType.HEDGE, row, col);
+}
 
-  static List<String> get types => [
-    HEDGE,
-    TERRAIN,
-    GOAL,
-    START,
-    FOX,
-    WALL,
-  ];
+class Terrain extends Tile {
+
+  Terrain.fromCoordinates(int row, int col) : super.fromCoordinates(TileType.TERRAIN, row, col);
+}
+
+class Goal extends Tile {
+
+  Goal.fromCoordinates(int row, int col) : super.fromCoordinates(TileType.GOAL, row, col);
+}
+
+class Wall extends Tile {
+
+  Wall.fromCoordinates(int row, int col) : super.fromCoordinates(TileType.WALL, row, col);
 }

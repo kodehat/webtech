@@ -3,21 +3,20 @@ part of mazegame;
 abstract class GameObject {
 
   Position position;
+  String _type;
 
-  GameObject(int row, int col) {
+  GameObject(this._type, int row, int col) {
     position = new Position.fromCoordinates(row, col);
   }
 
   GameObject.fromPosition(this.position);
 
-  static String getType(GameObject go) {
-    if (go is Tile) {
-      return go.type;
-    } else if(go is Rabbit) {
-      return TileType.START;
-    } else if (go is Fox) {
-      return TileType.FOX;
+  set type(String newType) {
+    if (!TileType.types.contains(newType)) {
+      throw new UnknownTileTypeException("The tile type $newType isn't a valid tile type!");
     }
-    return null;
+    _type = newType;
   }
+
+  String get type => _type;
 }

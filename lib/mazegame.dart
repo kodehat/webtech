@@ -17,3 +17,4 @@ part 'src/levelloader.dart';
 part 'src/position.dart';
 part 'src/rabbit.dart';
 part 'src/tile.dart';
+part 'src/tiletype.dart';

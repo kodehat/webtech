@@ -70,7 +70,7 @@ class MazeGameView {
     for (int row = 0; row < level.rows; row++) {
       for (int col = 0; col < level.cols; col++) {
         final GameObject go = level.objects[row][col];
-        String type = GameObject.getType(go);
+        String type = go.type;
 
         final td = fields[row][col];
         if (td != null) {
@@ -91,7 +91,7 @@ class MazeGameView {
       for (int col = 0; col < level.cols; col++) {
         final String pos = "field_${row}_${col}";
         final GameObject go = level.objects[row][col];
-        String type = GameObject.getType(go);
+        String type = go.type;
 
         table += "<td id='$pos' class='field ${type.toLowerCase()}'></td>";
       }
