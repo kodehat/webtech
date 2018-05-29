@@ -135,6 +135,7 @@ class MazeGameController {
 
   void onClickStartButton(MouseEvent e) {
     if (game.running) return;
+    //Needed to choose the right level, after continuing a previous game and after that starting a new game.
     MazeGameModel.local.clear();
     game.levelNr = 1;
 
