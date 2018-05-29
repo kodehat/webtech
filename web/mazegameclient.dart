@@ -11,11 +11,11 @@ void main() {
   window.onLoad.listen((e) {
     print("Finished converting Dart to JS!");
 
-    new MazeGameController();
+   MazeGameController mgc = new MazeGameController();
 
     startBtn.text = "Start";
     startBtn.attributes.remove("disabled");
-    continueBtn.classes.toggle("invisible");
+    if(mgc.game.local.isNotEmpty)continueBtn.classes.toggle("invisible");
     continueBtn.attributes.remove("disabled");
     tutorialBtn.classes.toggle("invisible");
     tutorialBtn.attributes.remove("disabled");
