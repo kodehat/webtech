@@ -15,7 +15,7 @@ void main() {
 
     startBtn.text = "Start";
     startBtn.attributes.remove("disabled");
-    if(mgc.game.local.isNotEmpty)continueBtn.classes.toggle("invisible");
+    if(mgc.game.local.isNotEmpty) continueBtn.classes.toggle("invisible");
     continueBtn.attributes.remove("disabled");
     tutorialBtn.classes.toggle("invisible");
     tutorialBtn.attributes.remove("disabled");

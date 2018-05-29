@@ -184,6 +184,8 @@ class MazeGameController {
     game.local['level'] = game.levelNo.toString();
     await game.loadLevel(game.levelNo);
 
+    view.generateField(game);
+
     view.subtitle.text = game.level.description;
     view.title.text = game.level.nameClean;
     //view.progressbarTitle.text = "${game.level.time} sec";
