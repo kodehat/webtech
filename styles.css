@@ -105,27 +105,28 @@ h1 {
     width: 38px;
     height: 38px;
     padding: 0;
+    image-rendering: pixelated;
 }
 
 .start {
-    background: url("assets/img/rabbit2.png") no-repeat, url("assets/img/ground2.png") no-repeat;
+    background: url("assets/img/rabbit2.png") repeat, url("assets/img/ground2.png") repeat transparent;
     filter: brightness(100%) !important;
 }
 
 .fox {
-    background: url("assets/img/fox.png") no-repeat, url("assets/img/ground2.png") no-repeat;
+    background: url("assets/img/fox.png") no-repeat, url("assets/img/ground2.png") repeat transparent;
 }
 
 .hedge {
-    background: url("assets/img/hedge2.png") no-repeat, url("assets/img/ground2.png") no-repeat;
+    background: url("assets/img/hedge2.png") repeat, url("assets/img/ground2.png") repeat transparent;
 }
 
 .goal {
-    background: url("assets/img/hole2.png") no-repeat, url("assets/img/ground2.png") no-repeat;
+    background: url("assets/img/hole2.png") no-repeat, url("assets/img/ground2.png") repeat transparent;
 }
 
 .terrain {
-    background: url("assets/img/ground2.png") no-repeat transparent;
+    background: url("assets/img/ground2.png") repeat transparent;
 }
 
 #progressbar {
