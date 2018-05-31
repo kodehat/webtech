@@ -1,5 +1,5 @@
 import 'dart:html';
-import 'package:rabbitrun/mazegame.dart';
+import 'package:rabbitrinth/mazegame.dart';
 
 final HtmlElement startBtn = querySelector("#btn_start");
 final HtmlElement continueBtn = querySelector("#btn_continue");

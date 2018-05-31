@@ -10,6 +10,7 @@ part 'src/model.dart';
 part 'src/control.dart';
 part 'src/view.dart';
 part 'src/creature.dart';
+part 'src/enemy.dart';
 part 'src/fox.dart';
 part 'src/gameobject.dart';
 part 'src/level.dart';

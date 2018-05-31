@@ -33,14 +33,41 @@ abstract class Creature extends GameObject {
 
     print("Try to move at: $newRow, $newCol. Type is $collisionType");
 
-    if (collisionType == TileType.TERRAIN) {
-      _moveTo(newRow, newCol);
-    } else if (collisionType == TileType.GOAL) {
-      _game.level.done = true;
-      _game.stop();
+    switch(collisionType) {
+      case TileType.TERRAIN:
+        onCollideWithTerrain(collisionObj, newRow, newCol);
+        break;
+      case TileType.GOAL:
+        onCollideWithGoal(collisionObj, newRow, newCol);
+        break;
+      case TileType.FOX:
+        onCollideWithFox(collisionObj, newRow, newCol);
+        break;
+      case TileType.START:
+        onCollideWithRabbit(collisionObj, newRow, newCol);
+        break;
     }
 
     return collisionObj;
+  }
+
+  void onCollideWithTerrain(GameObject collisionObject, int newRow, int newCol) {
+    _moveTo(newRow, newCol);
+  }
+
+  void onCollideWithGoal(GameObject collisionObject, int newRow, int newCol) {
+    _game.level.done = true;
+    _game.stop();
+  }
+
+  void onCollideWithFox(GameObject collisionObject, int newRow, int newCol) {
+    _game.level.gameOver = true;
+    _game.stop();
+  }
+
+  void onCollideWithRabbit(GameObject collisionObject, int newRow, int newCol) {
+    _game.level.gameOver = true;
+    _game.stop();
   }
 
   GameObject moveLeft() {
@@ -62,12 +89,4 @@ abstract class Creature extends GameObject {
     print("Moving down!");
     return _move(1, 0);
   }
-}
-
-abstract class Enemy extends Creature {
-
-  Enemy(MazeGameModel game, String type, int row, int col) : super(game, type, row, col);
-
-  void move();
-
 }

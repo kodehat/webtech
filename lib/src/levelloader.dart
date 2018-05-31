@@ -9,11 +9,6 @@ class LevelLoader {
     Map data = JSON.decode(req);
     Level level = _levelFromMap(data, game);
     return level;
-    /*HttpRequest.getString(path).then((lvlJson) {
-      Map data = JSON.decode(lvlJson);
-      Level level = _levelFromMap(data, game);
-      callback(level);
-    });*/
   }
 
   static Level _levelFromMap(final Map data, final MazeGameModel game) {
@@ -56,7 +51,9 @@ class LevelLoader {
           objects[position.row][position.col] = rabbit;
           break;
         case TileType.FOX:
-          objects[position.row][position.col] = new Fox(game, position.row, position.col);
+          Fox fox = new Fox(game, position.row, position.col, t["movementType"]);
+          game.enemies.add(fox);
+          objects[position.row][position.col] = fox;
           break;
       }
     });

@@ -82,7 +82,8 @@
         "row": 1,
         "col": 2
       },
-      "type": "FOX"
+      "type": "FOX",
+      "movementType": "HOR_FIRST_RIGHT"
     },
     {
       "position": {

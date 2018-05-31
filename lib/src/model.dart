@@ -15,6 +15,8 @@ class MazeGameModel {
 
   Rabbit rabbit;
 
+  List<Enemy> enemies = new List();
+
   Symbol _gamestate = #stopped;
 
   bool get stopped => _gamestate == #stopped;

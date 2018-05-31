@@ -1,6 +1,7 @@
 part of mazegame;
 
 const levelCountdown = const Duration(milliseconds: 200);
+const enemyMoveCountdown = const Duration(milliseconds: 750);
 const miniInfoDur = const Duration(seconds: 3);
 const deviceMotionToggleValue = 22;
 
@@ -12,6 +13,7 @@ class MazeGameController {
 
   Timer levelCountdownTrigger;
   Timer miniInfoTrigger;
+  Timer enemyMoveTrigger;
 
   int betaOrientation = null;
   int betaToggleUp = null;
@@ -153,17 +155,24 @@ class MazeGameController {
     calibrated = true;
 
     levelCountdownTrigger = new Timer.periodic(levelCountdown, (_) {
-      if (game.level.done) {
+      if (game.level.done || game.level.gameOver) {
         levelCountdownTrigger.cancel();
+        enemyMoveTrigger.cancel();
         return;
       }
       game.timeLeft -= 0.2;
       if (game.timeLeft.floor() <= 0) {
         game.level.gameOver = true;
         levelCountdownTrigger.cancel();
+        enemyMoveTrigger.cancel();
         game.stop();
       }
       view.update(game, true);
+    });
+
+    enemyMoveTrigger = new Timer.periodic(enemyMoveCountdown, (_) {
+      game.enemies.forEach((e) => e.move());
+      view.update(game);
     });
   }
 
@@ -188,7 +197,6 @@ class MazeGameController {
 
     view.subtitle.text = game.level.description;
     view.title.text = game.level.nameClean;
-    //view.progressbarTitle.text = "${game.level.time} sec";
     view.progressbar.style.width = "100%";
 
     game.start();
@@ -196,17 +204,24 @@ class MazeGameController {
     calibrated = true;
 
     levelCountdownTrigger = new Timer.periodic(levelCountdown, (_) {
-      if (game.level.done) {
+      if (game.level.done || game.level.gameOver) {
         levelCountdownTrigger.cancel();
+        enemyMoveTrigger.cancel();
         return;
       }
       game.timeLeft -= 0.2;
       if (game.timeLeft.floor() <= 0) {
         game.level.gameOver = true;
         levelCountdownTrigger.cancel();
+        enemyMoveTrigger.cancel();
         game.stop();
       }
       view.update(game, true);
+    });
+
+    enemyMoveTrigger = new Timer.periodic(enemyMoveCountdown, (_) {
+      game.enemies.forEach((e) => e.move());
+      view.update(game);
     });
   }
 

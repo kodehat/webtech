@@ -9,8 +9,6 @@ abstract class GameObject {
     position = new Position.fromCoordinates(row, col);
   }
 
-  GameObject.fromPosition(this.position);
-
   set type(String newType) {
     if (!TileType.types.contains(newType)) {
       throw new UnknownTileTypeException("The tile type $newType isn't a valid tile type!");
