@@ -32,7 +32,10 @@ class MazeGameController {
 
   int savedLevelNo = null;
 
+  NoSleep noSleep = new NoSleep();
+
   MazeGameController() {
+
     // Listen to mouse clicks on the overlay's close button
     view.overlayCloseButton.onClick.listen(onClickOverlayCloseButton);
 
@@ -142,6 +145,8 @@ class MazeGameController {
   }
 
   onClickStartButton(MouseEvent e) async {
+    noSleep.enable();
+
     if (game.running) return;
     //Needed to choose the right level, after continuing a previous game and after that starting a new game.
     game.levelNr = savedLevelNo ?? 1;
