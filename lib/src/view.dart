@@ -24,6 +24,8 @@ class MazeGameView {
 
   final gameTable = querySelector("#game");
 
+  final landscapeWarning = querySelector("#landscape_warning");
+
   HtmlElement get startButton => querySelector("#btn_start");
 
   HtmlElement get tutorialButton => querySelector("#btn_tutorial");
