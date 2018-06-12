@@ -1,9 +1,12 @@
 part of mazegame;
 
 const levelCountdown = const Duration(milliseconds: 200);
+const rabbitMoveCountdown = const Duration(milliseconds: 500);
 const enemyMoveCountdown = const Duration(milliseconds: 750);
 const miniInfoDur = const Duration(seconds: 3);
-const deviceMotionToggleValue = 22;
+
+const deviceMotionToggleVerticalValue = 16;
+const deviceMotionToggleHorizontalValue = 18;
 
 class MazeGameController {
 
@@ -13,6 +16,7 @@ class MazeGameController {
 
   Timer levelCountdownTrigger;
   Timer miniInfoTrigger;
+  Timer rabbitMoveTrigger;
   Timer enemyMoveTrigger;
 
   int betaOrientation = null;
@@ -43,6 +47,10 @@ class MazeGameController {
 
     // If the device is oriented
     window.onDeviceOrientation.listen(onDeviceMove);
+
+    view.title.onTouchEnd.listen(inDevAddTimeCheat);
+
+    view.title.onMouseDown.listen(inDevAddTimeCheat);
 
     window.onTouchEnd.listen(onTouchDisplay);
 
@@ -87,12 +95,12 @@ class MazeGameController {
 
     if (!calibrated) {
       betaOrientation = beta;
-      betaToggleUp = betaOrientation - deviceMotionToggleValue;
-      betaToggleDown = betaOrientation + deviceMotionToggleValue;
+      betaToggleUp = betaOrientation - deviceMotionToggleVerticalValue;
+      betaToggleDown = betaOrientation + deviceMotionToggleVerticalValue;
 
       gammaOrientation = gamma;
-      gammaToggleLeft = gammaOrientation - deviceMotionToggleValue;
-      gammaToggleRight = gammaOrientation + deviceMotionToggleValue;
+      gammaToggleLeft = gammaOrientation - deviceMotionToggleHorizontalValue;
+      gammaToggleRight = gammaOrientation + deviceMotionToggleHorizontalValue;
 
       if (game.stopped) {
         return;
@@ -106,33 +114,26 @@ class MazeGameController {
         game.rabbit.moveUp();
         view.update(game);
 
+        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
         hasMoved = true;
-      }
-      else if(beta >= betaToggleDown){ //Move Down
+      } else if(beta >= betaToggleDown){ //Move Down
         game.rabbit.moveDown();
         view.update(game);
 
+        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
         hasMoved = true;
-      }
-      else if(gamma <= gammaToggleLeft) { //Move Left
+      } else if(gamma <= gammaToggleLeft) { //Move Left
         game.rabbit.moveLeft();
         view.update(game);
 
+        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
         hasMoved = true;
-      }
-      else if(gamma >= gammaToggleRight) { //Move Right
+      } else if(gamma >= gammaToggleRight) { //Move Right
         game.rabbit.moveRight();
         view.update(game);
 
+        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
         hasMoved = true;
-      }
-    } else {
-      // Adding a fixed value to prevent moving very fast at a certain position of the mobile.
-      if (beta >= betaToggleUp + 2
-          && beta <= betaToggleDown - 2
-          && gamma >= gammaToggleLeft + 2
-          && gamma <= gammaToggleRight - 2) {
-        hasMoved = false;
       }
     }
   }
@@ -243,6 +244,17 @@ class MazeGameController {
     } else {
       miniInfoTrigger.cancel();
       miniInfoTrigger = new Timer(miniInfoDur, () => view.miniInfo.text = "");
+    }
+  }
+
+  void resetRabbitMove() {
+    hasMoved = false;
+  }
+
+  void inDevAddTimeCheat(Event e) {
+    if (game.running) {
+      game.level.time += 10.0;
+      game.timeLeft += 10.0;
     }
   }
 
