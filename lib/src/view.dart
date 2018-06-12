@@ -38,6 +38,8 @@ class MazeGameView {
 
   HtmlElement get continueButton => querySelector("#btn_continue");
 
+  HtmlElement get fullscreenButton => querySelector("#btn_fullscreen");
+
   List<List<HtmlElement>> fields;
 
   void update(MazeGameModel game, [bool timerOnly = false]) {

@@ -41,6 +41,9 @@ class MazeGameController {
     // Listen to mouse clicks on continue button
     view.continueButton.onClick.listen(onClickContinueButton);
 
+    // Listen to mouse clicks on continue button
+    view.fullscreenButton.onClick.listen(onClickFullscreenButton);
+
     // If the device is oriented
     window.onDeviceOrientation.listen(onDeviceMove);
 
@@ -176,9 +179,15 @@ class MazeGameController {
     });
   }
 
+  void onClickFullscreenButton(MouseEvent e) {
+    print("Fullscreen-Button clicked!");
+    fullscreenWorkaround(querySelector("body"));
+  }
+
   void onClickContinueButton(MouseEvent e) {
     savedLevelNo = int.parse(game.local['level']);
     onClickStartButton(e);
+    print("Continue-Button clicked!");
   }
 
   void onClickOverlayCloseButton(MouseEvent e) {
@@ -231,6 +240,27 @@ class MazeGameController {
     } else {
       miniInfoTrigger.cancel();
       miniInfoTrigger = new Timer(miniInfoDur, () => view.miniInfo.text = "");
+    }
+  }
+
+  void fullscreenWorkaround(Element element) {
+    var elem = new JsObject.fromBrowserObject(element);
+
+    if (elem.hasProperty("requestFullscreen")) {
+      elem.callMethod("requestFullscreen");
+    }
+    else {
+      List<String> vendors = ['moz', 'webkit', 'ms', 'o'];
+      for (String vendor in vendors) {
+        String vendorFullscreen = "${vendor}RequestFullscreen";
+        if (vendor == 'moz') {
+          vendorFullscreen = "${vendor}RequestFullScreen";
+        }
+        if (elem.hasProperty(vendorFullscreen)) {
+          elem.callMethod(vendorFullscreen);
+          return;
+        }
+      }
     }
   }
 

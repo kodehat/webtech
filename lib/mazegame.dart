@@ -4,6 +4,7 @@ import 'dart:html';
 import 'dart:core';
 import 'dart:convert';
 import 'dart:async';
+import 'dart:js';
 import 'dart:math';
 
 part 'src/model.dart';
