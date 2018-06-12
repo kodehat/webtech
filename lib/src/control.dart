@@ -46,6 +46,8 @@ class MazeGameController {
 
     window.onTouchEnd.listen(onTouchDisplay);
 
+    window.screen.orientation.onChange.listen(onOrientationChange);
+
     // Listen to keyboard to control the rabbit
     window.onKeyDown.listen((KeyboardEvent e) {
       if (game.stopped) return;
@@ -223,6 +225,16 @@ class MazeGameController {
       game.enemies.forEach((e) => e.move());
       view.update(game);
     });
+  }
+
+  void onOrientationChange(Event e) {
+    String type = window.screen.orientation.type;
+
+    if (type.contains("landscape")) {
+      view.landscapeWarning.classes.toggle("invisible", false);
+    } else if (type.contains("portrait")) {
+      view.landscapeWarning.classes.toggle("invisible", true);
+    }
   }
 
   void updateMiniInfo() {
