@@ -1,9 +1,7 @@
 {
-  "name": "level_1",
-  "nameClean": "Level 1",
+  "name": "Level 1",
   "description": "Let's start with an easy one.",
   "time": 15,
-  "possibleGoals": 2,
   "rows": 8,
   "cols": 8,
   "tiles": [
@@ -292,7 +290,7 @@
         "row": 5,
         "col": 0
       },
-      "type": "GOAL"
+      "type": "TERRAIN"
     },
     {
       "position": {
@@ -404,7 +402,7 @@
         "row": 7,
         "col": 0
       },
-      "type": "START"
+      "type": "RABBIT"
     },
     {
       "position": {
