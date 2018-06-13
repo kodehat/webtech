@@ -2,7 +2,7 @@
   "name": "level_2",
   "nameClean": "Level 2",
   "description": "It is getting more difficult.",
-  "time": 20,
+  "time": 15,
   "possibleGoals": 2,
   "rows": 8,
   "cols": 8,

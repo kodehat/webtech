@@ -1,7 +1,7 @@
 part of mazegame;
 
 const levelCountdown = const Duration(milliseconds: 200);
-const rabbitMoveCountdown = const Duration(milliseconds: 500);
+const rabbitMoveCountdown = const Duration(milliseconds: 400);
 const enemyMoveCountdown = const Duration(milliseconds: 750);
 const miniInfoDur = const Duration(seconds: 3);
 
