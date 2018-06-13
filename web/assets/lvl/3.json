@@ -1,9 +1,7 @@
 {
-  "name": "level_3",
-  "nameClean": "Level 3",
+  "name": "Level 3",
   "description": "Which path do you take?",
   "time": 15,
-  "possibleGoals": 1,
   "rows": 8,
   "cols": 8,
   "tiles": [
@@ -26,7 +24,7 @@
         "row": 0,
         "col": 2
       },
-      "type": "START"
+      "type": "RABBIT"
     },
     {
       "position": {

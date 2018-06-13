@@ -43,7 +43,7 @@ abstract class Creature extends GameObject {
       case TileType.FOX:
         onCollideWithFox(collisionObj, newRow, newCol);
         break;
-      case TileType.START:
+      case TileType.RABBIT:
         onCollideWithRabbit(collisionObj, newRow, newCol);
         break;
     }

@@ -16,11 +16,11 @@ abstract class Enemy extends Creature {
       case EnemyMovementType.HOR_FIRST_RIGHT:
         onHorFirstRight();
         break;
-      case EnemyMovementType.VERT_FIRST_LEFT:
-        onVertFirstLeft();
+      case EnemyMovementType.VERT_FIRST_UP:
+        onVertFirstUp();
         break;
-      case EnemyMovementType.VERT_FIRST_RIGHT:
-        onVertFirstRight();
+      case EnemyMovementType.VERT_FIRST_DOWN:
+        onVertFirstDown();
         break;
       case EnemyMovementType.ON_SIGHT:
         onOnSight();
@@ -29,7 +29,16 @@ abstract class Enemy extends Creature {
   }
 
   void onHorFirstLeft() {
+    if (_lastDirection == null) {
+      _lastDirection = Direction.LEFT;
+    }
 
+    GameObject collisionObj = _moveInCurrentLocation();
+
+    if (collisionObj.type == TileType.WALL || collisionObj.type == TileType.HEDGE) {
+      _lastDirection = _lastDirection == Direction.RIGHT ? Direction.LEFT : Direction.RIGHT;
+      _moveInCurrentLocation();
+    }
   }
 
   void onHorFirstRight() {
@@ -45,16 +54,37 @@ abstract class Enemy extends Creature {
       }
   }
 
-  void onVertFirstLeft() {
+  void onVertFirstUp() {
+    if (_lastDirection == null) {
+      _lastDirection = Direction.UP;
+    }
 
+    GameObject collisionObj = _moveInCurrentLocation();
+
+    if (collisionObj.type == TileType.WALL || collisionObj.type == TileType.HEDGE) {
+      _lastDirection = _lastDirection == Direction.DOWN ? Direction.UP : Direction.DOWN;
+      _moveInCurrentLocation();
+    }
   }
 
-  void onVertFirstRight() {
+  void onVertFirstDown() {
+    if (_lastDirection == null) {
+      _lastDirection = Direction.DOWN;
+    }
 
+    GameObject collisionObj = _moveInCurrentLocation();
+
+    if (collisionObj.type == TileType.WALL || collisionObj.type == TileType.HEDGE) {
+      _lastDirection = _lastDirection == Direction.UP ? Direction.DOWN : Direction.UP;
+      _moveInCurrentLocation();
+    }
   }
 
   void onOnSight() {
-
+    if (this.position.row == this._game.rabbit.position.row
+      || this.position.col == this._game.rabbit.position.col) {
+      // TODO: Check if no obstacles are between the enemy and the rabbit. Then move into desired location.
+    }
   }
 
   GameObject _moveInCurrentLocation() {
@@ -78,15 +108,15 @@ class EnemyMovementType {
 
   static const String HOR_FIRST_LEFT = "HOR_FIRST_LEFT";
   static const String HOR_FIRST_RIGHT = "HOR_FIRST_RIGHT";
-  static const String VERT_FIRST_LEFT = "VERT_FIRST_LEFT";
-  static const String VERT_FIRST_RIGHT = "VERT_FIRST_RIGHT";
+  static const String VERT_FIRST_UP = "VERT_FIRST_UP";
+  static const String VERT_FIRST_DOWN = "VERT_FIRST_DOWN";
   static const String ON_SIGHT = "ON_SIGHT";
 
   static List<String> get types => [
     HOR_FIRST_LEFT,
     HOR_FIRST_RIGHT,
-    VERT_FIRST_LEFT,
-    VERT_FIRST_RIGHT,
+    VERT_FIRST_UP,
+    VERT_FIRST_DOWN,
     ON_SIGHT,
   ];
 

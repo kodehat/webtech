@@ -108,7 +108,7 @@ h1 {
     image-rendering: pixelated;
 }
 
-.start {
+.rabbit {
     background: url("assets/img/rabbit2.png") repeat, url("assets/img/ground2.png") repeat transparent;
     filter: brightness(100%) !important;
 }

@@ -157,7 +157,7 @@ class MazeGameController {
     querySelectorAll(".button-wrapper > .button").classes.toggle("invisible", true);
 
     view.subtitle.text = game.level.description;
-    view.title.text = game.level.nameClean;
+    view.title.text = game.level.name;
     view.progressbarContainer.classes.toggle("invisible");
     view.gameField.classes.toggle("invisible");
 
@@ -212,8 +212,8 @@ class MazeGameController {
 
     view.generateField(game);
 
+    view.title.text = game.level.name;
     view.subtitle.text = game.level.description;
-    view.title.text = game.level.nameClean;
     view.progressbar.style.width = "100%";
 
     game.start();

@@ -1,9 +1,7 @@
 {
-  "name": "level_2",
-  "nameClean": "Level 2",
+  "name": "Level 2",
   "description": "It is getting more difficult.",
   "time": 15,
-  "possibleGoals": 2,
   "rows": 8,
   "cols": 8,
   "tiles": [
@@ -180,7 +178,7 @@
         "row": 3,
         "col": 0
       },
-      "type": "GOAL"
+      "type": "TERRAIN"
     },
     {
       "position": {
@@ -453,7 +451,7 @@
         "row": 7,
         "col": 7
       },
-      "type": "START"
+      "type": "RABBIT"
     }
   ]
 }
