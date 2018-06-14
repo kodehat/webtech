@@ -380,12 +380,12 @@ si:function(a,b){this.bh(a,"set length")
 if(typeof b!=="number"||Math.floor(b)!==b)throw H.c(P.bs(b,"newLength",null))
 if(b<0)throw H.c(P.X(b,0,null,"newLength",null))
 a.length=b},
-h:function(a,b){if(typeof b!=="number"||Math.floor(b)!==b)throw H.c(H.z(a,b))
-if(b>=a.length||b<0)throw H.c(H.z(a,b))
+h:function(a,b){if(typeof b!=="number"||Math.floor(b)!==b)throw H.c(H.A(a,b))
+if(b>=a.length||b<0)throw H.c(H.A(a,b))
 return a[b]},
 k:function(a,b,c){this.cm(a,"indexed set")
-if(typeof b!=="number"||Math.floor(b)!==b)throw H.c(H.z(a,b))
-if(b>=a.length||b<0)throw H.c(H.z(a,b))
+if(typeof b!=="number"||Math.floor(b)!==b)throw H.c(H.A(a,b))
+if(b>=a.length||b<0)throw H.c(H.A(a,b))
 a[b]=c},
 $isH:1,
 $asH:I.F,
@@ -454,10 +454,10 @@ $isbn:1},
 di:{"^":"b4;",$isbn:1,$ism:1},
 h5:{"^":"b4;",$isbn:1},
 b5:{"^":"f;",
-cn:function(a,b){if(b<0)throw H.c(H.z(a,b))
-if(b>=a.length)H.t(H.z(a,b))
+cn:function(a,b){if(b<0)throw H.c(H.A(a,b))
+if(b>=a.length)H.t(H.A(a,b))
 return a.charCodeAt(b)},
-ak:function(a,b){if(b>=a.length)throw H.c(H.z(a,b))
+ak:function(a,b){if(b>=a.length)throw H.c(H.A(a,b))
 return a.charCodeAt(b)},
 cB:function(a,b,c){var z,y
 if(c>b.length)throw H.c(P.X(c,0,b.length,null,null))
@@ -505,8 +505,8 @@ y^=y>>6}y=536870911&y+((67108863&y)<<3)
 y^=y>>11
 return 536870911&y+((16383&y)<<15)},
 gi:function(a){return a.length},
-h:function(a,b){if(typeof b!=="number"||Math.floor(b)!==b)throw H.c(H.z(a,b))
-if(b>=a.length||b<0)throw H.c(H.z(a,b))
+h:function(a,b){if(typeof b!=="number"||Math.floor(b)!==b)throw H.c(H.A(a,b))
+if(b>=a.length||b<0)throw H.c(H.A(a,b))
 return a[b]},
 $isH:1,
 $asH:I.F,
@@ -537,7 +537,7 @@ if(z!==this.gi(this))throw H.c(new P.I(this))}},
 bz:function(a,b){return this.df(0,b)},
 T:function(a,b){return new H.ae(this,b,[H.G(this,"aI",0),null])},
 ay:function(a,b){var z,y,x
-z=H.A([],[H.G(this,"aI",0)])
+z=H.B([],[H.G(this,"aI",0)])
 C.a.si(z,this.gi(this))
 y=0
 while(!0){x=this.gi(this)
@@ -593,7 +593,7 @@ gB:function(a){return C.z},
 p:function(a,b){},
 gi:function(a){return 0},
 T:function(a,b){return C.y},
-ay:function(a,b){var z=H.A([],this.$ti)
+ay:function(a,b){var z=H.B([],this.$ti)
 return z},
 aa:function(a){return this.ay(a,!0)}},
 fv:{"^":"a;",
@@ -1067,13 +1067,13 @@ return x
 case"fixed":if(1>=a.length)return H.h(a,1)
 x=a[1]
 this.b.push(x)
-y=H.A(this.as(x),[null])
+y=H.B(this.as(x),[null])
 y.fixed$length=Array
 return y
 case"extendable":if(1>=a.length)return H.h(a,1)
 x=a[1]
 this.b.push(x)
-return H.A(this.as(x),[null])
+return H.B(this.as(x),[null])
 case"mutable":if(1>=a.length)return H.h(a,1)
 x=a[1]
 this.b.push(x)
@@ -1081,7 +1081,7 @@ return this.as(x)
 case"const":if(1>=a.length)return H.h(a,1)
 x=a[1]
 this.b.push(x)
-y=H.A(this.as(x),[null])
+y=H.B(this.as(x),[null])
 y.fixed$length=Array
 return y
 case"map":return this.ev(a)
@@ -1235,8 +1235,8 @@ b=P.ad(b,!0,null)
 for(u=z;u<v;++u)C.a.I(b,init.metadata[x.ep(0,u)])}return y.apply(a,b)},
 u:function(a){throw H.c(H.C(a))},
 h:function(a,b){if(a==null)J.aV(a)
-throw H.c(H.z(a,b))},
-z:function(a,b){var z,y
+throw H.c(H.A(a,b))},
+A:function(a,b){var z,y
 if(typeof b!=="number"||Math.floor(b)!==b)return new P.a7(!0,b,"index",null)
 z=J.aV(a)
 if(!(b<0)){if(typeof z!=="number")return H.u(z)
@@ -1426,7 +1426,7 @@ return z==null?!1:H.eB(z,b)},
 kN:function(a){throw H.c(new P.fn(a))},
 bX:function(){return(Math.random()*0x100000000>>>0)+(Math.random()*0x100000000>>>0)*4294967296},
 cJ:function(a){return init.getIsolateTag(a)},
-A:function(a,b){a.$ti=b
+B:function(a,b){a.$ti=b
 return a},
 bU:function(a){if(a==null)return
 return a.$ti},
@@ -1964,7 +1964,7 @@ return z[b]}},
 im:{"^":"a;a,b,c",
 h:function(a,b){if(!J.x(b,0))H.t(P.b8(b,null,null))
 return this.c}}}],["","",,H,{"^":"",
-kl:function(a){var z=H.A(a?Object.keys(a):[],[null])
+kl:function(a){var z=H.B(a?Object.keys(a):[],[null])
 z.fixed$length=Array
 return z}}],["","",,H,{"^":"",
 kJ:function(a){if(typeof dartPrint=="function"){dartPrint(a)
@@ -1977,9 +1977,9 @@ $isN:1,
 $asN:I.F,
 $isH:1,
 $asH:I.F},cl:{"^":"dr;",
-h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.z(a,b))
+h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.A(a,b))
 return a[b]},
-k:function(a,b,c){if(b>>>0!==b||b>=a.length)H.t(H.z(a,b))
+k:function(a,b,c){if(b>>>0!==b||b>=a.length)H.t(H.A(a,b))
 a[b]=c}},dp:{"^":"ck+a3;",$asN:I.F,$asH:I.F,
 $asi:function(){return[P.aj]},
 $ase:function(){return[P.aj]},
@@ -1987,7 +1987,7 @@ $isi:1,
 $ise:1},dr:{"^":"dp+dc;",$asN:I.F,$asH:I.F,
 $asi:function(){return[P.aj]},
 $ase:function(){return[P.aj]}},af:{"^":"ds;",
-k:function(a,b,c){if(b>>>0!==b||b>=a.length)H.t(H.z(a,b))
+k:function(a,b,c){if(b>>>0!==b||b>=a.length)H.t(H.A(a,b))
 a[b]=c},
 $isi:1,
 $asi:function(){return[P.m]},
@@ -2007,7 +2007,7 @@ $asi:function(){return[P.aj]},
 $ise:1,
 $ase:function(){return[P.aj]},
 "%":"Float64Array"},lI:{"^":"af;",
-h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.z(a,b))
+h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.A(a,b))
 return a[b]},
 $isU:1,
 $isi:1,
@@ -2015,7 +2015,7 @@ $asi:function(){return[P.m]},
 $ise:1,
 $ase:function(){return[P.m]},
 "%":"Int16Array"},lJ:{"^":"af;",
-h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.z(a,b))
+h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.A(a,b))
 return a[b]},
 $isU:1,
 $isi:1,
@@ -2023,7 +2023,7 @@ $asi:function(){return[P.m]},
 $ise:1,
 $ase:function(){return[P.m]},
 "%":"Int32Array"},lK:{"^":"af;",
-h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.z(a,b))
+h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.A(a,b))
 return a[b]},
 $isU:1,
 $isi:1,
@@ -2031,7 +2031,7 @@ $asi:function(){return[P.m]},
 $ise:1,
 $ase:function(){return[P.m]},
 "%":"Int8Array"},lL:{"^":"af;",
-h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.z(a,b))
+h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.A(a,b))
 return a[b]},
 $isU:1,
 $isi:1,
@@ -2039,7 +2039,7 @@ $asi:function(){return[P.m]},
 $ise:1,
 $ase:function(){return[P.m]},
 "%":"Uint16Array"},lM:{"^":"af;",
-h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.z(a,b))
+h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.A(a,b))
 return a[b]},
 $isU:1,
 $isi:1,
@@ -2048,7 +2048,7 @@ $ise:1,
 $ase:function(){return[P.m]},
 "%":"Uint32Array"},lN:{"^":"af;",
 gi:function(a){return a.length},
-h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.z(a,b))
+h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.A(a,b))
 return a[b]},
 $isU:1,
 $isi:1,
@@ -2057,7 +2057,7 @@ $ise:1,
 $ase:function(){return[P.m]},
 "%":"CanvasPixelArray|Uint8ClampedArray"},lO:{"^":"af;",
 gi:function(a){return a.length},
-h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.z(a,b))
+h:function(a,b){if(b>>>0!==b||b>=a.length)H.t(H.A(a,b))
 return a[b]},
 $isU:1,
 $isi:1,
@@ -2239,7 +2239,7 @@ aH:function(a,b){var z=this.a
 if(z.a!==0)throw H.c(new P.a4("Future already completed"))
 z.al(b)},
 M:function(a,b){this.a.M(a,b)}},
-e8:{"^":"a;Z:a@,C:b>,c,d,e",
+e8:{"^":"a;Z:a@,D:b>,c,d,e",
 gaf:function(){return this.b.b},
 gcu:function(){return(this.c&1)!==0},
 geI:function(){return(this.c&2)!==0},
@@ -2493,7 +2493,7 @@ this.ai(new P.ii(z),!0,new P.ij(z,y),y.gb5())
 return y},
 aa:function(a){var z,y,x
 z=H.G(this,"aa",0)
-y=H.A([],[z])
+y=H.B([],[z])
 x=new P.Q(0,$.k,null,[[P.i,z]])
 this.ai(new P.ik(this,y),!0,new P.il(y,x),x.gb5())
 return x}},
@@ -3074,7 +3074,7 @@ if(this.b===x)this.bQ();++this.d},
 bQ:function(){var z,y,x,w
 z=new Array(this.a.length*2)
 z.fixed$length=Array
-y=H.A(z,this.$ti)
+y=H.B(z,this.$ti)
 z=this.a
 x=this.b
 w=z.length-x
@@ -3085,7 +3085,7 @@ this.c=this.a.length
 this.a=y},
 dr:function(a,b){var z=new Array(8)
 z.fixed$length=Array
-this.a=H.A(z,[b])},
+this.a=H.B(z,[b])},
 $ase:null,
 n:{
 ch:function(a,b){var z=new P.hs(null,0,0,0,[b])
@@ -3200,7 +3200,7 @@ by:function(a){return new P.iX(a)},
 dg:function(a,b,c){if(J.eO(a,0))return new H.da([c])
 return new P.ja(a,b,[c])},
 ad:function(a,b,c){var z,y
-z=H.A([],[c])
+z=H.B([],[c])
 for(y=J.az(a);y.l();)z.push(y.gt())
 return z},
 q:function(a){H.kJ(H.b(a))},
@@ -3557,7 +3557,7 @@ $isb9:1,
 $asb9:I.F,
 "%":";DOMRectReadOnly"},
 l_:{"^":"f;i:length=",
-D:function(a,b,c){return a.toggle(b,c)},
+C:function(a,b,c){return a.toggle(b,c)},
 "%":"DOMTokenList"},
 ct:{"^":"bC;a,$ti",
 gi:function(a){return this.a.length},
@@ -3577,7 +3577,7 @@ gaq:function(a){return new W.iP(a)},
 j:function(a){return a.localName},
 O:["aX",function(a,b,c,d){var z,y,x,w,v
 if(c==null){z=$.d9
-if(z==null){z=H.A([],[W.du])
+if(z==null){z=H.B([],[W.du])
 y=new W.dv(z)
 z.push(W.ea(null))
 z.push(W.ef())
@@ -3913,7 +3913,7 @@ for(z=this.ga9(this),y=z.length,x=this.a,w=0;w<z.length;z.length===y||(0,H.bp)(z
 b.$2(v,x.getAttribute(v))}},
 ga9:function(a){var z,y,x,w,v,u
 z=this.a.attributes
-y=H.A([],[P.r])
+y=H.B([],[P.r])
 for(x=z.length,w=0;w<x;++w){if(w>=z.length)return H.h(z,w)
 v=z[w]
 u=J.o(v)
@@ -3935,11 +3935,11 @@ aP:function(a){var z,y
 z=a.aJ(0," ")
 for(y=this.a,y=new H.cg(y,y.gi(y),0,null);y.l();)J.f2(y.d,z)},
 aK:function(a){C.a.p(this.b,new W.jq(a))},
-D:function(a,b,c){return C.a.ey(this.b,!1,new W.js(b,c))},
+C:function(a,b,c){return C.a.ey(this.b,!1,new W.js(b,c))},
 n:{
 cx:function(a){return new W.jp(a,new H.ae(a,new W.kj(),[H.w(a,0),null]).aa(0))}}},
 kj:{"^":"d:22;",
-$1:[function(a){return J.B(a)},null,null,2,0,null,2,"call"]},
+$1:[function(a){return J.z(a)},null,null,2,0,null,2,"call"]},
 jr:{"^":"d:8;a",
 $1:function(a){return this.a.F(0,a.K())}},
 jq:{"^":"d:8;a",
@@ -3955,9 +3955,9 @@ aP:function(a){this.a.className=a.aJ(0," ")},
 gi:function(a){return this.a.classList.length},
 N:function(a){this.a.className=""},
 w:function(a,b){return typeof b==="string"&&this.a.classList.contains(b)},
-D:function(a,b,c){var z=this.a
+C:function(a,b,c){var z=this.a
 return c==null?z.classList.toggle(b):W.iR(z,b,c)},
-U:function(a,b){return this.D(a,b,null)},
+U:function(a,b){return this.C(a,b,null)},
 F:function(a,b){W.iQ(this.a,b)},
 n:{
 iR:function(a,b,c){var z=a.classList
@@ -4156,7 +4156,7 @@ window
 z="Removing disallowed type extension <"+H.b(e)+' is="'+g+'">'
 if(typeof console!="undefined")console.warn(z)
 return}z=f.ga9(f)
-y=H.A(z.slice(0),[H.w(z,0)])
+y=H.B(z.slice(0),[H.w(z,0)])
 for(x=f.ga9(f).length-1,z=f.a;x>=0;--x){if(x>=y.length)return H.h(y,x)
 w=y[x]
 if(!this.a.a3(a,J.bZ(w),z.getAttribute(w))){window
@@ -4201,14 +4201,14 @@ ao:{"^":"a;",
 ce:[function(a){if($.$get$d_().b.test(H.ey(a)))return a
 throw H.c(P.bs(a,"value","Not a valid class token"))},"$1","geb",2,0,25,1],
 j:function(a){return this.K().aJ(0," ")},
-D:function(a,b,c){var z,y
+C:function(a,b,c){var z,y
 this.ce(b)
 z=this.K()
 if(c==null?!z.w(0,b):c){z.I(0,b)
 y=!0}else{z.J(0,b)
 y=!1}this.aP(z)
 return y},
-U:function(a,b){return this.D(a,b,null)},
+U:function(a,b){return this.C(a,b,null)},
 gB:function(a){var z,y
 z=this.K()
 y=new P.bf(z,z.r,null,null)
@@ -4319,7 +4319,7 @@ k8:{"^":"d:0;",
 $1:function(a){return new P.hc(a,[null])}},
 k9:{"^":"d:0;",
 $1:function(a){return new P.b7(a)}}}],["","",,P,{"^":"",je:{"^":"a;",
-eU:function(){return Math.random()}}}],["","",,P,{"^":"",kP:{"^":"b0;",$isf:1,"%":"SVGAElement"},kR:{"^":"p;",$isf:1,"%":"SVGAnimateElement|SVGAnimateMotionElement|SVGAnimateTransformElement|SVGAnimationElement|SVGSetElement"},l2:{"^":"p;C:result=",$isf:1,"%":"SVGFEBlendElement"},l3:{"^":"p;m:type=,C:result=",$isf:1,"%":"SVGFEColorMatrixElement"},l4:{"^":"p;C:result=",$isf:1,"%":"SVGFEComponentTransferElement"},l5:{"^":"p;C:result=",$isf:1,"%":"SVGFECompositeElement"},l6:{"^":"p;C:result=",$isf:1,"%":"SVGFEConvolveMatrixElement"},l7:{"^":"p;C:result=",$isf:1,"%":"SVGFEDiffuseLightingElement"},l8:{"^":"p;C:result=",$isf:1,"%":"SVGFEDisplacementMapElement"},l9:{"^":"p;C:result=",$isf:1,"%":"SVGFEFloodElement"},la:{"^":"p;C:result=",$isf:1,"%":"SVGFEGaussianBlurElement"},lb:{"^":"p;C:result=",$isf:1,"%":"SVGFEImageElement"},lc:{"^":"p;C:result=",$isf:1,"%":"SVGFEMergeElement"},ld:{"^":"p;C:result=",$isf:1,"%":"SVGFEMorphologyElement"},le:{"^":"p;C:result=",$isf:1,"%":"SVGFEOffsetElement"},lf:{"^":"p;C:result=",$isf:1,"%":"SVGFESpecularLightingElement"},lg:{"^":"p;C:result=",$isf:1,"%":"SVGFETileElement"},lh:{"^":"p;m:type=,C:result=",$isf:1,"%":"SVGFETurbulenceElement"},lk:{"^":"p;",$isf:1,"%":"SVGFilterElement"},b0:{"^":"p;",$isf:1,"%":"SVGCircleElement|SVGClipPathElement|SVGDefsElement|SVGEllipseElement|SVGForeignObjectElement|SVGGElement|SVGGeometryElement|SVGLineElement|SVGPathElement|SVGPolygonElement|SVGPolylineElement|SVGRectElement|SVGSwitchElement;SVGGraphicsElement"},lp:{"^":"b0;",$isf:1,"%":"SVGImageElement"},aG:{"^":"f;",$isa:1,"%":"SVGLength"},lu:{"^":"fS;",
+eU:function(){return Math.random()}}}],["","",,P,{"^":"",kP:{"^":"b0;",$isf:1,"%":"SVGAElement"},kR:{"^":"p;",$isf:1,"%":"SVGAnimateElement|SVGAnimateMotionElement|SVGAnimateTransformElement|SVGAnimationElement|SVGSetElement"},l2:{"^":"p;D:result=",$isf:1,"%":"SVGFEBlendElement"},l3:{"^":"p;m:type=,D:result=",$isf:1,"%":"SVGFEColorMatrixElement"},l4:{"^":"p;D:result=",$isf:1,"%":"SVGFEComponentTransferElement"},l5:{"^":"p;D:result=",$isf:1,"%":"SVGFECompositeElement"},l6:{"^":"p;D:result=",$isf:1,"%":"SVGFEConvolveMatrixElement"},l7:{"^":"p;D:result=",$isf:1,"%":"SVGFEDiffuseLightingElement"},l8:{"^":"p;D:result=",$isf:1,"%":"SVGFEDisplacementMapElement"},l9:{"^":"p;D:result=",$isf:1,"%":"SVGFEFloodElement"},la:{"^":"p;D:result=",$isf:1,"%":"SVGFEGaussianBlurElement"},lb:{"^":"p;D:result=",$isf:1,"%":"SVGFEImageElement"},lc:{"^":"p;D:result=",$isf:1,"%":"SVGFEMergeElement"},ld:{"^":"p;D:result=",$isf:1,"%":"SVGFEMorphologyElement"},le:{"^":"p;D:result=",$isf:1,"%":"SVGFEOffsetElement"},lf:{"^":"p;D:result=",$isf:1,"%":"SVGFESpecularLightingElement"},lg:{"^":"p;D:result=",$isf:1,"%":"SVGFETileElement"},lh:{"^":"p;m:type=,D:result=",$isf:1,"%":"SVGFETurbulenceElement"},lk:{"^":"p;",$isf:1,"%":"SVGFilterElement"},b0:{"^":"p;",$isf:1,"%":"SVGCircleElement|SVGClipPathElement|SVGDefsElement|SVGEllipseElement|SVGForeignObjectElement|SVGGElement|SVGGeometryElement|SVGLineElement|SVGPathElement|SVGPolygonElement|SVGPolylineElement|SVGRectElement|SVGSwitchElement;SVGGraphicsElement"},lp:{"^":"b0;",$isf:1,"%":"SVGImageElement"},aG:{"^":"f;",$isa:1,"%":"SVGLength"},lu:{"^":"fS;",
 gi:function(a){return a.length},
 h:function(a,b){if(b>>>0!==b||b>=a.length)throw H.c(P.ac(b,a,null,null,null))
 return a.getItem(b)},
@@ -4366,7 +4366,7 @@ aP:function(a){this.a.setAttribute("class",a.aJ(0," "))}},p:{"^":"V;",
 gaq:function(a){return new P.f8(a)},
 scz:function(a,b){this.aT(a,b)},
 O:function(a,b,c,d){var z,y,x,w,v,u
-z=H.A([],[W.du])
+z=H.B([],[W.du])
 z.push(W.ea(null))
 z.push(W.ef())
 z.push(new W.jG())
@@ -4480,11 +4480,11 @@ z=3
 return P.bg(v.aw(u),$async$aM)
 case 3:u=w.b
 u.bB(v)
-W.cx(new W.ct(document.querySelectorAll(".button-wrapper > .button"),[null])).D(0,"invisible",!0)
+W.cx(new W.ct(document.querySelectorAll(".button-wrapper > .button"),[null])).C(0,"invisible",!0)
 u.f.textContent=v.c.gcq()
 u.e.textContent=J.cR(v.c)
-J.B(u.x).U(0,"invisible")
-J.B(u.z).U(0,"invisible")
+J.z(u.x).U(0,"invisible")
+J.z(u.z).U(0,"invisible")
 v.r=C.w
 w.cx=!0
 w.c=P.bK(C.o,new G.hD(w))
@@ -4496,13 +4496,13 @@ z.r=C.e
 C.a.si(z.f,0)
 z.e=null
 this.f.G()
-W.cx(new W.ct(document.querySelectorAll(".button-wrapper > .button"),[null])).D(0,"invisible",!1)
+W.cx(new W.ct(document.querySelectorAll(".button-wrapper > .button"),[null])).C(0,"invisible",!1)
 z=this.b
-J.B(z.b).D(0,"invisible",!0)
+J.z(z.b).C(0,"invisible",!0)
 z.e.textContent="RabbitRinth"
 z.f.textContent="Guide the rabbit through the maze to find its hole."
-J.B(z.x).U(0,"invisible")
-J.B(z.z).U(0,"invisible")},"$1","gf_",2,0,4],
+J.z(z.x).U(0,"invisible")
+J.z(z.z).U(0,"invisible")},"$1","gf_",2,0,4],
 fw:[function(a){P.q("Fullscreen-Button clicked!")
 this.ez(document.querySelector("body"))},"$1","geY",2,0,4],
 bn:[function(a){var z=0,y=P.aX(),x=this
@@ -4515,7 +4515,7 @@ P.q("Continue-Button clicked!")
 return P.bi(null,y)}})
 return P.bj($async$bn,y)},"$1","geX",2,0,9],
 fz:[function(a){P.q("Overlay close button clicked!")
-J.B(this.b.b).D(0,"invisible",!0)},"$1","geZ",2,0,4],
+J.z(this.b.b).C(0,"invisible",!0)},"$1","geZ",2,0,4],
 bo:[function(a){var z=0,y=P.aX(),x,w=this,v,u,t
 var $async$bo=P.bl(function(b,c){if(b===1)return P.bh(c,y)
 while(true)switch(z){case 0:v=w.a
@@ -4523,7 +4523,7 @@ u=J.x(v.r.a,"running")
 if(u||v.c.gah()!==!0){z=1
 break}C.a.si(v.f,0)
 u=w.b
-J.B(u.b).D(0,"invisible",!0)
+J.z(u.b).C(0,"invisible",!0)
 t=J.a_(v.b,1)
 v.b=t
 v.a.setItem("level",J.a0(t))
@@ -4541,8 +4541,8 @@ w.f=P.bK(C.q,new G.hB(w))
 case 1:return P.bi(x,y)}})
 return P.bj($async$bo,y)},"$1","gf0",2,0,9],
 fC:[function(a){var z=window.screen.orientation.type
-if(J.L(z).w(z,"landscape"))J.B(this.b.ch).D(0,"invisible",!1)
-else if(C.d.w(z,"portrait"))J.B(this.b.ch).D(0,"invisible",!0)},"$1","gf4",2,0,10],
+if(J.L(z).w(z,"landscape"))J.z(this.b.ch).C(0,"invisible",!1)
+else if(C.d.w(z,"portrait"))J.z(this.b.ch).C(0,"invisible",!0)},"$1","gf4",2,0,10],
 fi:function(){var z=this.d
 if(z==null)this.d=P.aq(C.p,new G.hF(this))
 else{z.G()
@@ -4877,13 +4877,16 @@ hI:{"^":"a;a,b,c,d,e,f,r,x,y,z,Q,ch,cx",
 bx:function(a,b){var z,y,x,w,v,u,t,s
 if(a.c.gV()){this.c.textContent="Game Over!"
 J.br(this.d,"You reached level <strong>"+H.b(a.b)+"</strong>!")
-J.B(document.querySelector("#btn_main_menu")).D(0,"invisible",!1)
-J.B(this.b).D(0,"invisible",!1)}if(a.c.gah()===!0){J.B(document.querySelector("#btn_next_level")).D(0,"invisible",!0)
-z=this.c
+z=document
+J.z(z.querySelector("#btn_main_menu")).C(0,"invisible",!1)
+J.z(z.querySelector("#btn_next_level")).C(0,"invisible",!0)
+J.z(this.b).C(0,"invisible",!1)}if(a.c.gah()===!0){z=this.c
 y=this.d
 if(J.x(a.b,5)){z.textContent="Game Finished!"
-J.br(y,"You completed level <strong>"+H.b(a.b)+"</strong> with <strong>"+J.aU(a.d)+"</strong> sec left!<br>Congratulations!<br>You finished the game!")}else{z.textContent="Level Completed!"
-J.br(y,"You completed level <strong>"+H.b(a.b)+"</strong> with <strong>"+J.aU(a.d)+"</strong> sec left!")}J.B(this.b).D(0,"invisible",!1)}if(b){this.r.textContent=""+J.aU(a.d)+" sec"
+J.br(y,"You completed level <strong>"+H.b(a.b)+"</strong> with <strong>"+J.aU(a.d)+"</strong> sec left!<br>Congratulations!<br>You finished the game!")
+J.z(document.querySelector("#btn_next_level")).C(0,"invisible",!0)}else{z.textContent="Level Completed!"
+J.br(y,"You completed level <strong>"+H.b(a.b)+"</strong> with <strong>"+J.aU(a.d)+"</strong> sec left!")
+J.z(document.querySelector("#btn_next_level")).C(0,"invisible",!1)}J.z(this.b).C(0,"invisible",!1)}if(b){this.r.textContent=""+J.aU(a.d)+" sec"
 x=C.h.cr(J.eM(a.d,a.c.gaO())*100)
 z=this.y.style
 y=""+x+"%"
@@ -4933,7 +4936,7 @@ s=J.aW(J.ab(v[w],u))
 x+="<td id='"+t+"' class='field "+J.bZ(s)+"'></td>";++u}x+="</tr>";++w}J.br(this.Q,x)
 v=y.ga0(z)
 if(typeof v!=="number")return H.u(v)
-this.cx=H.A(new Array(v),[[P.i,W.n]])
+this.cx=H.B(new Array(v),[[P.i,W.n]])
 w=0
 while(!0){v=y.ga0(z)
 if(typeof v!=="number")return H.u(v)
@@ -4959,18 +4962,18 @@ y=$.$get$eI()
 y.textContent="Start"
 y.toString
 new W.aM(y).J(0,"disabled")
-if(z.a.a.key(0)!=null)J.B($.$get$cH()).U(0,"invisible")
+if(z.a.a.key(0)!=null)J.z($.$get$cH()).U(0,"invisible")
 y=$.$get$cH()
 y.toString
 new W.aM(y).J(0,"disabled")
 y=$.$get$eL()
-J.B(y).U(0,"invisible")
+J.z(y).U(0,"invisible")
 new W.aM(y).J(0,"disabled")
 y=$.$get$et()
-J.B(y).U(0,"invisible")
+J.z(y).U(0,"invisible")
 new W.aM(y).J(0,"disabled")
 y=$.$get$ez()
-J.B(y).U(0,"invisible")
+J.z(y).U(0,"invisible")
 new W.aM(y).J(0,"disabled")}}},1]]
 setupProgram(dart,0)
 J.l=function(a){if(typeof a=="number"){if(Math.floor(a)==a)return J.di.prototype
@@ -5038,7 +5041,7 @@ J.eS=function(a,b){return J.aT(a).H(a,b)}
 J.aU=function(a){return J.Z(a).cr(a)}
 J.eT=function(a,b){return J.aT(a).p(a,b)}
 J.cQ=function(a){return J.o(a).gef(a)}
-J.B=function(a){return J.o(a).gaq(a)}
+J.z=function(a){return J.o(a).gaq(a)}
 J.ay=function(a){return J.o(a).ga6(a)}
 J.a6=function(a){return J.l(a).gA(a)}
 J.az=function(a){return J.aT(a).gB(a)}
@@ -5049,7 +5052,7 @@ J.eV=function(a){return J.o(a).geW(a)}
 J.aA=function(a){return J.o(a).gcF(a)}
 J.eW=function(a){return J.o(a).gf7(a)}
 J.eX=function(a){return J.o(a).gfd(a)}
-J.cS=function(a){return J.o(a).gC(a)}
+J.cS=function(a){return J.o(a).gD(a)}
 J.eY=function(a){return J.o(a).gbE(a)}
 J.aW=function(a){return J.o(a).gm(a)}
 J.cT=function(a,b){return J.aT(a).T(a,b)}
@@ -5065,7 +5068,7 @@ J.f4=function(a,b,c,d){return J.o(a).aV(a,b,c,d)}
 J.cU=function(a){return J.Z(a).bv(a)}
 J.bZ=function(a){return J.cI(a).fg(a)}
 J.a0=function(a){return J.l(a).j(a)}
-J.f5=function(a,b,c){return J.o(a).D(a,b,c)}
+J.f5=function(a,b,c){return J.o(a).C(a,b,c)}
 J.cV=function(a){return J.cI(a).fh(a)}
 I.al=function(a){a.immutable$list=Array
 a.fixed$length=Array
@@ -5214,12 +5217,12 @@ C.t=function getTagFallback(o) {
 }
 C.L=new P.hh(null,null)
 C.M=new P.hi(null)
-C.N=H.A(I.al(["*::class","*::dir","*::draggable","*::hidden","*::id","*::inert","*::itemprop","*::itemref","*::itemscope","*::lang","*::spellcheck","*::title","*::translate","A::accesskey","A::coords","A::hreflang","A::name","A::shape","A::tabindex","A::target","A::type","AREA::accesskey","AREA::alt","AREA::coords","AREA::nohref","AREA::shape","AREA::tabindex","AREA::target","AUDIO::controls","AUDIO::loop","AUDIO::mediagroup","AUDIO::muted","AUDIO::preload","BDO::dir","BODY::alink","BODY::bgcolor","BODY::link","BODY::text","BODY::vlink","BR::clear","BUTTON::accesskey","BUTTON::disabled","BUTTON::name","BUTTON::tabindex","BUTTON::type","BUTTON::value","CANVAS::height","CANVAS::width","CAPTION::align","COL::align","COL::char","COL::charoff","COL::span","COL::valign","COL::width","COLGROUP::align","COLGROUP::char","COLGROUP::charoff","COLGROUP::span","COLGROUP::valign","COLGROUP::width","COMMAND::checked","COMMAND::command","COMMAND::disabled","COMMAND::label","COMMAND::radiogroup","COMMAND::type","DATA::value","DEL::datetime","DETAILS::open","DIR::compact","DIV::align","DL::compact","FIELDSET::disabled","FONT::color","FONT::face","FONT::size","FORM::accept","FORM::autocomplete","FORM::enctype","FORM::method","FORM::name","FORM::novalidate","FORM::target","FRAME::name","H1::align","H2::align","H3::align","H4::align","H5::align","H6::align","HR::align","HR::noshade","HR::size","HR::width","HTML::version","IFRAME::align","IFRAME::frameborder","IFRAME::height","IFRAME::marginheight","IFRAME::marginwidth","IFRAME::width","IMG::align","IMG::alt","IMG::border","IMG::height","IMG::hspace","IMG::ismap","IMG::name","IMG::usemap","IMG::vspace","IMG::width","INPUT::accept","INPUT::accesskey","INPUT::align","INPUT::alt","INPUT::autocomplete","INPUT::autofocus","INPUT::checked","INPUT::disabled","INPUT::inputmode","INPUT::ismap","INPUT::list","INPUT::max","INPUT::maxlength","INPUT::min","INPUT::multiple","INPUT::name","INPUT::placeholder","INPUT::readonly","INPUT::required","INPUT::size","INPUT::step","INPUT::tabindex","INPUT::type","INPUT::usemap","INPUT::value","INS::datetime","KEYGEN::disabled","KEYGEN::keytype","KEYGEN::name","LABEL::accesskey","LABEL::for","LEGEND::accesskey","LEGEND::align","LI::type","LI::value","LINK::sizes","MAP::name","MENU::compact","MENU::label","MENU::type","METER::high","METER::low","METER::max","METER::min","METER::value","OBJECT::typemustmatch","OL::compact","OL::reversed","OL::start","OL::type","OPTGROUP::disabled","OPTGROUP::label","OPTION::disabled","OPTION::label","OPTION::selected","OPTION::value","OUTPUT::for","OUTPUT::name","P::align","PRE::width","PROGRESS::max","PROGRESS::min","PROGRESS::value","SELECT::autocomplete","SELECT::disabled","SELECT::multiple","SELECT::name","SELECT::required","SELECT::size","SELECT::tabindex","SOURCE::type","TABLE::align","TABLE::bgcolor","TABLE::border","TABLE::cellpadding","TABLE::cellspacing","TABLE::frame","TABLE::rules","TABLE::summary","TABLE::width","TBODY::align","TBODY::char","TBODY::charoff","TBODY::valign","TD::abbr","TD::align","TD::axis","TD::bgcolor","TD::char","TD::charoff","TD::colspan","TD::headers","TD::height","TD::nowrap","TD::rowspan","TD::scope","TD::valign","TD::width","TEXTAREA::accesskey","TEXTAREA::autocomplete","TEXTAREA::cols","TEXTAREA::disabled","TEXTAREA::inputmode","TEXTAREA::name","TEXTAREA::placeholder","TEXTAREA::readonly","TEXTAREA::required","TEXTAREA::rows","TEXTAREA::tabindex","TEXTAREA::wrap","TFOOT::align","TFOOT::char","TFOOT::charoff","TFOOT::valign","TH::abbr","TH::align","TH::axis","TH::bgcolor","TH::char","TH::charoff","TH::colspan","TH::headers","TH::height","TH::nowrap","TH::rowspan","TH::scope","TH::valign","TH::width","THEAD::align","THEAD::char","THEAD::charoff","THEAD::valign","TR::align","TR::bgcolor","TR::char","TR::charoff","TR::valign","TRACK::default","TRACK::kind","TRACK::label","TRACK::srclang","UL::compact","UL::type","VIDEO::controls","VIDEO::height","VIDEO::loop","VIDEO::mediagroup","VIDEO::muted","VIDEO::preload","VIDEO::width"]),[P.r])
+C.N=H.B(I.al(["*::class","*::dir","*::draggable","*::hidden","*::id","*::inert","*::itemprop","*::itemref","*::itemscope","*::lang","*::spellcheck","*::title","*::translate","A::accesskey","A::coords","A::hreflang","A::name","A::shape","A::tabindex","A::target","A::type","AREA::accesskey","AREA::alt","AREA::coords","AREA::nohref","AREA::shape","AREA::tabindex","AREA::target","AUDIO::controls","AUDIO::loop","AUDIO::mediagroup","AUDIO::muted","AUDIO::preload","BDO::dir","BODY::alink","BODY::bgcolor","BODY::link","BODY::text","BODY::vlink","BR::clear","BUTTON::accesskey","BUTTON::disabled","BUTTON::name","BUTTON::tabindex","BUTTON::type","BUTTON::value","CANVAS::height","CANVAS::width","CAPTION::align","COL::align","COL::char","COL::charoff","COL::span","COL::valign","COL::width","COLGROUP::align","COLGROUP::char","COLGROUP::charoff","COLGROUP::span","COLGROUP::valign","COLGROUP::width","COMMAND::checked","COMMAND::command","COMMAND::disabled","COMMAND::label","COMMAND::radiogroup","COMMAND::type","DATA::value","DEL::datetime","DETAILS::open","DIR::compact","DIV::align","DL::compact","FIELDSET::disabled","FONT::color","FONT::face","FONT::size","FORM::accept","FORM::autocomplete","FORM::enctype","FORM::method","FORM::name","FORM::novalidate","FORM::target","FRAME::name","H1::align","H2::align","H3::align","H4::align","H5::align","H6::align","HR::align","HR::noshade","HR::size","HR::width","HTML::version","IFRAME::align","IFRAME::frameborder","IFRAME::height","IFRAME::marginheight","IFRAME::marginwidth","IFRAME::width","IMG::align","IMG::alt","IMG::border","IMG::height","IMG::hspace","IMG::ismap","IMG::name","IMG::usemap","IMG::vspace","IMG::width","INPUT::accept","INPUT::accesskey","INPUT::align","INPUT::alt","INPUT::autocomplete","INPUT::autofocus","INPUT::checked","INPUT::disabled","INPUT::inputmode","INPUT::ismap","INPUT::list","INPUT::max","INPUT::maxlength","INPUT::min","INPUT::multiple","INPUT::name","INPUT::placeholder","INPUT::readonly","INPUT::required","INPUT::size","INPUT::step","INPUT::tabindex","INPUT::type","INPUT::usemap","INPUT::value","INS::datetime","KEYGEN::disabled","KEYGEN::keytype","KEYGEN::name","LABEL::accesskey","LABEL::for","LEGEND::accesskey","LEGEND::align","LI::type","LI::value","LINK::sizes","MAP::name","MENU::compact","MENU::label","MENU::type","METER::high","METER::low","METER::max","METER::min","METER::value","OBJECT::typemustmatch","OL::compact","OL::reversed","OL::start","OL::type","OPTGROUP::disabled","OPTGROUP::label","OPTION::disabled","OPTION::label","OPTION::selected","OPTION::value","OUTPUT::for","OUTPUT::name","P::align","PRE::width","PROGRESS::max","PROGRESS::min","PROGRESS::value","SELECT::autocomplete","SELECT::disabled","SELECT::multiple","SELECT::name","SELECT::required","SELECT::size","SELECT::tabindex","SOURCE::type","TABLE::align","TABLE::bgcolor","TABLE::border","TABLE::cellpadding","TABLE::cellspacing","TABLE::frame","TABLE::rules","TABLE::summary","TABLE::width","TBODY::align","TBODY::char","TBODY::charoff","TBODY::valign","TD::abbr","TD::align","TD::axis","TD::bgcolor","TD::char","TD::charoff","TD::colspan","TD::headers","TD::height","TD::nowrap","TD::rowspan","TD::scope","TD::valign","TD::width","TEXTAREA::accesskey","TEXTAREA::autocomplete","TEXTAREA::cols","TEXTAREA::disabled","TEXTAREA::inputmode","TEXTAREA::name","TEXTAREA::placeholder","TEXTAREA::readonly","TEXTAREA::required","TEXTAREA::rows","TEXTAREA::tabindex","TEXTAREA::wrap","TFOOT::align","TFOOT::char","TFOOT::charoff","TFOOT::valign","TH::abbr","TH::align","TH::axis","TH::bgcolor","TH::char","TH::charoff","TH::colspan","TH::headers","TH::height","TH::nowrap","TH::rowspan","TH::scope","TH::valign","TH::width","THEAD::align","THEAD::char","THEAD::charoff","THEAD::valign","TR::align","TR::bgcolor","TR::char","TR::charoff","TR::valign","TRACK::default","TRACK::kind","TRACK::label","TRACK::srclang","UL::compact","UL::type","VIDEO::controls","VIDEO::height","VIDEO::loop","VIDEO::mediagroup","VIDEO::muted","VIDEO::preload","VIDEO::width"]),[P.r])
 C.O=I.al(["HEAD","AREA","BASE","BASEFONT","BR","COL","COLGROUP","EMBED","FRAME","FRAMESET","HR","IMAGE","IMG","INPUT","ISINDEX","LINK","META","PARAM","SOURCE","STYLE","TITLE","WBR"])
 C.i=I.al([])
-C.j=H.A(I.al(["bind","if","ref","repeat","syntax"]),[P.r])
-C.k=H.A(I.al(["A::href","AREA::href","BLOCKQUOTE::cite","BODY::background","COMMAND::icon","DEL::cite","FORM::action","IMG::src","INPUT::src","INS::cite","Q::cite","VIDEO::poster"]),[P.r])
-C.P=H.A(I.al([]),[P.bb])
+C.j=H.B(I.al(["bind","if","ref","repeat","syntax"]),[P.r])
+C.k=H.B(I.al(["A::href","AREA::href","BLOCKQUOTE::cite","BODY::background","COMMAND::icon","DEL::cite","FORM::action","IMG::src","INPUT::src","INS::cite","Q::cite","VIDEO::poster"]),[P.r])
+C.P=H.B(I.al([]),[P.bb])
 C.u=new H.fi(0,{},C.P,[P.bb,null])
 C.Q=new H.ba("call")
 C.w=new H.ba("running")
