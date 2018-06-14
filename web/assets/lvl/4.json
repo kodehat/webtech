@@ -1,63 +1,56 @@
 {
   "name": "Level 4",
-  "description": "Beware the fox!",
-  "time": 20,
-  "rows": 8,
-  "cols": 8,
+  "description": "Look out! There is a fox around.",
+  "time": 25,
+  "rows": 7,
+  "cols": 7,
   "tiles": [
     {
       "position": {
         "row": 0,
         "col": 0
       },
-      "type": "HEDGE"
+      "type": "TERRAIN"
     },
     {
       "position": {
         "row": 0,
         "col": 1
       },
-      "type": "HEDGE"
+      "type": "TERRAIN"
     },
     {
       "position": {
         "row": 0,
         "col": 2
       },
-      "type": "HEDGE"
+      "type": "TERRAIN"
     },
     {
       "position": {
         "row": 0,
         "col": 3
       },
-      "type": "HEDGE"
+      "type": "TERRAIN"
     },
     {
       "position": {
         "row": 0,
         "col": 4
       },
-      "type": "HEDGE"
+      "type": "TERRAIN"
     },
     {
       "position": {
         "row": 0,
         "col": 5
       },
-      "type": "HEDGE"
+      "type": "TERRAIN"
     },
     {
       "position": {
         "row": 0,
         "col": 6
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 0,
-        "col": 7
       },
       "type": "TERRAIN"
     },
@@ -73,120 +66,106 @@
         "row": 1,
         "col": 1
       },
-      "type": "TERRAIN"
+      "type": "HEDGE"
     },
     {
       "position": {
         "row": 1,
         "col": 2
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 1,
+        "col": 3
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 1,
+        "col": 4
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 1,
+        "col": 5
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 1,
+        "col": 6
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 2,
+        "col": 0
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 2,
+        "col": 1
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 2,
+        "col": 2
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 2,
+        "col": 3
+      },
+      "type": "GOAL"
+    },
+    {
+      "position": {
+        "row": 2,
+        "col": 4
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 2,
+        "col": 5
+      },
+      "type": "HEDGE"
+    },
+    {
+      "position": {
+        "row": 2,
+        "col": 6
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 3,
+        "col": 0
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 3,
+        "col": 1
       },
       "type": "FOX",
-      "enemyMovementType": "HOR_FIRST_LEFT"
-    },
-    {
-      "position": {
-        "row": 1,
-        "col": 3
-      },
-      "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 1,
-        "col": 4
-      },
-      "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 1,
-        "col": 5
-      },
-      "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 1,
-        "col": 6
-      },
-      "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 1,
-        "col": 7
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 2,
-        "col": 0
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 2,
-        "col": 1
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 2,
-        "col": 2
-      },
-      "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 2,
-        "col": 3
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 2,
-        "col": 4
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 2,
-        "col": 5
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 2,
-        "col": 6
-      },
-      "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 2,
-        "col": 7
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 3,
-        "col": 0
-      },
-      "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 3,
-        "col": 1
-      },
-      "type": "HEDGE"
+      "enemyMovementType": "HOR_FIRST_RIGHT"
     },
     {
       "position": {
@@ -200,22 +179,21 @@
         "row": 3,
         "col": 3
       },
-      "type": "HEDGE"
+      "type": "TERRAIN"
     },
     {
       "position": {
         "row": 3,
         "col": 4
       },
-      "type": "HEDGE"
+      "type": "TERRAIN"
     },
     {
       "position": {
         "row": 3,
         "col": 5
       },
-      "type": "FOX",
-      "enemyMovementType": "VERT_FIRST_DOWN"
+      "type": "TERRAIN"
     },
     {
       "position": {
@@ -223,13 +201,6 @@
         "col": 6
       },
       "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 3,
-        "col": 7
-      },
-      "type": "HEDGE"
     },
     {
       "position": {
@@ -250,7 +221,7 @@
         "row": 4,
         "col": 2
       },
-      "type": "TERRAIN"
+      "type": "HEDGE"
     },
     {
       "position": {
@@ -264,28 +235,21 @@
         "row": 4,
         "col": 4
       },
-      "type": "TERRAIN"
+      "type": "HEDGE"
     },
     {
       "position": {
         "row": 4,
         "col": 5
       },
-      "type": "TERRAIN"
+      "type": "HEDGE"
     },
     {
       "position": {
         "row": 4,
         "col": 6
       },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 4,
-        "col": 7
-      },
-      "type": "HEDGE"
+      "type": "TERRAIN"
     },
     {
       "position": {
@@ -306,154 +270,84 @@
         "row": 5,
         "col": 2
       },
-      "type": "TERRAIN"
+      "type": "HEDGE"
     },
     {
       "position": {
         "row": 5,
         "col": 3
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 5,
-        "col": 4
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 5,
-        "col": 5
-      },
-      "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 5,
-        "col": 6
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 5,
-        "col": 7
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 6,
-        "col": 0
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 6,
-        "col": 1
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 6,
-        "col": 2
-      },
-      "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 6,
-        "col": 3
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 6,
-        "col": 4
-      },
-      "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 6,
-        "col": 5
-      },
-      "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 6,
-        "col": 6
-      },
-      "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 6,
-        "col": 7
-      },
-      "type": "HEDGE"
-    },
-    {
-      "position": {
-        "row": 7,
-        "col": 0
-      },
-      "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 7,
-        "col": 1
-      },
-      "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 7,
-        "col": 2
       },
       "type": "RABBIT"
     },
     {
       "position": {
-        "row": 7,
-        "col": 3
-      },
-      "type": "TERRAIN"
-    },
-    {
-      "position": {
-        "row": 7,
+        "row": 5,
         "col": 4
       },
       "type": "HEDGE"
     },
     {
       "position": {
-        "row": 7,
+        "row": 5,
         "col": 5
       },
       "type": "HEDGE"
     },
     {
       "position": {
-        "row": 7,
+        "row": 5,
         "col": 6
       },
       "type": "TERRAIN"
     },
     {
       "position": {
-        "row": 7,
-        "col": 7
+        "row": 6,
+        "col": 0
       },
-      "type": "GOAL"
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 6,
+        "col": 1
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 6,
+        "col": 2
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 6,
+        "col": 3
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 6,
+        "col": 4
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 6,
+        "col": 5
+      },
+      "type": "TERRAIN"
+    },
+    {
+      "position": {
+        "row": 6,
+        "col": 6
+      },
+      "type": "TERRAIN"
     }
   ]
 }

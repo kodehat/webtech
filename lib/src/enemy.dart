@@ -81,9 +81,34 @@ abstract class Enemy extends Creature {
   }
 
   void onOnSight() {
-    if (this.position.row == this._game.rabbit.position.row
-      || this.position.col == this._game.rabbit.position.col) {
-      // TODO: Check if no obstacles are between the enemy and the rabbit. Then move into desired location.
+    // TODO: Check if no obstacles are between the enemy and the rabbit. Then move into desired location.
+
+    if (this.position.row == this._game.rabbit.position.row) { // On same row
+      for (int dCol = min(this.position.col, this._game.rabbit.position.col) + 1; dCol < max(this.position.col, this._game.rabbit.position.col); dCol++) {
+        GameObject obj = _game._level.objects[this.position.row][dCol];
+        if (obj.type != TileType.TERRAIN) {
+          return;
+        }
+      }
+      print("On sight enemy on: ${this.position} has rabbit in sight!");
+      if (this.position.col < this._game.rabbit.position.col) {
+        moveRight();
+      } else {
+        moveLeft();
+      }
+    } else if (this.position.col == this._game.rabbit.position.col) { // On same column
+      for (int dRow = min(this.position.row, this._game.rabbit.position.row) + 1; dRow < max(this.position.row, this._game.rabbit.position.row); dRow++) {
+        GameObject obj = _game._level.objects[dRow][this.position.col];
+        if (obj.type != TileType.TERRAIN) {
+          return;
+        }
+      }
+      print("On sight enemy on: ${this.position} has rabbit in sight!");
+      if (this.position.row < this._game.rabbit.position.row) {
+        moveDown();
+      } else {
+        moveUp();
+      }
     }
   }
 

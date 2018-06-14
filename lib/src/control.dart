@@ -42,6 +42,9 @@ class MazeGameController {
     // Listen to mouse clicks on next level button
     view.overlayNextLevelButton.onClick.listen(onClickOverlayNextLevel);
 
+    // Listen to mouse clicks on menu button
+    view.overlayMainMenuButton.onClick.listen(onClickOverlayMenuButton);
+
     // Listen to mouse clicks on start button
     view.startButton.onClick.listen(onClickStartButton);
 
@@ -108,7 +111,7 @@ class MazeGameController {
       gammaToggleLeft = gammaOrientation - deviceMotionToggleHorizontalValue;
       gammaToggleRight = gammaOrientation + deviceMotionToggleHorizontalValue;
 
-      if (game.stopped) {
+      if (game.stopped || game.level.gameOver || game.level.done) {
         return;
       } else {
         calibrated = true;
@@ -187,14 +190,29 @@ class MazeGameController {
     });
   }
 
+  void onClickOverlayMenuButton(MouseEvent e) {
+    game.stop();
+    game.enemies.clear();
+    game.rabbit = null;
+    enemyMoveTrigger.cancel();
+    querySelectorAll(".button-wrapper > .button").classes.toggle("invisible", false);
+
+    view.closeOverlay();
+    view.title.text = "RabbitRinth";
+    view.subtitle.text = "Guide the rabbit through the maze to find its hole.";
+    view.progressbarContainer.classes.toggle("invisible");
+    view.gameField.classes.toggle("invisible");
+  }
+
   void onClickFullscreenButton(MouseEvent e) {
     print("Fullscreen-Button clicked!");
     fullscreenWorkaround(querySelector("body"));
   }
 
-  void onClickContinueButton(MouseEvent e) {
+  Future onClickContinueButton(MouseEvent e) async {
     savedLevelNo = int.parse(game.local['level']);
-    onClickStartButton(e);
+    await onClickStartButton(e);
+    savedLevelNo = null;
     print("Continue-Button clicked!");
   }
 
@@ -205,6 +223,7 @@ class MazeGameController {
 
   Future onClickOverlayNextLevel(MouseEvent e) async {
     if (game.running || !game.level.done) return;
+    game.enemies.clear();
     view.closeOverlay();
     game.levelNo++;
     game.local['level'] = game.levelNo.toString();
