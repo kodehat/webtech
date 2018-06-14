@@ -54,13 +54,13 @@ class MazeGameView {
     }
 
     if (game.level.done) {
+        overlayNextLevelButton.classes.toggle("invisible", true);
         if (game.levelNo == MazeGameModel.MAX_LEVEL) {
           overlayTitle.text = "Game Finished!";
           overlayDescription.innerHtml = "You completed level <strong>${game.levelNo}</strong> with <strong>${game.timeLeft.floor()}</strong> sec left!<br>Congratulations!<br>You finished the game!";
         } else {
           overlayTitle.text = "Level Completed!";
           overlayDescription.innerHtml = "You completed level <strong>${game.levelNo}</strong> with <strong>${game.timeLeft.floor()}</strong> sec left!";
-          overlayNextLevelButton.classes.toggle("invisible", false);
         }
         openOverlay();
     }
