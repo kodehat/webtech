@@ -4878,12 +4878,12 @@ bx:function(a,b){var z,y,x,w,v,u,t,s
 if(a.c.gV()){this.c.textContent="Game Over!"
 J.br(this.d,"You reached level <strong>"+H.b(a.b)+"</strong>!")
 J.B(document.querySelector("#btn_main_menu")).D(0,"invisible",!1)
-J.B(this.b).D(0,"invisible",!1)}if(a.c.gah()===!0){z=this.c
+J.B(this.b).D(0,"invisible",!1)}if(a.c.gah()===!0){J.B(document.querySelector("#btn_next_level")).D(0,"invisible",!0)
+z=this.c
 y=this.d
 if(J.x(a.b,5)){z.textContent="Game Finished!"
 J.br(y,"You completed level <strong>"+H.b(a.b)+"</strong> with <strong>"+J.aU(a.d)+"</strong> sec left!<br>Congratulations!<br>You finished the game!")}else{z.textContent="Level Completed!"
-J.br(y,"You completed level <strong>"+H.b(a.b)+"</strong> with <strong>"+J.aU(a.d)+"</strong> sec left!")
-J.B(document.querySelector("#btn_next_level")).D(0,"invisible",!1)}J.B(this.b).D(0,"invisible",!1)}if(b){this.r.textContent=""+J.aU(a.d)+" sec"
+J.br(y,"You completed level <strong>"+H.b(a.b)+"</strong> with <strong>"+J.aU(a.d)+"</strong> sec left!")}J.B(this.b).D(0,"invisible",!1)}if(b){this.r.textContent=""+J.aU(a.d)+" sec"
 x=C.h.cr(J.eM(a.d,a.c.gaO())*100)
 z=this.y.style
 y=""+x+"%"
