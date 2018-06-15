@@ -5,7 +5,6 @@ final HtmlElement startBtn = querySelector("#btn_start");
 final HtmlElement continueBtn = querySelector("#btn_continue");
 final HtmlElement tutorialBtn = querySelector("#btn_tutorial");
 final HtmlElement aboutBtn = querySelector("#btn_about");
-final HtmlElement fullscreenBtn = querySelector("#btn_fullscreen");
 
 void main() {
 
@@ -22,7 +21,5 @@ void main() {
     tutorialBtn.attributes.remove("disabled");
     aboutBtn.classes.toggle("invisible");
     aboutBtn.attributes.remove("disabled");
-    fullscreenBtn.classes.toggle("invisible");
-    fullscreenBtn.attributes.remove("disabled");
   });
 }

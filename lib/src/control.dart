@@ -51,9 +51,6 @@ class MazeGameController {
     // Listen to mouse clicks on continue button
     view.continueButton.onClick.listen(onClickContinueButton);
 
-    // Listen to mouse clicks on continue button
-    view.fullscreenButton.onClick.listen(onClickFullscreenButton);
-
     // If the device is oriented
     window.onDeviceOrientation.listen(onDeviceMove);
 
@@ -149,6 +146,7 @@ class MazeGameController {
 
   onClickStartButton(MouseEvent e) async {
     noSleep.enable();
+    fullscreenWorkaround(querySelector("body"));
 
     if (game.running) return;
     //Needed to choose the right level, after continuing a previous game and after that starting a new game.
@@ -202,11 +200,6 @@ class MazeGameController {
     view.subtitle.text = "Guide the rabbit through the maze to find its hole.";
     view.progressbarContainer.classes.toggle("invisible");
     view.gameField.classes.toggle("invisible");
-  }
-
-  void onClickFullscreenButton(MouseEvent e) {
-    print("Fullscreen-Button clicked!");
-    fullscreenWorkaround(querySelector("body"));
   }
 
   Future onClickContinueButton(MouseEvent e) async {
