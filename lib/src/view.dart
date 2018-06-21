@@ -69,7 +69,7 @@ class MazeGameView {
       progressbarTitle.text = "${game.timeLeft.floor()} sec";
       int timeInPerc = ((game.timeLeft / game.level.time) * 100).floor();
       progressbar.style.width = "$timeInPerc%";
-      querySelectorAll(".field").style.filter = "brightness(${max(timeInPerc, 35)}%)";
+      querySelectorAll(".field:not(.rabbit)").style.filter = "brightness(${max(timeInPerc, 35)}%)";
       return;
     }
 
@@ -84,8 +84,10 @@ class MazeGameView {
 
         final td = fields[row][col];
         if (td != null) {
+          //if (td.classes.contains(type.toLowerCase())) return;
+
           td.classes.clear();
-          td.classes.addAll(["field", type.toLowerCase()]);
+          td.classes.addAll(["right", type.toLowerCase()]);
         }
       }
     }
@@ -97,15 +99,20 @@ class MazeGameView {
 
     print("Level rows: ${level.rows}, cols: ${level.cols}");
     for (int row = 0; row < level.rows; row++) {
-      table += "<tr>";
+      //table += "<tr>";
+      table += "<div class='table-row'>";
       for (int col = 0; col < level.cols; col++) {
         final String pos = "field_${row}_${col}";
         final GameObject go = level.objects[row][col];
         String type = go.type;
 
-        table += "<td id='$pos' class='field ${type.toLowerCase()}'></td>";
+        //table += "<td id='$pos' class='field ${type.toLowerCase()}'></td>";
+        table +=
+            "<div class='table-cell field terrain'>"
+            "<div id='$pos' class='${type.toLowerCase()}'></div>"
+            "</div>";
       }
-      table += "</tr>";
+      table += "</div>";
     }
 
     gameTable.innerHtml = table;
