@@ -85,25 +85,20 @@ h1 {
     margin-top: 1rem;
 }
 
-#game_field {
-    position: relative;
-    z-index: 0;
-}
-
 #game {
     position: relative;
-    background-color: #AA6839;
+    z-index: 50;
+    background-color: #AD8543;
     border: 4px solid #B33771;
     border-collapse: collapse;
     margin: 0 auto;
-    z-index: 1;
 }
 
 #game .field {
-    position: relative;
+    z-index: 5;
     text-align: center;
     vertical-align: middle;
-    background-position: center;
+    background: url("assets/img/terrain.png") no-repeat;
     width: 38px;
     height: 38px;
     padding: 0;
@@ -123,9 +118,44 @@ h1 {
     }
 }
 
+@keyframes rabbit-left {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    50% {
+        transform: translateX(-19px) translateY(-10px);
+    }
+    100% {
+        transform: translateX(-38px) translateY(0);
+    }
+}
+
+@keyframes rabbit-up {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(38px);
+    }
+}
+
+@keyframes rabbit-down {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px);
+    }
+    100% {
+        transform: translateY(-38px);
+    }
+}
+
 .table {
     display: table;
-    border-collapse: collapse;
 }
 
 .table-row {
@@ -134,48 +164,77 @@ h1 {
 
 .table-cell {
     display: table-cell;
+    position: relative;
 }
 
 .rabbit {
-    position: relative;
-    z-index: 3;
+    display: inline-block;
+    position: absolute;
     width: 38px;
     height: 38px;
-    background: url("assets/img/rabbit.png") no-repeat;
+    background: url("assets/img/rabbit.png") no-repeat !important;
     filter: brightness(100%) !important;
-    /* animation: rabbit-right .75s ease-in normal infinite; */
-    transition: transform .75s;
+    /* transition: transform .75s; */
+    z-index: 10;
+    image-rendering: pixelated;
 }
 
-.rabbit.right {
-    transform: translateX(38px);
-    z-index: 10;
-    display: block;
-    position: relative;
+.rabbit-right {
+    animation: rabbit-right .4s ease-in normal infinite;
+    transform: scaleX(1);
+}
+
+.rabbit-left {
+    animation: rabbit-left .4s ease-in normal infinite;
+    transform: scaleX(-1);
+}
+
+.rabbit-up {
+    animation: rabbit-up .4s ease-in normal infinite;
+}
+
+.rabbit-down {
+    animation: rabbit-down .4s ease-in normal infinite;
 }
 
 .fox {
-    background: url("assets/img/fox.png") no-repeat, url("assets/img/terrain.png") no-repeat transparent;
+    background: url("assets/img/fox.png") no-repeat;
     width: 38px;
     height: 38px;
+    display: inline-block;
+    position: absolute;
+    z-index: 9;
+    image-rendering: pixelated;
 }
 
 .hedge {
-    background: url("assets/img/hedge.png") no-repeat, url("assets/img/terrain.png") no-repeat transparent;
+    background: url("assets/img/hedge.png") no-repeat;
     width: 38px;
     height: 38px;
+    display: inline-block;
+    position: absolute;
+    z-index: 8;
+    image-rendering: pixelated;
 }
 
 .goal {
-    background: url("assets/img/goal.png") no-repeat, url("assets/img/terrain.png") no-repeat transparent;
+    background: url("assets/img/goal.png") no-repeat;
     width: 38px;
     height: 38px;
+    display: inline-block;
+    position: absolute;
+    z-index: 8;
+    image-rendering: pixelated;
 }
 
 .terrain {
+    /* background: url("assets/img/terrain.png") no-repeat; */
     width: 38px;
     height: 38px;
-    background: url("assets/img/terrain.png") no-repeat;
+    display: inline-block;
+    position: absolute;
+    z-index: 7;
+    image-rendering: pixelated;
 }
 
 #progressbar {
@@ -200,7 +259,7 @@ h1 {
 
 .modal {
     position: fixed;
-    z-index: 99;
+    z-index: 90;
     left: 0;
     top: 0;
     width: 100%;

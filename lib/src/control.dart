@@ -68,19 +68,27 @@ class MazeGameController {
       switch (e.keyCode) {
         case KeyCode.LEFT:
           game.rabbit.moveLeft();
-          view.update(game);
+          querySelector(".rabbit").classes.toggle("rabbit-left");
+          new Timer(rabbitMoveCountdown, () => view.update(game));
+          //view.update(game);
           break;
         case KeyCode.RIGHT:
           game.rabbit.moveRight();
-          view.update(game);
+          querySelector(".rabbit").classes.toggle("rabbit-right");
+          new Timer(rabbitMoveCountdown, () => view.update(game));
+          //view.update(game);
           break;
         case KeyCode.UP:
           game.rabbit.moveUp();
-          view.update(game);
+          querySelector(".rabbit").classes.toggle("rabbit-up");
+          new Timer(rabbitMoveCountdown, () => view.update(game));
+          //view.update(game);
           break;
         case KeyCode.DOWN:
           game.rabbit.moveDown();
-          view.update(game);
+          querySelector(".rabbit").classes.toggle("rabbit-down");
+          new Timer(rabbitMoveCountdown, () => view.update(game));
+          //view.update(game);
       }
     });
   }
@@ -136,7 +144,9 @@ class MazeGameController {
         hasMoved = true;
       } else if(gamma >= gammaToggleRight) { //Move Right
         game.rabbit.moveRight();
-        view.update(game);
+        querySelector(".rabbit").classes.toggle("rabbit-right");
+        new Timer(rabbitMoveCountdown, () => view.update(game));
+        //view.update(game);
 
         rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
         hasMoved = true;

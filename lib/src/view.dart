@@ -87,7 +87,7 @@ class MazeGameView {
           //if (td.classes.contains(type.toLowerCase())) return;
 
           td.classes.clear();
-          td.classes.addAll(["right", type.toLowerCase()]);
+          td.classes.addAll([type.toLowerCase()]);
         }
       }
     }
@@ -106,10 +106,11 @@ class MazeGameView {
         final GameObject go = level.objects[row][col];
         String type = go.type;
 
-        //table += "<td id='$pos' class='field ${type.toLowerCase()}'></td>";
+        //table += "<td id='$pos' class='field ${type.toLowerCase()}'></td>"; "<div id='$pos' class='${type.toLowerCase()}'></div>"
         table +=
-            "<div class='table-cell field terrain'>"
-            "<div id='$pos' class='${type.toLowerCase()}'></div>"
+            "<div class='table-cell'>"
+                "<div id='$pos' class='${type.toLowerCase()}'></div>"
+                "<div class='field'></div>"
             "</div>";
       }
       table += "</div>";
