@@ -18,20 +18,36 @@
         <h3 class="subtitle">Please rotate your device back into portrait mode!</h3>
     </div>
     <div class="container has-text-centered">
-        <h1 class="title" id="title">RabbitRinth</h1>
-        <h3 class="subtitle" id="subtitle">Guide the rabbit through the maze to find its hole.</h3>
-        <div class="button-group">
+        <h1 class="title" id="title">
+            RabbitRinth
+        </h1>
+        <h3 class="subtitle" id="subtitle">
+            Guide the rabbit
+            <span><img src="assets/img/rabbit.png" alt="Rabbit"></span>
+            through the maze
+            <span><img src="assets/img/hedge.png" alt="Hedge"></span>
+            to find its hole
+            <span><img src="assets/img/goal.png" alt="Hole"></span>
+            .
+        </h3>
+        <div class="running-rabbit">
+
+        </div>
+        <div class="loading">
+            Loading game...
+        </div>
+        <div class="button-group invisible">
             <div class="button-wrapper">
-                <button class="button" type="button" id="btn_start" disabled>Loading</button>
+                <button class="button invisible" type="button" id="btn_continue">Continue</button>
             </div>
             <div class="button-wrapper">
-                <button class="button invisible" type="button" id="btn_continue" disabled>Continue</button>
+                <button class="button" type="button" id="btn_start">Start</button>
             </div>
             <div class="button-wrapper">
-                <button class="button invisible" type="button" id="btn_tutorial" disabled>Tutorial</button>
+                <button class="button" type="button" id="btn_tutorial">Tutorial</button>
             </div>
             <div class="button-wrapper">
-                <button class="button invisible" type="button" id="btn_about" disabled>About</button>
+                <button class="button" type="button" id="btn_about">About</button>
             </div>
         </div>
     </div>

@@ -2,6 +2,8 @@ part of mazegame;
 
 class MazeGameView {
 
+  final loadingDiv = querySelector(".loading");
+
   final miniInfo = querySelector("#mini_info");
 
   final overlay = querySelector("#overlay");
@@ -25,6 +27,8 @@ class MazeGameView {
   final gameTable = querySelector("#game");
 
   final landscapeWarning = querySelector("#landscape_warning");
+
+  final mainMenuButtonGroup = querySelector(".button-group");
 
   HtmlElement get startButton => querySelector("#btn_start");
 
@@ -70,7 +74,7 @@ class MazeGameView {
       int timeInPerc = ((game.timeLeft / game.level.time) * 100).floor();
       progressbar.style.width = "$timeInPerc%";
       //querySelectorAll(".field:not(.rabbit)").style.filter = "brightness(${max(timeInPerc, 35)}%)";
-      querySelectorAll(".table-cell div").style.filter = "brightness(${max(timeInPerc, 35)}%)";
+      querySelectorAll(".table-cell div:not(.rabbit):not(.goal)").style.filter = "brightness(${max(timeInPerc, 35)}%)";
       querySelectorAll(".rabbit").style.filter = "brightness(${max(timeInPerc, 60)}%)";
       querySelectorAll(".goal").style.filter = "brightness(${max(timeInPerc, 60)}%)";
       return;
@@ -129,6 +133,18 @@ class MazeGameView {
         fields[row].add(querySelector("#field_${row}_${col}"));
       }
     }
+  }
+
+  void _visibility(Element element, bool shouldAdd) {
+    element.classes.toggle("invisible", shouldAdd);
+  }
+
+  void visible(Element element) {
+    _visibility(element, false);
+  }
+
+  void invisible(Element element) {
+    _visibility(element, true);
   }
 
   closeOverlay() => overlay.classes.toggle("invisible", true);

@@ -2,7 +2,25 @@ part of mazegame;
 
 class LevelLoader {
 
+  static Map<int, Level> LEVELS = {};
+
+  static void preloadAllLevels(final MazeGameModel game) {
+    final List<Future<Level>> futureLevels = [];
+    for (int i = 1; i <= MazeGameModel.MAX_LEVEL; i++) {
+      futureLevels.add(load(i, game));
+    }
+    Future.wait(futureLevels).then((levels) {
+      for (int i = 0; i < levels.length; i++) {
+        LEVELS[i + 1] = levels[i];
+      }
+    });
+  }
+
   static Future<Level> load(final int levelNo, final MazeGameModel game) async {
+    if (LEVELS.containsKey(levelNo)) {
+      return LEVELS[levelNo];
+    }
+
     final String path = "assets/lvl/$levelNo.json";
 
     var req = await HttpRequest.getString(path);
