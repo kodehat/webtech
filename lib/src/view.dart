@@ -20,7 +20,7 @@ class MazeGameView {
 
   final progressbar = querySelector("#progressbar > div");
 
-  final gameField = querySelector("#game_field");
+  final gameWrapper = querySelector("#game_wrapper");
 
   final gameTable = querySelector("#game");
 
@@ -69,7 +69,10 @@ class MazeGameView {
       progressbarTitle.text = "${game.timeLeft.floor()} sec";
       int timeInPerc = ((game.timeLeft / game.level.time) * 100).floor();
       progressbar.style.width = "$timeInPerc%";
-      querySelectorAll(".field:not(.rabbit)").style.filter = "brightness(${max(timeInPerc, 35)}%)";
+      //querySelectorAll(".field:not(.rabbit)").style.filter = "brightness(${max(timeInPerc, 35)}%)";
+      querySelectorAll(".table-cell div").style.filter = "brightness(${max(timeInPerc, 35)}%)";
+      querySelectorAll(".rabbit").style.filter = "brightness(${max(timeInPerc, 60)}%)";
+      querySelectorAll(".goal").style.filter = "brightness(${max(timeInPerc, 60)}%)";
       return;
     }
 

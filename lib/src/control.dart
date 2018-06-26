@@ -126,19 +126,25 @@ class MazeGameController {
     if (!hasMoved) {
       if (beta <= betaToggleUp) { // Move UP
         game.rabbit.moveUp();
-        view.update(game);
+        querySelector(".rabbit").classes.toggle("rabbit-up");
+        new Timer(rabbitMoveCountdown, () => view.update(game));
+        //view.update(game);
 
         rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
         hasMoved = true;
       } else if(beta >= betaToggleDown){ //Move Down
         game.rabbit.moveDown();
-        view.update(game);
+        querySelector(".rabbit").classes.toggle("rabbit-down");
+        new Timer(rabbitMoveCountdown, () => view.update(game));
+        //view.update(game);
 
         rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
         hasMoved = true;
       } else if(gamma <= gammaToggleLeft) { //Move Left
         game.rabbit.moveLeft();
-        view.update(game);
+        querySelector(".rabbit").classes.toggle("rabbit-left");
+        new Timer(rabbitMoveCountdown, () => view.update(game));
+        //view.update(game);
 
         rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
         hasMoved = true;
@@ -165,12 +171,13 @@ class MazeGameController {
 
     view.generateField(game);
 
+    //querySelector(".button-group").classes.toggle("invisible", true);
     querySelectorAll(".button-wrapper > .button").classes.toggle("invisible", true);
 
     view.subtitle.text = game.level.description;
     view.title.text = game.level.name;
     view.progressbarContainer.classes.toggle("invisible");
-    view.gameField.classes.toggle("invisible");
+    view.gameWrapper.classes.toggle("invisible");
 
     game.start();
 
@@ -209,7 +216,7 @@ class MazeGameController {
     view.title.text = "RabbitRinth";
     view.subtitle.text = "Guide the rabbit through the maze to find its hole.";
     view.progressbarContainer.classes.toggle("invisible");
-    view.gameField.classes.toggle("invisible");
+    view.gameWrapper.classes.toggle("invisible");
   }
 
   Future onClickContinueButton(MouseEvent e) async {
