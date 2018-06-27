@@ -2,8 +2,6 @@ part of mazegame;
 
 class MazeGameModel {
 
-  static const int MAX_LEVEL = 5;
-
   // Local storage
   Storage local = window.localStorage;
 

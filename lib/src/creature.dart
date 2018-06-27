@@ -11,8 +11,7 @@ abstract class Creature extends GameObject {
     _game.level.objects[super.position.row][super.position.col] = _game.level.objects[newRow][newCol];
 
     // Update own position.
-    super.position.row = newRow;
-    super.position.col = newCol;
+    super.position = new Position.fromCoordinates(newRow, newCol);
 
     // Update self at new position;
     _game.level.objects[newRow][newCol] = this;

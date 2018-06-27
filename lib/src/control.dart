@@ -36,9 +36,6 @@ class MazeGameController {
 
   /// Creates a new "Maze Game Controller" instance.
   MazeGameController() {
-    // Start pre-loading all levels.
-    LevelLoader.preloadAllLevels(game);
-
     // Listen to mouse clicks on the overlay's close button
     view.overlayCloseButton.onClick.listen(onClickOverlayCloseButton);
 

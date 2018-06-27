@@ -57,7 +57,7 @@ class MazeGameView {
     }
 
     if (game.level.done) {
-        if (game.levelNo == MazeGameModel.MAX_LEVEL) {
+        if (game.levelNo == LevelLoader.MAX_LEVEL) {
           overlayTitle.text = "Game Finished!";
           overlayDescription.innerHtml = "You completed level <strong>${game.levelNo}</strong> with <strong>${game.timeLeft.floor()}</strong> sec left!<br>Congratulations!<br>You finished the game!";
           overlayNextLevelButton.classes.toggle("invisible", true);

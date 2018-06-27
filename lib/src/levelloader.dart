@@ -1,34 +1,57 @@
 part of mazegame;
 
+/// Responsible for loading and caching level files,
+/// which are itself written in JSON.
 class LevelLoader {
 
-  static Map<int, Level> LEVELS = {};
+  // Defines the level number of the last level in the game.
+  static const int MAX_LEVEL = 5;
 
-  static void preloadAllLevels(final MazeGameModel game) {
+  // Contains the pre-loaded levels mapped by their level number.
+  static final Map<int, Level> CACHED_LEVELS = {};
+
+  /// Async pre-loading of all levels as defined by [MAX_LEVEL].
+  /// After functions returned, pre-loaded levels can be found in
+  /// [CACHED_LEVELS] map.
+  static Future preloadAllLevels(final MazeGameModel game) async {
+    print("Pre-loading all $MAX_LEVEL levels...");
     final List<Future<Level>> futureLevels = [];
-    for (int i = 1; i <= MazeGameModel.MAX_LEVEL; i++) {
+
+    // Start loading all levels.
+    for (int i = 1; i <= MAX_LEVEL; i++) {
       futureLevels.add(load(i, game));
     }
-    Future.wait(futureLevels).then((levels) {
+
+    // Wait until all level have been loaded into the level cache.
+    await Future.wait(futureLevels).then((levels) {
+      // Load all loaded levels into the level cache.
       for (int i = 0; i < levels.length; i++) {
-        LEVELS[i + 1] = levels[i];
+        CACHED_LEVELS[i + 1] = levels[i];
       }
     });
   }
 
+  /// Async loading of a level with the given [levelNo].
+  /// After completion the level is returned as "Level" object.
   static Future<Level> load(final int levelNo, final MazeGameModel game) async {
-    if (LEVELS.containsKey(levelNo)) {
-      return LEVELS[levelNo];
+    print("Trying to load level $levelNo...");
+
+    if (CACHED_LEVELS.containsKey(levelNo)) {
+      print("Level $levelNo is already loaded. Using cached version.");
+      return CACHED_LEVELS[levelNo];
     }
 
-    final String path = "assets/lvl/$levelNo.json";
+    print("Level $levelNo isn't cached. Loading it now...");
 
-    var req = await HttpRequest.getString(path);
-    Map data = JSON.decode(req);
-    Level level = _levelFromMap(data, game);
+    final String path = "assets/lvl/$levelNo.json";
+    final String jsonLevelStr = await HttpRequest.getString(path);
+    final Map levelData = JSON.decode(jsonLevelStr);
+    final Level level = _levelFromMap(levelData, game);
+
     return level;
   }
 
+  /// Extracts the level from a specific map.
   static Level _levelFromMap(final Map data, final MazeGameModel game) {
     Level level = new Level()
       ..name = data["name"]
@@ -41,14 +64,23 @@ class LevelLoader {
     return level;
   }
 
-  static List<List<GameObject>> _tilesFromMap(List<Map> data, int rows, int cols, final MazeGameModel game) {
+  /// Extracts all level tiles from a specific map.
+  static List<List<GameObject>> _tilesFromMap(
+      final List<Map> data,
+      final int rows,
+      final int cols,
+      final MazeGameModel game) {
+
+    // A list of lists representing the game field.
+    // The size is [rows] * [cols].
     List<List<GameObject>> objects = new Iterable.generate(rows, (row) {
       return new Iterable.generate(cols, (col) => null).toList();
     }).toList();
 
+    // Iterate each tile in map.
     data.forEach((t) {
-      Position position = _positionFromMap(t["position"]);
-      String type = t["type"];
+      final Position position = _positionFromMap(t["position"]);
+      final String type = t["type"];
 
       switch (type) {
         case TileType.HEDGE:
@@ -77,6 +109,8 @@ class LevelLoader {
     return objects;
   }
 
-  static Position _positionFromMap(Map data) => new Position.fromCoordinates(data["row"], data["col"]);
-
+  // Extracts a position from a specific map.
+  static Position _positionFromMap(Map data) {
+    return new Position.fromCoordinates(data["row"], data["col"]);
+  }
 }
