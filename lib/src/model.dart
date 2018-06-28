@@ -18,6 +18,9 @@ class MazeGameModel {
   /// A list of enemies in the current level for quicker access.
   List<Enemy> _enemies;
 
+  // A list of speed power-ups in the current level for quicker access.
+  List<Powerup> _speedPowerups;
+
   /// A symbol representing the state if the game.
   /// Possible values are #running for a running game and
   /// #stopped for a stopped game.
@@ -41,6 +44,13 @@ class MazeGameModel {
     // Now set all required attributes in the model from the loaded level.
     this._rabbit = _level.findGameObjectExact(TileType.RABBIT);
     this._enemies = _level.findAllGameObjectsExact(TileType.FOX);
+    this._speedPowerups = _level.findAllGameObjectsExact(TileType.SPEED_POWERUP);
+
+    // Try to make all power-ups appear.
+    _speedPowerups.forEach((final GameObject gameObject) {
+      // Try to appear.
+      (gameObject as CarrotPowerup).appear();
+    });
   }
 
   /// Returns the currently loaded level.
@@ -63,4 +73,7 @@ class MazeGameModel {
 
   /// Returns a list of enemies (foxes) in the current level.
   List<Enemy> get enemies => this._enemies;
+
+  /// Returns a list of power-ups in the current level.
+  List<Powerup> get speedPowerups => this._speedPowerups;
 }

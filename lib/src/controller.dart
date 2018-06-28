@@ -92,8 +92,8 @@ class MazeGameController {
     window.onDeviceOrientation.listen(handleMobileDeviceMovement);
 
     //TODO: REMOVE!
-    view.title.onTouchEnd.listen(inDevAddTimeCheat);
-    view.title.onMouseDown.listen(inDevAddTimeCheat);
+    //view.title.onTouchEnd.listen(inDevAddTimeCheat);
+    //view.title.onMouseDown.listen(inDevAddTimeCheat);
 
     // Listen on touch events to recalibrate the movement on mobiles.
     window.onTouchEnd.listen(handleTouchOnGameScreen);
@@ -112,32 +112,20 @@ class MazeGameController {
     // If game is stopped, return.
     if (game.stopped) return;
 
-    if (this.game.rabbit.isAbleToMove) {
+    if (this.game.rabbit.isAbleToMove && this.view.viewAnimationEnded) {
       // Switch all possible key codes (LEFT, RIGHT, UP, DOWN).
       switch (event.keyCode) {
         case KeyCode.LEFT:
           this._moveRabbit(Direction.LEFT);
-          //game._rabbit.moveLeft();
-          //querySelector(".rabbit").classes.toggle("rabbit-left");
-          //new Timer(rabbitMoveCountdown, () => view.update(game));
           break;
         case KeyCode.RIGHT:
           this._moveRabbit(Direction.RIGHT);
-          //game._rabbit.moveRight();
-          //querySelector(".rabbit").classes.toggle("rabbit-right");
-          //new Timer(rabbitMoveCountdown, () => view.update(game));
           break;
         case KeyCode.UP:
           this._moveRabbit(Direction.UP);
-          //game._rabbit.moveUp();
-          //querySelector(".rabbit").classes.toggle("rabbit-up");
-          //new Timer(rabbitMoveCountdown, () => view.update(game));
           break;
         case KeyCode.DOWN:
           this._moveRabbit(Direction.DOWN);
-      //game._rabbit.moveDown();
-      //querySelector(".rabbit").classes.toggle("rabbit-down");
-      //new Timer(rabbitMoveCountdown, () => view.update(game));
       }
     }
   }
@@ -173,7 +161,7 @@ class MazeGameController {
 
     // Check the rabbit is able to move. Checks if the rabbit timer
     // has reset this boolean.
-    if (this.game.rabbit.isAbleToMove) {
+    if (this.game.rabbit.isAbleToMove && this.view.viewAnimationEnded) {
 
       // Move the rabbit UP.
       if (beta <= this._betaToggleUp) {
@@ -191,40 +179,6 @@ class MazeGameController {
       } else if (gamma >= this._gammaToggleRight) {
           this._moveRabbit(Direction.RIGHT);
       }
-
-//      // Move UP
-//      if (beta <= this._betaToggleUp) {
-//        game._rabbit.moveUp();
-//        querySelector(".rabbit").classes.toggle("rabbit-up");
-//        new Timer(rabbitMoveCountdown, () => view.update(game));
-//
-//        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
-//        hasMoved = true;
-//      } else if(beta >= _betaToggleDown){ //Move Down
-//        game._rabbit.moveDown();
-//        querySelector(".rabbit").classes.toggle("rabbit-down");
-//        new Timer(rabbitMoveCountdown, () => view.update(game));
-//        //view.update(game);
-//
-//        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
-//        hasMoved = true;
-//      } else if(gamma <= _gammaToggleLeft) { //Move Left
-//        game._rabbit.moveLeft();
-//        querySelector(".rabbit").classes.toggle("rabbit-left");
-//        new Timer(rabbitMoveCountdown, () => view.update(game));
-//        //view.update(game);
-//
-//        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
-//        hasMoved = true;
-//      } else if(gamma >= _gammaToggleRight) { //Move Right
-//        game._rabbit.moveRight();
-//        querySelector(".rabbit").classes.toggle("rabbit-right");
-//        new Timer(rabbitMoveCountdown, () => view.update(game));
-//        //view.update(game);
-//
-//        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
-//        hasMoved = true;
-//      }
     }
   }
 
@@ -376,6 +330,9 @@ class MazeGameController {
     view.loadingDiv.text = "Loading level ${this.game.levelNumber}...";
     view.visible(view.loadingDiv);
 
+    // Set rabbit animation ended state to true.
+    this.view.viewAnimationEnded = true;
+
     // Hide the main menu buttons.
     view.invisible(view.mainMenuButtonGroup);
 
@@ -385,8 +342,9 @@ class MazeGameController {
     // Generate the game field.
     view.generateGameField(MazeGameModel.level);
 
-    // Update the title and the subtitle.
+    // Update the title, subtitle progressbar and time.
     view.updateTitleAndSubtitle();
+    view.updateTimerAndBrightness();
 
     // Start the level countdown.
     MazeGameModel.level.start();
@@ -419,7 +377,9 @@ class MazeGameController {
 
     this.view.updateTitleAndSubtitle();
     this.view.updateTimerAndBrightness();
-    this.view.updateNotLivingTiles();
+    //this.view.updateNotLivingTiles();
+    this.game.speedPowerups.removeWhere((final Powerup powerup) => powerup.used || !powerup.mayAppear);
+    this.view.updatePowerups(this.game);
     this.view.updateEnemies(this.game);
 
     // Check for game over or level done.
@@ -433,6 +393,7 @@ class MazeGameController {
       MazeGameModel.level.stop();
       this.game.rabbit.stopTimer();
       this.game.enemies.forEach((final Enemy enemy) => enemy.stopMoving());
+      this.game.speedPowerups.forEach((final Powerup powerup) => powerup.timeOnFieldTimer.cancel());
 
       // Reset the played level.
       LevelLoader.resetInCache(this.game.levelNumber);
@@ -458,10 +419,28 @@ class MazeGameController {
     this.game.rabbit.isAbleToMove = false;
 
     // Actually move the rabbit.
-    this.game.rabbit.move(direction);
+    GameObject collisionObject = this.game.rabbit.move(direction);
 
-    view.addRabbitAnimationBasedOnDirection(this.game.rabbit, () {
+    // Skip animation, if collision with wall or hedge.
+    if (collisionObject.type == TileType.WALL
+      || collisionObject.type == TileType.HEDGE) {
+      this.game.rabbit.isAbleToMove = true;
       view.updateRabbit(this.game.rabbit);
+      return;
+    }
+
+    // Start the timer until it's allowed to move again.
+    this.game.rabbit.startTimer(this.game);
+
+    // Wait, while the rabbit animation is played.
+    this.view.viewAnimationEnded = false;
+
+    // Play rabbit's animation and update view after the animation.
+    view.animateRabbit(this.game.rabbit, () {
+      // Update rabbit in view.
+      view.updateRabbit(this.game.rabbit);
+      // Reset animation ended boolean.
+      view.viewAnimationEnded = true;
     });
   }
 
@@ -479,7 +458,8 @@ class MazeGameController {
   }
 
   //TODO: REMOVE!
-  void inDevAddTimeCheat(Event e) {
+  Future inDevAddTimeCheat(Event e) async {
+
     if (game.running) {
       MazeGameModel.level.timeTotal += 10.0;
       MazeGameModel.level.timeLeft += 10.0;

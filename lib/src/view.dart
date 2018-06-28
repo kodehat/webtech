@@ -82,6 +82,9 @@ class MazeGameView {
   /// Represents the current tutorial page;
   int currentTutorialPage = 0;
 
+  /// True, if the rabbit animation has finished. False, if not.
+  bool viewAnimationEnded = true;
+
   /// Generates the game field in the browser based on the level game field.
   void generateGameField(final Level level) {
     String table = "";
@@ -150,10 +153,52 @@ class MazeGameView {
   void updateEnemies(final MazeGameModel game) {
     //print("View: Updating all enemies!");
 
-    // Iterate each enemy and update it's position in view.
-    game.enemies.forEach((final Enemy e) =>
-        _updateElementInGameField(e.position.row, e.position.col
-    ));
+    // Iterate each enemy and update its position in view.
+    game.enemies.forEach((final Enemy enemy) {
+      _updateElementInGameFieldWithPosition(enemy.position);
+
+      if (enemy.belowGameObject.position != null) {
+        _updateElementInGameFieldWithPosition(enemy.belowGameObject.position);
+      }
+
+      if (enemy.previousPosition != null) {
+        _updateElementInGameFieldWithPosition(enemy.previousPosition);
+      }
+    });
+  }
+
+  // Updates the positions of all power-ups in the view.
+  void updatePowerups(final MazeGameModel game) {
+
+    // Iterate each power-up and update its position in view.
+    game.speedPowerups.forEach((final Powerup powerup) {
+      _updateElementInGameFieldWithPosition(powerup.position);
+    });
+  }
+
+  ///TODO: Corrupts the rabbit's animation.
+  /// Update all not living tiles in view. For instance hedge and terrain.
+  void updateNotLivingTiles() {
+    //print("View: Updating not living tiles!");
+
+    // Level reference for quicker access.
+    final level = MazeGameModel.level;
+
+    // Iterate each row.
+    for (int row = 0; row < level.rows; row++) {
+      // Iterate each column.
+      for (int col = 0; col < level.cols; col++) {
+
+        // The current game object.
+        final GameObject gameObject = level.getGameObjectAtRowAndCol(row, col);
+
+        // Just update the tile if it's not a living tile.
+        if (gameObject.type != TileType.RABBIT
+            && gameObject.type != TileType.FOX) {
+          _updateElementInGameField(row, col);
+        }
+      }
+    }
   }
 
   /// Updates the title and the subtitle.
@@ -198,30 +243,6 @@ class MazeGameView {
     // Everything, but rabbit and goal.
     querySelectorAll(".table-cell div:not(.rabbit):not(.goal)").style.filter =
       "brightness(${max(timeLeftInPercent, 35)}%)";
-  }
-
-  /// Update all not living tiles in view. For instance hedge and terrain.
-  void updateNotLivingTiles() {
-    //print("View: Updating not living tiles!");
-
-
-    final level = MazeGameModel.level;
-
-    // Iterate each row.
-    for (int row = 0; row < level.rows; row++) {
-      // Iterate each column.
-      for (int col = 0; col < level.cols; col++) {
-
-        // The current game object.
-        final GameObject gameObject = level.getGameObjectAtRowAndCol(row, col);
-
-        // Just update the tile if it's not a living tile.
-        if (gameObject.type != TileType.RABBIT
-          && gameObject.type != TileType.FOX) {
-          _updateElementInGameField(row, col);
-        }
-      }
-    }
   }
 
   /// Shows the game over overlay with a given [levelReached].
@@ -391,33 +412,50 @@ class MazeGameView {
     this.currentTutorialPage = 0;
   }
 
-  /// Adds the rabbit's animation based on the its direction.
-  void addRabbitAnimationBasedOnDirection(Rabbit rabbit,
-      Function afterAnimation) {
+  /// Animates the rabbit based on its direction.
+  void animateRabbit(Rabbit rabbit, Function afterAnimation) {
 
-    String animationClass;
+    // Get div table cell with the rabbit.
+    final Element rabbitElement = querySelector(".rabbit");
 
+    // Play animation based on rabbit's direction.
     switch(rabbit.direction) {
       case Direction.LEFT:
-        animationClass = "rabbit-left";
+        rabbitElement.animate([
+          {"transform": "translateX(0) translateY(0)"},
+          {"transform": "translateX(${ -1 * (rabbitElement.clientWidth / 2)}px) translateY(${-1 * (rabbitElement.clientWidth * 10 / 100 * 2)}px)"},
+          {"transform": "translateX(${ -1 * (rabbitElement.clientWidth)}px) translateY(0)"},
+        ], rabbit.speed);
         break;
       case Direction.RIGHT:
-        animationClass = "rabbit-right";
+        rabbitElement.animate([
+          {"transform": "translateX(0) translateY(0)"},
+          {"transform": "translateX(${rabbitElement.clientWidth / 2}px) translateY(${-1 * (rabbitElement.clientWidth * 10 / 100 * 2)}px)"},
+          {"transform": "translateX(${rabbitElement.clientWidth}px) translateY(0)"},
+        ], rabbit.speed);
         break;
       case Direction.UP:
-        animationClass = "rabbit-up";
+        rabbitElement.animate([
+          {"transform": "translateY(0)"},
+          {"transform": "translateY(${-1 * (rabbitElement.clientWidth * 10 / 100 * 2)}px)"},
+          {"transform": "translateY(${ -1 * (rabbitElement.clientWidth)}px)"},
+        ], rabbit.speed);
         break;
       case Direction.DOWN:
-        animationClass = "rabbit-down";
+        rabbitElement.animate([
+          {"transform": "translateY(0)"},
+          {"transform": "translateY(${rabbitElement.clientWidth * 10 / 100 * 2}px)"},
+          {"transform": "translateY(${rabbitElement.clientWidth}px)"},
+        ], rabbit.speed);
         break;
       default:
-        throw
-          new UnknownDirectionException("The rabbit's direction is unknown!");
+        throw new UnknownDirectionException("The direction of the rabbit"
+            " is unknown.");
     }
 
-    querySelector(".rabbit").classes.add(animationClass);
-
-    new Timer(new Duration(milliseconds: Constants.RABBIT_MOVEMENT_SPEED), afterAnimation);
+    // Set the timer, which updates the view, when finished.
+    new Timer(new Duration(milliseconds: rabbit.speed - 25),
+        afterAnimation);
   }
 
   /// Increments the current tutorial page in a cyclic behavior.

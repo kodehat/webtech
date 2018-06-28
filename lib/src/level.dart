@@ -156,8 +156,8 @@ class Level {
           "the boundaries of the level (${this.rows} x ${this.cols}!");
     }
 
-    // Save the object on the "old" position.
-    GameObject oldGameObject = getGameObjectAtRowAndCol(row, col);
+    // Save the object on the "new" position.
+    GameObject newGameObject = getGameObjectAtRowAndCol(row, col);
 
     // If the game object is a [Creature] (here rabbit or fox) handle the
     // game object, which is below the [Creature].
@@ -175,8 +175,8 @@ class Level {
       this.objects[gameObject.position.row][gameObject.position.col] =
           belowObject;
 
-      // Set the below object to the "old" game object.
-      (gameObject as Creature).belowGameObject = oldGameObject;
+      // Set the below object to the "new" game object.
+      (gameObject as Creature).belowGameObject = newGameObject;
     }
 
     // Update the [gameObject] at the given position.

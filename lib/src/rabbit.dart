@@ -11,7 +11,7 @@ class Rabbit extends Creature {
 
   /// Speed of the rabbit in milliseconds.
   /// Describes, when the rabbit tries to move.
-  int _speed;
+  int speed;
 
   /// The duration for the movement trigger.
   /// Speed is based on [speed] in milliseconds.
@@ -23,29 +23,37 @@ class Rabbit extends Creature {
 
   /// Creates a new rabbit (player).
   Rabbit(final int row, final int col,
-      [final this._speed = Constants.RABBIT_MOVEMENT_SPEED]) :
+      [final this.speed = Constants.RABBIT_MOVEMENT_SPEED]) :
         super(TileType.RABBIT, row, col);
 
   @override
   void onCollideWithGoal(GameObject collisionObject, int newRow, int newCol) {
-    MazeGameModel.level.done = true;;
+    MazeGameModel.level.done = true;
+
+    // Has to be called to update position.
+    super.onCollideWithGoal(collisionObject, newRow, newCol);
   }
 
   @override
   void onCollideWithFox(GameObject collisionObject, int newRow, int newCol) {
     MazeGameModel.level.gameOver = true;
+
+    // Has to be called to update position.
+    super.onCollideWithFox(collisionObject, newRow, newCol);
   }
 
   /// Starts the movement of the rabbit by starting the timer.
   void startTimer(final MazeGameModel game) {
     // Return, if already moving.
-    if (this._moveTimer != null && this._moveTimer.isActive) return;
+    if (this._moveTimer != null && this._moveTimer.isActive) {
+      this._moveTimer.cancel();
+    }
 
     // Create the countdown.
-    this._moveCountdown = new Duration(milliseconds: this._speed);
+    this._moveCountdown = new Duration(milliseconds: this.speed);
     // Create the periodic timer and set the [_resetMovementState] method as callback.
     this._moveTimer =
-      new Timer.periodic(this._moveCountdown, _resetMovementState);
+      new Timer(this._moveCountdown, _resetMovementState);
   }
 
   /// Stops the movement of the rabbit by cancelling the timer.
@@ -58,5 +66,5 @@ class Rabbit extends Creature {
   }
 
   /// Resets the movement state of the rabbit.
-  void _resetMovementState(Timer timer) => this.isAbleToMove = true;
+  void _resetMovementState() => this.isAbleToMove = true;
 }

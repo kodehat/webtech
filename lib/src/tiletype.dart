@@ -27,6 +27,9 @@ class TileType {
   /// because they only describe the boundaries of the game field.
   static const String WALL = "WALL";
 
+  /// Constant representing a speed power-up tile type.
+  static const String SPEED_POWERUP = "SPEED_POWERUP";
+
   /// Returns a list of all possible tile types.
   static List<String> get types => [
     HEDGE,
@@ -35,6 +38,7 @@ class TileType {
     RABBIT,
     FOX,
     WALL,
+    SPEED_POWERUP,
   ];
 }
 

@@ -39,9 +39,10 @@ abstract class Enemy extends Creature {
   /// Can be overwritten for other functionality.
   @override
   void onCollideWithRabbit(GameObject collisionObject, int newRow, int newCol) {
-    //TODO: Update!
-    //_game.level.gameOver = true;
-    //_game.stop();
+    MazeGameModel.level.gameOver = true;
+
+    // Has to be called to update position.
+    super.onCollideWithRabbit(collisionObject, newRow, newCol);
   }
 
   /// Starts the movement of the enemy by starting the timer.

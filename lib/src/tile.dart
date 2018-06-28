@@ -9,9 +9,7 @@ abstract class Tile extends GameObject {
   /// Creates a new tile based on the given [type] and a position
   /// consisting of a [row] and a [col] coordinate.
   Tile.fromCoordinates(final String type, final int row, final int col) :
-        super(type, row, col) {
-    this.position = new Position.fromCoordinates(row, col);
-  }
+        super(type, row, col);
 
   String toString() {
     return "[Tile{ pos: $position, type: $type }]";

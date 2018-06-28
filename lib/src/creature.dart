@@ -87,37 +87,45 @@ abstract class Creature extends GameObject {
       case TileType.WALL:
         onCollideWithWall(collisionObj, newRow, newCol);
         break;
+      case TileType.SPEED_POWERUP:
+        onCollideWithSpeedPowerup(collisionObj, newRow, newCol);
+        break;
       default:
         throw new UnknownTileTypeException("The tile type of the collision"
             "object is unknown!");
     }
 
-    //TODO: Is this really necessary? Maybe set method return type to "void".
     // Return the object, the [Creature] collidied with.
     return collisionObj;
   }
 
   /// Is called, if the [Creature] collides with a terrain tile.
-  /// By default moves the creature. Can be overwritten.
-  void onCollideWithTerrain(
-      GameObject collisionObject,
-      int newRow,
-      int newCol) {
+  /// Moves to the new direction by default.
+  void onCollideWithTerrain(GameObject collisionObject, int newRow, int newCol) {
     // Update the position of all related game objects.
     _updatePositions(newRow, newCol);
   }
 
   /// Is called, if the [Creature] collides with a goal tile.
   /// Does nothing by default, should be overwritten.
-  void onCollideWithGoal(GameObject collisionObject, int newRow, int newCol) {}
+  void onCollideWithGoal(GameObject collisionObject, int newRow, int newCol) {
+    // Update the position of all related game objects.
+    _updatePositions(newRow, newCol);
+  }
 
   /// Is called, if the [Creature] collides with a fox tile.
   /// Does nothing by default, should be overwritten.
-  void onCollideWithFox(GameObject collisionObject, int newRow, int newCol) {}
+  void onCollideWithFox(GameObject collisionObject, int newRow, int newCol) {
+    // Update the position of all related game objects.
+    _updatePositions(newRow, newCol);
+  }
 
   /// Is called, if the [Creature] collides with a rabbit tile.
   /// Does nothing by default, should be overwritten.
-  void onCollideWithRabbit(GameObject collisionObject, int newRow, int newCol) {}
+  void onCollideWithRabbit(GameObject collisionObject, int newRow, int newCol) {
+    // Update the position of all related game objects.
+    _updatePositions(newRow, newCol);
+  }
 
   /// Is called, if the [Creature] collides with a hedge tile.
   /// Does nothing by default, should be overwritten.
@@ -126,6 +134,20 @@ abstract class Creature extends GameObject {
   /// Is called, if the [Creature] collides with a wall tile.
   /// Does nothing by default, should be overwritten.
   void onCollideWithWall(GameObject collisionObject, int newRow, int newCol) {}
+
+  /// Is called, if the [Creature] collides with a speed power-up tile.
+  /// The power-up is applied by default.
+  void onCollideWithSpeedPowerup(
+      Powerup collisionObject,
+      int newRow,
+      int newCol) {
+
+    // Apply power-up on this [Creature].
+    collisionObject.applyOn(this);
+
+    // Update the position of all related game objects.
+    _updatePositions(newRow, newCol);
+  }
 }
 
 /// This class is meant as "Enum".

@@ -119,6 +119,17 @@ class LevelLoader {
           objects[position.row][position.col] =
             new Fox(position.row, position.col, t["enemyMovementType"]);
           break;
+        case TileType.SPEED_POWERUP:
+          print("LevelLoader: Speed power-up found at $position.");
+
+          objects[position.row][position.col] =
+          new CarrotPowerup.fromCoordinates(
+              position.row,
+              position.col,
+              t["appearChance"],
+              t["timeOnField"],
+              t["speedIncrease"]);
+          break;
         default:
           throw new UnknownTileTypeException("The given tile type is unknown!");
       }

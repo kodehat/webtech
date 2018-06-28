@@ -159,14 +159,50 @@ span > img {
 }
 
 .table-cell div {
-    width: calc(100vw / 8); /* calc(38px + 2.5vw); */
-    height: calc(100vw / 8); /* calc(38px + 2.5vw); */
+    width: 68px; /* calc(100vw / 8); */ /* calc(38px + 2.5vw); */
+    height: 68px; /* calc(100vw / 8); */ /* calc(38px + 2.5vw); */
     max-width: 68px;
     max-height: 68px;
     position: absolute;
     display: inline-block;
     image-rendering: pixelated;
     vertical-align: middle;
+}
+
+/*
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+    .table-cell div {
+        width: 76px;
+        height: 76px;
+    }
+}
+
+/*
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .table-cell div {
+        width: 76px;
+        height: 76px;
+    }
+}
+
+/*
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+    .table-cell div {
+        width: 44px;
+        height: 44px;
+    }
 }
 
 #game .field {
@@ -210,6 +246,12 @@ span > img {
     z-index: 8;
 }
 
+.speed_powerup {
+    background: url("assets/img/speed_powerup.png") no-repeat;
+    background-size: cover;
+    z-index: 8;
+}
+
 /*
     Animations:
  */
@@ -247,21 +289,6 @@ span > img {
 /*
     => Rabbit
  */
-@keyframes rabbit-right {
-    0% {
-        transform: translateX(0) translateY(0);
-    }
-    50% {
-        transform: translateX(19px) translateY(-10px);
-    }
-    100% {
-        transform: translateX(38px) translateY(0);
-    }
-}
-.rabbit-right {
-    animation: rabbit-right .425s ease-in normal;
-}
-
 @keyframes rabbit-left {
     0% {
         transform: translateX(0) translateY(0);
@@ -275,6 +302,21 @@ span > img {
 }
 .rabbit-left {
     animation: rabbit-left .425s ease-in normal;
+}
+
+@keyframes rabbit-right {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    50% {
+        transform: translateX(19px) translateY(-10px);
+    }
+    100% {
+        transform: translateX(38px) translateY(0);
+    }
+}
+.rabbit-right {
+    animation: rabbit-right .425s ease-in normal;
 }
 
 @keyframes rabbit-up {
@@ -322,7 +364,7 @@ span > img {
 #progressbar > div {
     background-color: #58B19F;
     width: 100%;
-    height: 8px;
+    height: 10px;
     border-radius: 10px;
 }
 
@@ -344,7 +386,7 @@ span > img {
 
 .modal-content {
     background-color: #6D214F;
-    margin: 20% auto;
+    margin: 15% auto; /* Was on "20% auto" previously. */
     padding: 20px;
     border: 3px solid #B33771;
     width: 75%

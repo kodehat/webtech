@@ -15,7 +15,7 @@ abstract class GameObject {
   /// Creates a new game object with the given [type] and a
   /// position with the coordinates [row] and [col].
   GameObject(final this._type, final int row, final int col) {
-    position = new Position.fromCoordinates(row, col);
+    this.position = new Position.fromCoordinates(row, col);
   }
 
   /// Sets the type.

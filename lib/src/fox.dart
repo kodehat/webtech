@@ -6,11 +6,5 @@ part of mazegame;
 class Fox extends Enemy {
 
   /// Creates a new fox game objects.
-  Fox(int row, int col, String movementType) :
-        super(TileType.FOX, row, col, movementType);
-
-  @override
-  void onCollideWithRabbit(GameObject collisionObject, int newRow, int newCol) {
-    MazeGameModel.level.gameOver = true;
-  }
+  Fox(int row, int col, String movementType) : super(TileType.FOX, row, col, movementType);
 }
