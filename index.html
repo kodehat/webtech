@@ -4,7 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RabbitRinth | A-maze-ing</title>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
-    <!--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">-->
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="favicon.ico">
     <script defer="" src="mazegameclient.dart.js"></script>
@@ -12,24 +11,37 @@
 </head>
 
 <body>
-    <div id="landscape_warning" class="invisible">
+    <div class="invisible" id="landscape_warning">
         <h3 class="subtitle">Please rotate your device back into portrait mode!</h3>
     </div>
     <div class="container has-text-centered">
-        <h1 class="animated bounceInDown" id="title">RabbitRinth</h1>
-        <h3 class="subtitle" id="subtitle">Guide the rabbit through the maze to find its hole.</h3>
-        <div class="button-group">
+        <h1 class="title" id="title">
+            RabbitRinth
+        </h1>
+        <h3 class="subtitle" id="subtitle">
+            Guide the rabbit
+            <span><img src="assets/img/rabbit.png" alt="Rabbit"></span>
+            through the maze
+            <span><img src="assets/img/hedge.png" alt="Hedge"></span>
+            to find its hole
+            <span><img src="assets/img/goal.png" alt="Hole"></span>
+            .
+        </h3>
+        <div class="loading">
+            Loading game...
+        </div>
+        <div class="button-group invisible">
             <div class="button-wrapper">
-                <button id="btn_continue" type="button" class="button invisible" disabled="">Continue</button>
+                <button class="button invisible" type="button" id="btn_continue">Continue »</button>
             </div>
             <div class="button-wrapper">
-                <button id="btn_start" type="button" class="button" disabled="">Loading</button>
+                <button class="button" type="button" id="btn_start">Start ›</button>
             </div>
             <div class="button-wrapper">
-                <button id="btn_tutorial" type="button" class="button invisible" disabled="">Tutorial</button>
+                <button class="button" type="button" id="btn_tutorial">Tutorial ?</button>
             </div>
             <div class="button-wrapper">
-                <button id="btn_about" type="button" class="button invisible" disabled="">About</button>
+                <button class="button" type="button" id="btn_about">About @</button>
             </div>
         </div>
     </div>
@@ -43,14 +55,15 @@
         <div class="modal-content has-text-centered">
             <h2></h2>
             <p></p>
-            <button id="btn_close_modal" type="button" class="button invisible">Close</button>
-            <button id="btn_next_level" type="button" class="button invisible">Next Level</button>
-            <button id="btn_main_menu" type="button" class="button invisible">Main Menu</button>
+            <button class="button invisible" type="button" id="btn_next_level">Next Level</button>
+            <button class="button is-small invisible" type="button" id="btn_previous_page">&lt;</button>
+            <button class="button is-small invisible" type="button" id="btn_next_page">&gt;</button>
+            <button class="button invisible" type="button" id="btn_main_menu">Main Menu</button>
         </div>
     </div>
-    <div class="container invisible" id="game_field">
-        <table id="game" cellpadding="0" cellspacing="0">
-        </table>
+    <div class="container invisible" id="game_wrapper">
+        <div class="table" id="game">
+        </div>
     </div>
     <div class="footer has-text-centered">
         <p id="mini_info"></p>
