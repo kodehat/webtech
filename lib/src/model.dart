@@ -33,7 +33,7 @@ class MazeGameModel {
   Future loadCurrentLevel() async {
 
     // Don't load a level if the game is running.
-    if (running) return;
+    if (this.running) return;
 
     // Load the level into the model and wait for completion.
     _level = await LevelLoader.load(this.levelNumber);

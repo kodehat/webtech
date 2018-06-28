@@ -14,6 +14,9 @@ abstract class Creature extends GameObject {
   /// Initial value is a terrain tile, which is below the [Creature].
   GameObject belowGameObject = new Terrain.fromCoordinates(0, 0);
 
+  /// Saves the position prior moving.
+  Position previousPosition;
+
   /// The direction of the [Creature] in which it's looking.
   String direction;
 
@@ -32,6 +35,9 @@ abstract class Creature extends GameObject {
   GameObject move(String direction) {
     // Update the [Creature]'s direction.
     this.direction = direction;
+
+    // Update the previous position.
+    this.previousPosition = this.position;
 
     // Get the addends based on the given direction.
     List<int> addends = Direction.getRowAndColIndication(direction);
@@ -66,6 +72,9 @@ abstract class Creature extends GameObject {
       case TileType.TERRAIN:
         onCollideWithTerrain(collisionObj, newRow, newCol);
         break;
+      case TileType.HEDGE:
+        onCollideWithHedge(collisionObj, newRow, newCol);
+        break;
       case TileType.GOAL:
         onCollideWithGoal(collisionObj, newRow, newCol);
         break;
@@ -74,6 +83,9 @@ abstract class Creature extends GameObject {
         break;
       case TileType.RABBIT:
         onCollideWithRabbit(collisionObj, newRow, newCol);
+        break;
+      case TileType.WALL:
+        onCollideWithWall(collisionObj, newRow, newCol);
         break;
       default:
         throw new UnknownTileTypeException("The tile type of the collision"
@@ -106,6 +118,14 @@ abstract class Creature extends GameObject {
   /// Is called, if the [Creature] collides with a rabbit tile.
   /// Does nothing by default, should be overwritten.
   void onCollideWithRabbit(GameObject collisionObject, int newRow, int newCol) {}
+
+  /// Is called, if the [Creature] collides with a hedge tile.
+  /// Does nothing by default, should be overwritten.
+  void onCollideWithHedge(GameObject collisionObject, int newRow, int newCol) {}
+
+  /// Is called, if the [Creature] collides with a wall tile.
+  /// Does nothing by default, should be overwritten.
+  void onCollideWithWall(GameObject collisionObject, int newRow, int newCol) {}
 }
 
 /// This class is meant as "Enum".

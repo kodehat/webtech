@@ -52,8 +52,8 @@ class MazeGameController {
   /// Boolean showing, if the mobile has been calibrated.
   bool _calibrated = false;
 
-  //TODO: Used?
-  int savedLevelNo;
+  /// The saved level number. Only used by the start and continue button.
+  int savedLevelNumber;
 
   /// Creates a new [MazeGameController] instance.
   MazeGameController() {
@@ -68,7 +68,7 @@ class MazeGameController {
     view.overlayNextLevelButton.onClick.listen(onClickOverlayNextLevel);
 
     // Listen to mouse clicks on menu button
-    view.overlayMainMenuButton.onClick.listen(onClickOverlayMenuButton);
+    view.overlayMainMenuButton.onClick.listen(onClickOverlayMainMenuButton);
 
     // Listen to 3D orientation movement of the mobile to move the rabbit.
     window.onDeviceOrientation.listen(handleMobileDeviceMovement);
@@ -90,8 +90,12 @@ class MazeGameController {
   /// Handles the movement via keyboard.
   /// Uses the arrow keys (LEFT, RIGHT, UP and DOWN).
   void handleKeyboardMovement(KeyboardEvent event) {
+
+    // If game is stopped, return.
     if (game.stopped) return;
-    switch (e.keyCode) {
+
+    // Switch all possible key codes (LEFT, RIGHT, UP, DOWN).
+    switch (event.keyCode) {
       case KeyCode.LEFT:
         this._moveRabbit(Direction.LEFT);
         //game._rabbit.moveLeft();
@@ -151,22 +155,24 @@ class MazeGameController {
     // has reset this boolean.
     if (this.game.rabbit.isAbleToMove) {
 
-      // Move the rabbit LEFT.
-      if (gamma <= this._gammaToggleLeft) {
-        this._moveRabbit(Direction.LEFT);
-
-        // Move the rabbit RIGHT.
-      } else if (gamma >= this._gammaToggleRight) {
-        this._moveRabbit(Direction.RIGHT);
-
-        // Move the rabbit UP.
-      } else if (beta <= this._betaToggleUp) {
+      // Move the rabbit UP.
+      if (beta <= this._betaToggleUp) {
         this._moveRabbit(Direction.UP);
 
         // Move the rabbit down.
       } else if (beta >= this._betaToggleDown) {
         this._moveRabbit(Direction.DOWN);
+
+        // Move the rabbit LEFT.
+      } else if (gamma <= this._gammaToggleLeft) {
+        this._moveRabbit(Direction.LEFT);
+
+        // Move the rabbit RIGHT.
+      } else if (gamma >= this._gammaToggleRight) {
+          this._moveRabbit(Direction.RIGHT);
       }
+
+
 
 //      // Move UP
 //      if (beta <= this._betaToggleUp) {
@@ -214,115 +220,119 @@ class MazeGameController {
     // Set mini info text.
     view.miniInfo.text = "Device orientation re-calibrated!";
 
+    // Update the mini info timer.
     updateMiniInfoTimer();
+
+    // Reset the calibration state.
     _calibrated = false;
-    hasMoved = false;
   }
 
-  onClickStartButton(MouseEvent e) async {
-    noSleep.enable();
-    fullscreenWorkaround(querySelector("body"));
+  /// Handles the start of the game.
+  /// Called by clicking on the start button in the main menu.
+  void onClickStartButton(MouseEvent event) {
 
+    // If the game is already running, return.
     if (game.running) return;
-    //Needed to choose the right level, after continuing a previous game and after that starting a new game.
-    game.levelNr = savedLevelNo ?? 1;
-    await game.loadLevel(game.levelNumber);
 
-    view.generateGameField(game);
+    // Toggle calibration state to calibrated.
+    this._calibrated = true;
 
-    //querySelector(".button-group").classes.toggle("invisible", true);
-    querySelectorAll(".button-wrapper > .button").classes.toggle("invisible", true);
+    // Enable the mobile screen sleep prevention.
+    // Can only be activated by a user gesture (e.g. button click).
+    this.noSleep.enable();
+    // Request full-screen for the body HTML element.
+    this.fullscreenWorkaround(querySelector("body"));
 
-    view.subtitle.text = game.level.description;
-    view.title.text = game.level.name;
-    view.progressbarContainer.classes.toggle("invisible");
-    view.gameWrapper.classes.toggle("invisible");
+    // Needed to choose the right level,
+    // after continuing a previous game and after that starting a new game.
+    this.game.levelNumber = savedLevelNumber ?? 1;
 
-    game.start();
-
-    _calibrated = true;
-
-    levelCountdownTrigger = new Timer.periodic(levelCountdown, (_) {
-      if (game.level.done || game.level.gameOver) {
-        levelCountdownTrigger.cancel();
-        enemyMoveTrigger.cancel();
-        return;
-      }
-      game.level.timeLeft -= 0.2;
-      if (game.level.timeLeft.floor() <= 0) {
-        game.level.gameOver = true;
-        levelCountdownTrigger.cancel();
-        enemyMoveTrigger.cancel();
-        game.stop();
-      }
-      view.update(game, true);
-    });
-
-    enemyMoveTrigger = new Timer.periodic(enemyMoveCountdown, (_) {
-      game._enemies.forEach((e) => e.move());
-      view.update(game);
-    });
-  }
-
-  void onClickOverlayMenuButton(MouseEvent e) {
-    game.stop();
-    game._enemies.clear();
-    game._rabbit = null;
-    enemyMoveTrigger.cancel();
-    querySelectorAll(".button-wrapper > .button").classes.toggle("invisible", false);
-
-    view.closeOverlay();
-    view.title.text = "RabbitRinth";
-    view.subtitle.text = "Guide the rabbit through the maze to find its hole.";
-    view.progressbarContainer.classes.toggle("invisible");
-    view.gameWrapper.classes.toggle("invisible");
-  }
-
-  Future onClickContinueButton(MouseEvent e) async {
-    savedLevelNo = int.parse(window.localStorage['savedLevel']);
-    await onClickStartButton(e);
-    savedLevelNo = null;
-    print("Continue-Button clicked!");
+    // Load and start the level.
+    this._startLevel();
   }
 
   Future onClickOverlayNextLevel(MouseEvent e) async {
-    if (game.running || !game.level.done) return;
-    game._enemies.clear();
+    // If the game is already running, return.
+    if (game.running) return;
+
+    // Close the overlay.
     view.closeOverlay();
-    game.levelNumber++;
-    window.localStorage['savedLevel'] = game.levelNumber.toString();
-    await game.loadLevel(game.levelNumber);
 
-    view.generateGameField(game);
+    // Toggle calibration state to calibrated.
+    this._calibrated = true;
 
-    view.title.text = game.level.name;
-    view.subtitle.text = game.level.description;
-    view.progressbar.style.width = "100%";
+    // Enable the mobile screen sleep prevention.
+    // Can only be activated by a user gesture (e.g. button click).
+    this.noSleep.enable();
 
-    game.start();
+    // Increase level number.
+    this.game.levelNumber += 1;
 
-    _calibrated = true;
+    // Load and start the level.
+    this._startLevel();
 
-    levelCountdownTrigger = new Timer.periodic(levelCountdown, (_) {
-      if (game.level.done || game.level.gameOver) {
-        levelCountdownTrigger.cancel();
-        enemyMoveTrigger.cancel();
-        return;
-      }
-      game.level.timeLeft -= 0.2;
-      if (game.level.timeLeft.floor() <= 0) {
-        game.level.gameOver = true;
-        levelCountdownTrigger.cancel();
-        enemyMoveTrigger.cancel();
-        game.stop();
-      }
-      view.update(game, true);
-    });
+//    if (game.running || !game.level.done) return;
+//    game._enemies.clear();
+//    view.closeOverlay();
+//    game.levelNumber++;
+//    window.localStorage['savedLevel'] = game.levelNumber.toString();
+//    await game.loadLevel(game.levelNumber);
+//
+//    view.generateGameField(game);
+//
+//    view.title.text = game.level.name;
+//    view.subtitle.text = game.level.description;
+//    view.progressbar.style.width = "100%";
+//
+//    game.start();
+//
+//    _calibrated = true;
+//
+//    levelCountdownTrigger = new Timer.periodic(levelCountdown, (_) {
+//      if (game.level.done || game.level.gameOver) {
+//        levelCountdownTrigger.cancel();
+//        enemyMoveTrigger.cancel();
+//        return;
+//      }
+//      game.level.timeLeft -= 0.2;
+//      if (game.level.timeLeft.floor() <= 0) {
+//        game.level.gameOver = true;
+//        levelCountdownTrigger.cancel();
+//        enemyMoveTrigger.cancel();
+//        game.stop();
+//      }
+//      view.update(game, true);
+//    });
+//
+//    enemyMoveTrigger = new Timer.periodic(enemyMoveCountdown, (_) {
+//      game._enemies.forEach((e) => e.move());
+//      view.update(game);
+//    });
+  }
 
-    enemyMoveTrigger = new Timer.periodic(enemyMoveCountdown, (_) {
-      game._enemies.forEach((e) => e.move());
-      view.update(game);
-    });
+  /// Called, if the main menu button in the overlay is clicked.
+  void onClickOverlayMainMenuButton(MouseEvent e) {
+
+    // Stop the game, if not stopped yet.
+    this.game.stop();
+    this.game._enemies.clear();
+    this.game._rabbit = null;
+
+    // Reset elements.
+    view.resetToMainMenu();
+
+    // Close the overlay.
+    view.closeOverlay();
+  }
+
+  // Called, when the main menu continue button is clicked.
+  void onClickContinueButton(MouseEvent event) {
+
+    // Get the saved level number (can be null).
+    this.savedLevelNumber = int.parse(window.localStorage['savedLevel']);
+
+    // Call the start button's callback method.
+    onClickStartButton(event);
   }
 
   /// Handles the change of the screen orientation and shows a warning in
@@ -378,8 +388,85 @@ class MazeGameController {
     }
   }
 
+  Future _startLevel() async {
+    // Set and show the loading text.
+    view.loadingDiv.text = "Loading level ${this.game.levelNumber}...";
+    view.visible(view.loadingDiv);
+
+    // Hide the main menu buttons.
+    view.invisible(view.mainMenuButtonGroup);
+
+    // Wait until the level is loaded.
+    await this.game.loadCurrentLevel();
+
+    // Generate the game field.
+    view.generateGameField(MazeGameModel.level);
+
+    // Update the title and the subtitle.
+    view.updateTitleAndSubtitle();
+
+    // Start the level countdown.
+    MazeGameModel.level.start();
+
+    // Start rabbit (player) movement.
+    this.game.rabbit.startTimer(this.game);
+
+    // Start enemy movement
+    this.game.enemies.forEach((final Enemy enemy) => enemy.startMoving(game));
+
+    // Set the view update timer.
+    this._viewTimer = new Timer.periodic(viewUpdateCountdown,
+        _updateViewTrigger);
+
+    // Start the game routine.
+    game.start();
+
+    // Hide the loading text.
+    view.invisible(view.loadingDiv);
+
+    // Show the progressbar and the game field.
+    view.visible(view.progressbarContainer);
+    view.visible(view.gameWrapper);
+  }
+
+  /// Trigger for the view update timer.
+  /// Updates the view periodically.
+  void _updateViewTrigger(Timer timer) {
+    print("Controller: Updating view!");
+
+    this.view.updateTitleAndSubtitle();
+    this.view.updateTimerAndBrightness();
+    this.view.updateNotLivingTiles();
+    this.view.updateEnemies(this.game);
+
+    // Check for game over or level done.
+    if (MazeGameModel.level.gameOver
+      || MazeGameModel.level.done) {
+      // Stop the game.
+      this.game.stop();
+
+      // Stop all timers.
+      this._viewTimer.cancel();
+      MazeGameModel.level.stop();
+      this.game.rabbit.stopTimer();
+      this.game.enemies.forEach((final Enemy enemy) => enemy.stopMoving());
+
+      // Show the correct overlay.
+      if (MazeGameModel.level.gameOver) {
+        view.showGameOverOverlay(this.game.levelNumber);
+      } else if (MazeGameModel.level.done) {
+        // Save the level.
+        window.localStorage['savedLevel'] =
+            min(this.game.levelNumber + 1, Constants.MAX_LEVEL).toString();
+
+        view.showLevelFinishedOverlay(MazeGameModel.level.timeLeft.floor(),
+            this.game.levelNumber);
+      }
+    }
+  }
+
   /// Moves the rabbit into the given [direction].
-  void _moveRabbit(String direction) {
+  void _moveRabbit(final String direction) {
 
     // Don't let the rabbit move again, until the rabbit timer has completed.
     this.game.rabbit.isAbleToMove = false;

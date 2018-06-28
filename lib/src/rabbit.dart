@@ -9,7 +9,7 @@ class Rabbit extends Creature {
   /// This is reset by the [moveTimer].
   bool isAbleToMove = true;
 
-  /// Speed of the enemy in milliseconds.
+  /// Speed of the rabbit in milliseconds.
   /// Describes, when the rabbit tries to move.
   int _speed;
 
@@ -28,27 +28,24 @@ class Rabbit extends Creature {
 
   @override
   void onCollideWithGoal(GameObject collisionObject, int newRow, int newCol) {
-    //TODO: Update!
-    //_game.level.done = true;
-    //_game.stop();
+    MazeGameModel.level.done = true;;
   }
 
   @override
   void onCollideWithFox(GameObject collisionObject, int newRow, int newCol) {
-    //TODO: Update!
-    //_game.level.gameOver = true;
-    // _game.stop();
+    MazeGameModel.level.gameOver = true;
   }
 
   /// Starts the movement of the rabbit by starting the timer.
   void startTimer(final MazeGameModel game) {
     // Return, if already moving.
-    if (_moveTimer.isActive) return;
+    if (this._moveTimer != null && this._moveTimer.isActive) return;
 
     // Create the countdown.
     this._moveCountdown = new Duration(milliseconds: this._speed);
-    // Create the timer and set the [_resetMovementState] method as callback.
-    this._moveTimer = new Timer(this._moveCountdown, _resetMovementState);
+    // Create the periodic timer and set the [_resetMovementState] method as callback.
+    this._moveTimer =
+      new Timer.periodic(this._moveCountdown, _resetMovementState);
   }
 
   /// Stops the movement of the rabbit by cancelling the timer.
@@ -61,5 +58,5 @@ class Rabbit extends Creature {
   }
 
   /// Resets the movement state of the rabbit.
-  void _resetMovementState() => this.isAbleToMove = true;
+  void _resetMovementState(Timer timer) => this.isAbleToMove = true;
 }

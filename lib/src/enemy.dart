@@ -47,7 +47,7 @@ abstract class Enemy extends Creature {
   /// Starts the movement of the enemy by starting the timer.
   void startMoving(final MazeGameModel game) {
     // Return, if already moving.
-    if (_moveTimer.isActive) return;
+    if (this._moveTimer != null && this._moveTimer.isActive) return;
 
     // Set the model for intelligent enemy movement.
     this._game = game;

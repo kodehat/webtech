@@ -44,7 +44,7 @@ class Level {
   /// Starts the level countdown timer.
   void start() {
     // If the timer is already running, return.
-    if (_levelTimer.isActive) return;
+    if (_levelTimer != null && _levelTimer.isActive) return;
 
     // Set and start the timer and set the [_updateTime] as callback method.
     this._levelTimer = new Timer.periodic(this._levelCountdown, _updateTime);
@@ -53,7 +53,7 @@ class Level {
   /// Stops the level countdown timer.
   void stop() {
     // If the timer isn't running, return.
-    if (!this._levelTimer.isActive) return;
+    if (this._levelTimer == null || !this._levelTimer.isActive) return;
 
     // Cancel the level countdown timer.
     this._levelTimer.cancel();
@@ -89,8 +89,11 @@ class Level {
 
     // Search for a game object based on the given [tileType].
     this.objects.forEach((final List<GameObject> lgo) {
-       resultGameObject = lgo.firstWhere((final GameObject go)
-        => go.type == tileType);
+       lgo.forEach((final GameObject gameObject) {
+         if (gameObject.type == tileType) {
+           resultGameObject = gameObject;
+         }
+       });
     });
 
     // Return the (found) object (can be null).
@@ -102,12 +105,12 @@ class Level {
   List<GameObject> findAllGameObjectsExact(final String tileType) {
 
     // The later returned list of matching game objects.
-    List<GameObject> resultGameObjects;
+    List<GameObject> resultGameObjects = [];
 
     // Search for all game object based on the given [tileType].
     this.objects.forEach((final List<GameObject> lgo) {
-      resultGameObjects = lgo.where((final GameObject go)
-        => go.type == tileType);
+      resultGameObjects.addAll(lgo.where((final GameObject go)
+        => go.type == tileType));
     });
 
     // Return the (found) objects (can be null).

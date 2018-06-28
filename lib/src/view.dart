@@ -129,7 +129,9 @@ class MazeGameView {
 
   void updateRabbit(Rabbit rabbit) {
     print("View: Updating rabbit!");
-    _updateElementInGameField(rabbit.position.row, rabbit.position.col);
+    _updateElementInGameFieldWithPosition(rabbit.position);
+    _updateElementInGameFieldWithPosition(rabbit.belowGameObject.position);
+    _updateElementInGameFieldWithPosition(rabbit.previousPosition);
   }
 
   /// Updates the positions of all enemies in the view.
@@ -140,6 +142,13 @@ class MazeGameView {
     game.enemies.forEach((final Enemy e) =>
         _updateElementInGameField(e.position.row, e.position.col
     ));
+  }
+
+  /// Updates the title and the subtitle.
+  void updateTitleAndSubtitle() {
+    // Update the title and the subtitle.
+    this.title.text = MazeGameModel.level.name;
+    this.subtitle.text = MazeGameModel.level.description;
   }
 
   /// Updates the timer (the progressbar).
@@ -157,17 +166,17 @@ class MazeGameView {
 
     // Update the brightness of all required fields.
 
-    // Everything, but rabbit and goal.
-    querySelectorAll(".table-cell div:not(.rabbit):not(.goal)").style.filter =
-      "brightness(${max(timeLeftInPercent, 35)}%)";
-
     // Rabbit only.
     querySelectorAll(".rabbit").style.filter =
-      "brightness(${max(timeLeftInPercent, 60)}%)";
+    "brightness(${max(timeLeftInPercent, 60)}%)";
 
     // Goal only.
     querySelectorAll(".goal").style.filter =
-      "brightness(${max(timeLeftInPercent, 60)}%)";
+    "brightness(${max(timeLeftInPercent, 60)}%)";
+
+    // Everything, but rabbit and goal.
+    querySelectorAll(".table-cell div:not(.rabbit):not(.goal)").style.filter =
+      "brightness(${max(timeLeftInPercent, 35)}%)";
   }
 
   /// Update all not living tiles in view. For instance hedge and terrain.
@@ -199,7 +208,7 @@ class MazeGameView {
 
     // Set overlay heading and description.
     this.overlayTitle.text = "Game Over!";
-    this.overlayDescription.text =
+    this.overlayDescription.innerHtml =
       "You reached level <strong>$levelReached</strong>!";
 
     // Make the overlay buttons visible/invisible.
@@ -218,7 +227,7 @@ class MazeGameView {
     if (levelCompleted != Constants.MAX_LEVEL) {
       // Set overlay heading and description.
       this.overlayTitle.text = "Level Completed!";
-      this.overlayDescription.text =
+      this.overlayDescription.innerHtml =
       "You completed level <strong>$levelCompleted</strong>"
           " with <strong>$timeLeft</strong> sec left!";
 
@@ -236,10 +245,16 @@ class MazeGameView {
       // Make the overlay buttons visible/invisible.
       visible(this.overlayMainMenuButton);
       invisible(this.overlayNextLevelButton);
-
-      // Open the overlay.
-      this.openOverlay();
     }
+
+    // Open the overlay.
+    this.openOverlay();
+  }
+
+  /// Updates a specific game object in the DOM game field
+  /// with the given position.
+  void _updateElementInGameFieldWithPosition(final Position position) {
+    this._updateElementInGameField(position.row, position.col);
   }
 
   /// Updates a specific game object in the DOM game field.
@@ -260,6 +275,30 @@ class MazeGameView {
       // Add new classes.
       tableCell.classes.addAll([gameObject.type.toLowerCase()]);
     }
+  }
+
+  /// Resets the title, the subtitle and the game containers to
+  /// the initial state.
+  void resetToMainMenu() {
+    // Hide the progressbar.
+    this.invisible(this.progressbarContainer);
+
+    // Hide and clear the game field.
+    this.invisible(this.gameWrapper);
+    this.gameTable.innerHtml = "";
+
+    // Show the main menu buttons.
+    this.visible(this.mainMenuButtonGroup);
+
+    // Reset the title and subtitle.
+    this.title.text = "RabbitRinth";
+    this.subtitle.innerHtml = "Guide the rabbit "
+        "<span><img src='assets/img/rabbit.png' alt='Rabbit'></span>"
+        " through the maze "
+        "<span><img src='assets/img/hedge.png' alt='Hedge'></span>"
+        " to find its hole "
+        "<span><img src='assets/img/goal.png' alt='Hole'></span>"
+        " .";
   }
 
   /// Toggles the visibility of an element.

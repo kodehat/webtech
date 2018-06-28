@@ -95,12 +95,16 @@ class LevelLoader {
             new Goal.fromCoordinates(position.row, position.col);
           break;
         case TileType.RABBIT:
+          print("LevelLoader: Rabbit found at $position.");
+
           objects[position.row][position.col] =
             new Rabbit(position.row, position.col);
           break;
         case TileType.FOX:
+          print("LevelLoader: Fox found at $position.");
+
           objects[position.row][position.col] =
-            new Fox(position.row, position.col, t["enemyMovementType"]);;
+            new Fox(position.row, position.col, t["enemyMovementType"]);
           break;
         default:
           throw new UnknownTileTypeException("The given tile type is unknown!");
