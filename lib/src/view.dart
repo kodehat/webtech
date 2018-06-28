@@ -49,7 +49,7 @@ class MazeGameView {
   void update(MazeGameModel game, [bool timerOnly = false]) {
     if (game.level.gameOver) {
       overlayTitle.text = "Game Over!";
-      overlayDescription.innerHtml = "You reached level <strong>${game.levelNo}</strong>!";
+      overlayDescription.innerHtml = "You reached level <strong>${game.levelNumber}</strong>!";
       overlayMainMenuButton.classes.toggle("invisible", false);
       overlayNextLevelButton.classes.toggle("invisible", true);
 
@@ -57,21 +57,21 @@ class MazeGameView {
     }
 
     if (game.level.done) {
-        if (game.levelNo == LevelLoader.MAX_LEVEL) {
+        if (game.levelNumber == LevelLoader.MAX_LEVEL) {
           overlayTitle.text = "Game Finished!";
-          overlayDescription.innerHtml = "You completed level <strong>${game.levelNo}</strong> with <strong>${game.timeLeft.floor()}</strong> sec left!<br>Congratulations!<br>You finished the game!";
+          overlayDescription.innerHtml = "You completed level <strong>${game.levelNumber}</strong> with <strong>${game.level.timeLeft.floor()}</strong> sec left!<br>Congratulations!<br>You finished the game!";
           overlayNextLevelButton.classes.toggle("invisible", true);
         } else {
           overlayTitle.text = "Level Completed!";
-          overlayDescription.innerHtml = "You completed level <strong>${game.levelNo}</strong> with <strong>${game.timeLeft.floor()}</strong> sec left!";
+          overlayDescription.innerHtml = "You completed level <strong>${game.levelNumber}</strong> with <strong>${game.level.timeLeft.floor()}</strong> sec left!";
           overlayNextLevelButton.classes.toggle("invisible", false);
         }
         openOverlay();
     }
 
     if (timerOnly) {
-      progressbarTitle.text = "${game.timeLeft.floor()} sec";
-      int timeInPerc = ((game.timeLeft / game.level.time) * 100).floor();
+      progressbarTitle.text = "${game.level.timeLeft.floor()} sec";
+      int timeInPerc = ((game.level.timeLeft / game.level.timeTotal) * 100).floor();
       progressbar.style.width = "$timeInPerc%";
       //querySelectorAll(".field:not(.rabbit)").style.filter = "brightness(${max(timeInPerc, 35)}%)";
       querySelectorAll(".table-cell div:not(.rabbit):not(.goal)").style.filter = "brightness(${max(timeInPerc, 35)}%)";

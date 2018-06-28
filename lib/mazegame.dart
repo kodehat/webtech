@@ -7,8 +7,9 @@ import 'dart:async';
 import 'dart:js';
 import 'dart:math';
 
+/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
 part 'src/model.dart';
-part 'src/control.dart';
+part 'src/controller.dart';
 part 'src/view.dart';
 part 'src/creature.dart';
 part 'src/enemy.dart';

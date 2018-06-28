@@ -2,6 +2,9 @@ part of mazegame;
 
 /// Represents a position on the game field.
 /// Consists of a row and a column coordinate.
+/// This object is immutable!
+///
+/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
 class Position {
 
   /// The row coordinate.

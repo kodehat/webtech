@@ -1,20 +1,31 @@
 part of mazegame;
 
+/// Abstract class representing a creature on the game field.
+/// This includes the rabbit and the foxes.
+/// It contains moving functionality and collision checking.
+///
+/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
 abstract class Creature extends GameObject {
 
-  final MazeGameModel _game;
+  /// This attribute holds the game objects, which is below the [Creature]
+  /// after moving. For instance a fox moves onto a goal field. This goal
+  /// game object is now saved in this attribute until
+  /// the fox moves away from it.
+  /// Initial value is a terrain tile, which is below the [Creature].
+  GameObject belowGameObject = new Terrain.fromCoordinates(0, 0);
 
-  Creature(MazeGameModel this._game, String type, int row, int col) : super(type, row, col);
+  /// Creates a new [Creature] with a given [type] and a position
+  /// with a [row] and a [col] coordinate.
+  Creature(final String type, final int row, final int col) :
+        super(type, row, col);
 
-  void _moveTo(int newRow, int newCol) {
-    // Update object at previous/own position.
-    _game.level.objects[super.position.row][super.position.col] = _game.level.objects[newRow][newCol];
+  /// Tries to move the [Creature] onto the given coordinates.
+  /// Additionally handles collision checking.
+  void _moveTo(final int newRow, final int newCol) {
 
-    // Update own position.
-    super.position = new Position.fromCoordinates(newRow, newCol);
-
-    // Update self at new position;
-    _game.level.objects[newRow][newCol] = this;
+    // Move to the new position and update the [belowGameObject].
+    this.belowGameObject =
+        MazeGameModel._level.updateGameObjectAtRowAndCol(newRow, newCol, this);
   }
 
   GameObject _move(int dRow, int dCol) {

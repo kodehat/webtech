@@ -2,6 +2,8 @@ part of mazegame;
 
 /// An abstract class representing a tile on the game field.
 /// This tile has limited functionality.
+///
+/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
 abstract class Tile extends GameObject {
 
   /// Creates a new tile based on the given [type] and a position

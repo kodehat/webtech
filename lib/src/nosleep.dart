@@ -1,6 +1,8 @@
 part of mazegame;
 
 /// Prevents sleeping of mobile devices.
+///
+/// => Authors: Marc-Niclas Harm
 class NoSleep {
 
   /// A small video preventing the mobile to sleep.

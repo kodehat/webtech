@@ -67,25 +67,25 @@ class MazeGameController {
       if (game.stopped) return;
       switch (e.keyCode) {
         case KeyCode.LEFT:
-          game.rabbit.moveLeft();
+          game._rabbit.moveLeft();
           querySelector(".rabbit").classes.toggle("rabbit-left");
           new Timer(rabbitMoveCountdown, () => view.update(game));
           //view.update(game);
           break;
         case KeyCode.RIGHT:
-          game.rabbit.moveRight();
+          game._rabbit.moveRight();
           querySelector(".rabbit").classes.toggle("rabbit-right");
           new Timer(rabbitMoveCountdown, () => view.update(game));
           //view.update(game);
           break;
         case KeyCode.UP:
-          game.rabbit.moveUp();
+          game._rabbit.moveUp();
           querySelector(".rabbit").classes.toggle("rabbit-up");
           new Timer(rabbitMoveCountdown, () => view.update(game));
           //view.update(game);
           break;
         case KeyCode.DOWN:
-          game.rabbit.moveDown();
+          game._rabbit.moveDown();
           querySelector(".rabbit").classes.toggle("rabbit-down");
           new Timer(rabbitMoveCountdown, () => view.update(game));
           //view.update(game);
@@ -125,7 +125,7 @@ class MazeGameController {
 
     if (!hasMoved) {
       if (beta <= betaToggleUp) { // Move UP
-        game.rabbit.moveUp();
+        game._rabbit.moveUp();
         querySelector(".rabbit").classes.toggle("rabbit-up");
         new Timer(rabbitMoveCountdown, () => view.update(game));
         //view.update(game);
@@ -133,7 +133,7 @@ class MazeGameController {
         rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
         hasMoved = true;
       } else if(beta >= betaToggleDown){ //Move Down
-        game.rabbit.moveDown();
+        game._rabbit.moveDown();
         querySelector(".rabbit").classes.toggle("rabbit-down");
         new Timer(rabbitMoveCountdown, () => view.update(game));
         //view.update(game);
@@ -141,7 +141,7 @@ class MazeGameController {
         rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
         hasMoved = true;
       } else if(gamma <= gammaToggleLeft) { //Move Left
-        game.rabbit.moveLeft();
+        game._rabbit.moveLeft();
         querySelector(".rabbit").classes.toggle("rabbit-left");
         new Timer(rabbitMoveCountdown, () => view.update(game));
         //view.update(game);
@@ -149,7 +149,7 @@ class MazeGameController {
         rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
         hasMoved = true;
       } else if(gamma >= gammaToggleRight) { //Move Right
-        game.rabbit.moveRight();
+        game._rabbit.moveRight();
         querySelector(".rabbit").classes.toggle("rabbit-right");
         new Timer(rabbitMoveCountdown, () => view.update(game));
         //view.update(game);
@@ -167,7 +167,7 @@ class MazeGameController {
     if (game.running) return;
     //Needed to choose the right level, after continuing a previous game and after that starting a new game.
     game.levelNr = savedLevelNo ?? 1;
-    await game.loadLevel(game.levelNo);
+    await game.loadLevel(game.levelNumber);
 
     view.generateField(game);
 
@@ -189,8 +189,8 @@ class MazeGameController {
         enemyMoveTrigger.cancel();
         return;
       }
-      game.timeLeft -= 0.2;
-      if (game.timeLeft.floor() <= 0) {
+      game.level.timeLeft -= 0.2;
+      if (game.level.timeLeft.floor() <= 0) {
         game.level.gameOver = true;
         levelCountdownTrigger.cancel();
         enemyMoveTrigger.cancel();
@@ -200,15 +200,15 @@ class MazeGameController {
     });
 
     enemyMoveTrigger = new Timer.periodic(enemyMoveCountdown, (_) {
-      game.enemies.forEach((e) => e.move());
+      game._enemies.forEach((e) => e.move());
       view.update(game);
     });
   }
 
   void onClickOverlayMenuButton(MouseEvent e) {
     game.stop();
-    game.enemies.clear();
-    game.rabbit = null;
+    game._enemies.clear();
+    game._rabbit = null;
     enemyMoveTrigger.cancel();
     querySelectorAll(".button-wrapper > .button").classes.toggle("invisible", false);
 
@@ -220,7 +220,7 @@ class MazeGameController {
   }
 
   Future onClickContinueButton(MouseEvent e) async {
-    savedLevelNo = int.parse(game.local['level']);
+    savedLevelNo = int.parse(window.localStorage['savedLevel']);
     await onClickStartButton(e);
     savedLevelNo = null;
     print("Continue-Button clicked!");
@@ -233,11 +233,11 @@ class MazeGameController {
 
   Future onClickOverlayNextLevel(MouseEvent e) async {
     if (game.running || !game.level.done) return;
-    game.enemies.clear();
+    game._enemies.clear();
     view.closeOverlay();
-    game.levelNo++;
-    game.local['level'] = game.levelNo.toString();
-    await game.loadLevel(game.levelNo);
+    game.levelNumber++;
+    window.localStorage['savedLevel'] = game.levelNumber.toString();
+    await game.loadLevel(game.levelNumber);
 
     view.generateField(game);
 
@@ -255,8 +255,8 @@ class MazeGameController {
         enemyMoveTrigger.cancel();
         return;
       }
-      game.timeLeft -= 0.2;
-      if (game.timeLeft.floor() <= 0) {
+      game.level.timeLeft -= 0.2;
+      if (game.level.timeLeft.floor() <= 0) {
         game.level.gameOver = true;
         levelCountdownTrigger.cancel();
         enemyMoveTrigger.cancel();
@@ -266,7 +266,7 @@ class MazeGameController {
     });
 
     enemyMoveTrigger = new Timer.periodic(enemyMoveCountdown, (_) {
-      game.enemies.forEach((e) => e.move());
+      game._enemies.forEach((e) => e.move());
       view.update(game);
     });
   }
@@ -317,8 +317,8 @@ class MazeGameController {
 
   void inDevAddTimeCheat(Event e) {
     if (game.running) {
-      game.level.time += 10.0;
-      game.timeLeft += 10.0;
+      game.level.timeTotal += 10.0;
+      game.level.timeLeft += 10.0;
     }
   }
 }
