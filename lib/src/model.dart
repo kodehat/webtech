@@ -3,7 +3,7 @@ part of mazegame;
 /// The [MazeGameModel] class represents the game model.
 /// It contains relevant information like the current level and the game-state.
 ///
-/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 class MazeGameModel {
 
   /// The current level.

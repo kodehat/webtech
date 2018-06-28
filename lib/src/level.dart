@@ -4,7 +4,7 @@ part of mazegame;
 /// This class is created by the [LevelLoader], which
 /// parses and handles level JSON files.
 ///
-/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 class Level {
 
   /// Name of the level. Shown as title in the game view.
@@ -190,7 +190,7 @@ class Level {
 /// This exception should be thrown, if a game object in a level is being
 /// accessed, but the row and column coordinate are out of bounds.
 ///
-/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 class LevelObjectAccessOutOfBoundsException implements Exception {
 
   /// Message of the exception.

@@ -68,8 +68,19 @@ class MazeGameView {
   /// Returns the main menu button in the overlay.
   HtmlElement get overlayMainMenuButton => querySelector("#btn_main_menu");
 
+  /// Goes to the next tutorial page in the overlay.
+  HtmlElement get overlayNextTutorialPageButton =>
+      querySelector("#btn_next_page");
+
+  /// Goes to the previous tutorial page in the overlay.
+  HtmlElement get overlayPreviousTutorialPageButton =>
+      querySelector("#btn_previous_page");
+
   /// A list of lists containing all game fields.
   List<List<HtmlElement>> fields;
+
+  /// Represents the current tutorial page;
+  int currentTutorialPage = 0;
 
   /// Generates the game field in the browser based on the level game field.
   void generateGameField(final Level level) {
@@ -128,7 +139,8 @@ class MazeGameView {
   }
 
   void updateRabbit(Rabbit rabbit) {
-    print("View: Updating rabbit!");
+    //print("View: Updating rabbit!");
+
     _updateElementInGameFieldWithPosition(rabbit.position);
     _updateElementInGameFieldWithPosition(rabbit.belowGameObject.position);
     _updateElementInGameFieldWithPosition(rabbit.previousPosition);
@@ -136,7 +148,7 @@ class MazeGameView {
 
   /// Updates the positions of all enemies in the view.
   void updateEnemies(final MazeGameModel game) {
-    print("View: Updating all enemies!");
+    //print("View: Updating all enemies!");
 
     // Iterate each enemy and update it's position in view.
     game.enemies.forEach((final Enemy e) =>
@@ -153,7 +165,7 @@ class MazeGameView {
 
   /// Updates the timer (the progressbar).
   void updateTimerAndBrightness() {
-    print("View: Updating timer and brightness!");
+    //print("View: Updating timer and brightness!");
 
     // The time left in percent.
     int timeLeftInPercent =
@@ -181,7 +193,7 @@ class MazeGameView {
 
   /// Update all not living tiles in view. For instance hedge and terrain.
   void updateNotLivingTiles() {
-    print("View: Updating not living tiles!");
+    //print("View: Updating not living tiles!");
 
 
     final level = MazeGameModel.level;
@@ -245,6 +257,44 @@ class MazeGameView {
       // Make the overlay buttons visible/invisible.
       visible(this.overlayMainMenuButton);
       invisible(this.overlayNextLevelButton);
+    }
+
+    // Open the overlay.
+    this.openOverlay();
+  }
+
+  /// Shows a current tutorial page in the overlay.
+  void showTutorialOverlay() {
+    print(this.currentTutorialPage);
+
+    // Set title and description.
+    this.overlayTitle.text =
+        Constants.TUTORIAL_MESSAGES[this.currentTutorialPage][0];
+    this.overlayDescription.innerHtml =
+        Constants.TUTORIAL_MESSAGES[this.currentTutorialPage][1];
+
+    // Ensure next level button is invisible.
+    invisible(this.overlayNextLevelButton);
+
+    // If not the last and the first tutorial page,
+    // show next and previous button.
+    if (this.currentTutorialPage != (Constants.MAX_TUTORIAL_PAGES - 1)
+        && this.currentTutorialPage != 0) {
+      visible(this.overlayPreviousTutorialPageButton);
+      visible(this.overlayNextTutorialPageButton);
+      invisible(this.overlayMainMenuButton);
+
+      // If it's the first page, don't show the previous page button.
+    } else if (this.currentTutorialPage == 0) {
+      invisible(this.overlayPreviousTutorialPageButton);
+      visible(this.overlayNextTutorialPageButton);
+      invisible(this.overlayMainMenuButton);
+
+      // Otherwise only show the previous page and the main menu button.
+    } else {
+      visible(this.overlayPreviousTutorialPageButton);
+      invisible(this.overlayNextTutorialPageButton);
+      visible(this.overlayMainMenuButton);
     }
 
     // Open the overlay.
@@ -323,6 +373,13 @@ class MazeGameView {
         " to find its hole "
         "<span><img src='assets/img/goal.png' alt='Hole'></span>"
         " .";
+
+    // Hide the tutorial page buttons.
+    invisible(this.overlayPreviousTutorialPageButton);
+    invisible(this.overlayNextTutorialPageButton);
+
+    // Reset the tutorial page.
+    this.currentTutorialPage = 0;
   }
 
   /// Adds the rabbit's animation based on the its direction.
@@ -352,6 +409,18 @@ class MazeGameView {
     querySelector(".rabbit").classes.add(animationClass);
 
     new Timer(new Duration(milliseconds: Constants.RABBIT_MOVEMENT_SPEED), afterAnimation);
+  }
+
+  /// Increments the current tutorial page in a cyclic behavior.
+  void incrementTutorialPage() {
+    this.currentTutorialPage =
+      (this.currentTutorialPage + 1) % Constants.MAX_TUTORIAL_PAGES;
+  }
+
+  /// Decrements the current tutorial page in a cyclic behavior.
+  void decrementTutorialPage() {
+    this.currentTutorialPage =
+      (this.currentTutorialPage - 1) % Constants.MAX_TUTORIAL_PAGES;
   }
 
   /// Toggles the visibility of an element.

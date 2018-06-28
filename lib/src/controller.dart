@@ -58,20 +58,35 @@ class MazeGameController {
   /// Creates a new [MazeGameController] instance.
   MazeGameController() {
 
-    // Listen to mouse clicks on continue button
+    // Listen to mouse clicks on the continue button.
     view.continueButton.onClick.listen(onClickContinueButton);
 
-    // Listen to mouse clicks on start button
+    // Listen to mouse clicks on the start button.
     view.startButton.onClick.listen(onClickStartButton);
 
-    // Listen to mouse clicks on about button.
+    // Listen to mouse clicks on the about button.
     view.aboutButton.onClick.listen((_) => view.showAboutOverlay());
 
-    // Listen to mouse clicks on next level button
+    // Listen to mouse clicks on the tutorial button.
+    view.tutorialButton.onClick.listen((_) => view.showTutorialOverlay());
+
+    // Listen to mouse clicks on next level button.
     view.overlayNextLevelButton.onClick.listen(onClickOverlayNextLevel);
 
     // Listen to mouse clicks on menu button
     view.overlayMainMenuButton.onClick.listen(onClickOverlayMainMenuButton);
+
+    // Listen to mouse clicks on the previous tutorial page button.
+    view.overlayPreviousTutorialPageButton.onClick.listen((_) {
+      view.decrementTutorialPage();
+      view.showTutorialOverlay();
+    });
+
+    // Listen to mouse clicks on the next tutorial page button.
+    view.overlayNextTutorialPageButton.onClick.listen((_) {
+      view.incrementTutorialPage();
+      view.showTutorialOverlay();
+    });
 
     // Listen to 3D orientation movement of the mobile to move the rabbit.
     window.onDeviceOrientation.listen(handleMobileDeviceMovement);
@@ -400,7 +415,7 @@ class MazeGameController {
   /// Trigger for the view update timer.
   /// Updates the view periodically.
   void _updateViewTrigger(Timer timer) {
-    print("Controller: Updating view!");
+    //print("Controller: Updating view!");
 
     this.view.updateTitleAndSubtitle();
     this.view.updateTimerAndBrightness();
@@ -419,9 +434,8 @@ class MazeGameController {
       this.game.rabbit.stopTimer();
       this.game.enemies.forEach((final Enemy enemy) => enemy.stopMoving());
 
-      // Reset remaining level time.
-      MazeGameModel.level.timeLeft = MazeGameModel.level.timeTotal;
-      //TODO: Load previous level after completion. Update "objects" list.
+      // Reset the played level.
+      LevelLoader.resetInCache(this.game.levelNumber);
 
       // Show the correct overlay.
       if (MazeGameModel.level.gameOver) {

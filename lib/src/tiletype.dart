@@ -5,7 +5,7 @@ part of mazegame;
 /// Each tile type is represented by a static constant, whom name
 /// is translated into a string equal to the name.
 ///
-/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 class TileType {
 
   /// Constant representing a hedge tile type.
@@ -41,7 +41,7 @@ class TileType {
 /// This exception should be thrown, if a tile type is requested/used,
 /// which doesn't exist.
 ///
-/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 class UnknownTileTypeException implements Exception {
 
   /// Message of the exception.

@@ -17,6 +17,7 @@ html, body {
 }
 
 p {
+    font-size: 14px;
     line-height: 1.6;
 }
 
@@ -103,8 +104,8 @@ span > img {
  */
 
 .button {
-    min-width: 235px;
-    width: 16vw;
+    min-width: 250px;
+    /* width: 16vw; */
     padding: 2vh 4vw;
     white-space: nowrap;
     background-color: #6D214F;
@@ -115,6 +116,10 @@ span > img {
     margin: .7vh 1.5vw;
     border: 3px solid #F8EFBA;
     transition-duration: .4s;
+}
+
+.button.is-small {
+    min-width: auto;
 }
 
 .button:disabled {
@@ -181,7 +186,6 @@ span > img {
 .rabbit {
     background: url("assets/img/rabbit.png") no-repeat;
     background-size: cover;
-    /* filter: brightness(100%) !important; */
     z-index: 10;
 }
 
@@ -334,7 +338,7 @@ span > img {
     margin: 20% auto;
     padding: 20px;
     border: 3px solid #B33771;
-    width: 60%
+    width: 75%
 }
 
 /*

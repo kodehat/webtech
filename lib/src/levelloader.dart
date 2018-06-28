@@ -3,7 +3,7 @@ part of mazegame;
 /// Responsible for loading and caching level files,
 /// which are itself written in JSON.
 ///
-/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 class LevelLoader {
 
   // Contains the pre-loaded levels mapped by their level number.
@@ -30,19 +30,32 @@ class LevelLoader {
     });
   }
 
-  /// Async loading of a level with the given [levelNo].
-  /// After completion the level is returned as "Level" object.
-  static Future<Level> load(final int levelNo) async {
-    print("Trying to load level $levelNo...");
+  /// Resets the level with the given [levelNumber] in the level cache.
+  /// Useful after a level has ended.
+  static Future resetInCache(final int levelNumber) async {
+    print("LevelLoader: Resetting level $levelNumber in cache.");
 
-    if (CACHED_LEVELS.containsKey(levelNo)) {
-      print("Level $levelNo is already loaded. Using cached version.");
-      return CACHED_LEVELS[levelNo];
+    // Wait, until the level has been loaded.
+    Level level = await load(levelNumber, true);
+    // Update level in level cache.
+    CACHED_LEVELS[levelNumber] = level;
+  }
+
+  /// Async loading of a level with the given [levelNumber].
+  /// After completion the level is returned as "Level" object.
+  static Future<Level> load(final int levelNumber,
+      [final bool ignoreCache = false]) async {
+
+    print("Trying to load level $levelNumber...");
+
+    if (!ignoreCache && CACHED_LEVELS.containsKey(levelNumber)) {
+      print("Level $levelNumber is already loaded. Using cached version.");
+      return CACHED_LEVELS[levelNumber];
     }
 
-    print("Level $levelNo isn't cached. Loading it now...");
+    print("Level $levelNumber isn't cached. Loading it now...");
 
-    final String path = "assets/lvl/$levelNo.json";
+    final String path = "assets/lvl/$levelNumber.json";
     final String jsonLevelStr = await HttpRequest.getString(path);
     final Map levelData = JSON.decode(jsonLevelStr);
     final Level level = _levelFromMap(levelData);

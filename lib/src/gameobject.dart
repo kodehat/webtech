@@ -3,7 +3,7 @@ part of mazegame;
 /// An abstract class representing an object living on thr game field.
 /// Consists of a position and a type.
 ///
-/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 abstract class GameObject {
 
   /// The game object's position on the game field.

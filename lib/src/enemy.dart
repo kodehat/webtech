@@ -3,7 +3,7 @@ part of mazegame;
 /// Represents an enemy in the game field.
 /// Contains basic and intelligent movement.
 ///
-/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 abstract class Enemy extends Creature {
 
   /// The type of movement the enemy does.
@@ -284,7 +284,7 @@ class EnemyMovementType {
 /// This exception should be thrown, if a enemy movement type
 /// is requested/used, which doesn't exist.
 ///
-/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 class UnknownMovementTypeException implements Exception {
 
   /// Message of the exception.

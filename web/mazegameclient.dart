@@ -3,7 +3,7 @@ import 'package:rabbitrinth/mazegame.dart';
 
 /// Main method instantiating the controller.
 ///
-/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 void main() {
   // Listener waiting for the completion of rewriting Dart to JavaScript.
   window.onLoad.listen((e) async {

@@ -4,7 +4,7 @@ part of mazegame;
 /// This includes the rabbit and the foxes.
 /// It contains moving functionality and basic collision checking.
 ///
-/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 abstract class Creature extends GameObject {
 
   /// This attribute holds the game objects, which is below the [Creature]
@@ -132,7 +132,7 @@ abstract class Creature extends GameObject {
 /// Represents the direction an object can move to.
 /// These are LEFT, RIGHT, UP and DOWN.
 ///
-/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 class Direction {
 
   /// Constant representing the left direction.
@@ -178,7 +178,7 @@ class Direction {
 /// This exception should be thrown, if a direction is requested/used,
 /// which doesn't exist.
 ///
-/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 class UnknownDirectionException implements Exception {
 
   /// Message of the exception.

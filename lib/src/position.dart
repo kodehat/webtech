@@ -4,7 +4,7 @@ part of mazegame;
 /// Consists of a row and a column coordinate.
 /// This object is immutable!
 ///
-/// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 class Position {
 
   /// The row coordinate.
