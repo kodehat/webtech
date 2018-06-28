@@ -309,6 +309,11 @@ class MazeGameView {
     // Show the main menu buttons.
     this.visible(this.mainMenuButtonGroup);
 
+    // Show continue button, if progress has been saved.
+    if (window.localStorage["savedLevel"] != null) {
+      visible(this.continueButton);
+    }
+
     // Reset the title and subtitle.
     this.title.text = "RabbitRinth";
     this.subtitle.innerHtml = "Guide the rabbit "
