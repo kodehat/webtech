@@ -1,9 +1,12 @@
 part of mazegame;
 
-const miniInfoDur = const Duration(seconds: 3);
+/// Countdown how often the view is updated-
+const viewUpdateCountdown =
+const Duration(milliseconds: Constants.VIEW_UPDATE_COUNTDOWN);
 
-const deviceMotionToggleVerticalValue = 16;
-const deviceMotionToggleHorizontalValue = 18;
+/// Countdown how long the mini info is shown.
+const miniInfoCountdown =
+  const Duration(seconds: Constants.MINI_INFO_COUNTDOWN);
 
 /// Represents the game controller.
 /// Handles various input and touch events as well as mouse events.
@@ -17,28 +20,49 @@ class MazeGameController {
   /// The view instance.
   MazeGameView view = new MazeGameView();
 
-  Timer miniInfoTrigger;
-  Timer rabbitMoveTrigger;
-
-  int betaOrientation = null;
-  int betaToggleUp = null;
-  int betaToggleDown = null;
-
-  int gammaOrientation = null;
-  int gammaToggleLeft = null;
-  int gammaToggleRight = null;
-
-  bool calibrated = false;
-  bool hasMoved = false;
-
-  int savedLevelNo = null;
-
+  /// The mobile sleep prevention instance.
   NoSleep noSleep = new NoSleep();
 
-  /// Creates a new "Maze Game Controller" instance.
+  /// The timer, when the view is updated.
+  Timer _viewTimer;
+
+  /// The timer, when the mini info is hidden.
+  Timer _miniInfoTimer;
+
+  /// Gamma orientation value of the mobile, saved for calibration.
+  /// Used for LEFT, RIGHT movement.
+  int _gammaOrientation;
+
+  /// Gamma orientation, when the LEFT movement is done.
+  int _gammaToggleLeft;
+
+  /// Gamma orientation, when the RIGHT movement is done.
+  int _gammaToggleRight;
+
+  /// Beta orientation value of the mobile, saved for calibration.
+  /// Used for UP, DOWN movement.
+  int _betaOrientation;
+
+  /// Beta orientation, when the UP movement is done.
+  int _betaToggleUp;
+
+  /// Beta orientation, when the DOWN movement is done.
+  int _betaToggleDown;
+
+  /// Boolean showing, if the mobile has been calibrated.
+  bool _calibrated = false;
+
+  //TODO: Used?
+  int savedLevelNo;
+
+  /// Creates a new [MazeGameController] instance.
   MazeGameController() {
-    // Listen to mouse clicks on the overlay's close button
-    view.overlayCloseButton.onClick.listen(onClickOverlayCloseButton);
+
+    // Listen to mouse clicks on continue button
+    view.continueButton.onClick.listen(onClickContinueButton);
+
+    // Listen to mouse clicks on start button
+    view.startButton.onClick.listen(onClickStartButton);
 
     // Listen to mouse clicks on next level button
     view.overlayNextLevelButton.onClick.listen(onClickOverlayNextLevel);
@@ -46,119 +70,153 @@ class MazeGameController {
     // Listen to mouse clicks on menu button
     view.overlayMainMenuButton.onClick.listen(onClickOverlayMenuButton);
 
-    // Listen to mouse clicks on start button
-    view.startButton.onClick.listen(onClickStartButton);
+    // Listen to 3D orientation movement of the mobile to move the rabbit.
+    window.onDeviceOrientation.listen(handleMobileDeviceMovement);
 
-    // Listen to mouse clicks on continue button
-    view.continueButton.onClick.listen(onClickContinueButton);
-
-    // If the device is oriented
-    window.onDeviceOrientation.listen(onDeviceMove);
-
+    //TODO: REMOVE!
     view.title.onTouchEnd.listen(inDevAddTimeCheat);
-
     view.title.onMouseDown.listen(inDevAddTimeCheat);
 
-    window.onTouchEnd.listen(onTouchDisplay);
+    // Listen on touch events to recalibrate the movement on mobiles.
+    window.onTouchEnd.listen(handleTouchOnGameScreen);
 
-    window.screen.orientation.onChange.listen(onOrientationChange);
+    // Listen to orientation changes to show the landscape warning.
+    window.screen.orientation.onChange.listen(handleLandscapeOrientationChange);
 
-    // Listen to keyboard to control the rabbit
-    window.onKeyDown.listen((KeyboardEvent e) {
-      if (game.stopped) return;
-      switch (e.keyCode) {
-        case KeyCode.LEFT:
-          game._rabbit.moveLeft();
-          querySelector(".rabbit").classes.toggle("rabbit-left");
-          new Timer(rabbitMoveCountdown, () => view.update(game));
-          //view.update(game);
-          break;
-        case KeyCode.RIGHT:
-          game._rabbit.moveRight();
-          querySelector(".rabbit").classes.toggle("rabbit-right");
-          new Timer(rabbitMoveCountdown, () => view.update(game));
-          //view.update(game);
-          break;
-        case KeyCode.UP:
-          game._rabbit.moveUp();
-          querySelector(".rabbit").classes.toggle("rabbit-up");
-          new Timer(rabbitMoveCountdown, () => view.update(game));
-          //view.update(game);
-          break;
-        case KeyCode.DOWN:
-          game._rabbit.moveDown();
-          querySelector(".rabbit").classes.toggle("rabbit-down");
-          new Timer(rabbitMoveCountdown, () => view.update(game));
-          //view.update(game);
-      }
-    });
+    // Listen to keyboard events on PC to control the rabbit.
+    window.onKeyDown.listen(handleKeyboardMovement);
   }
 
-  void onTouchDisplay(TouchEvent e) {
+  /// Handles the movement via keyboard.
+  /// Uses the arrow keys (LEFT, RIGHT, UP and DOWN).
+  void handleKeyboardMovement(KeyboardEvent event) {
     if (game.stopped) return;
-    view.miniInfo.text = "Device orientation re-calibrated!";
-    updateMiniInfo();
-    calibrated = false;
-    hasMoved = false;
+    switch (e.keyCode) {
+      case KeyCode.LEFT:
+        this._moveRabbit(Direction.LEFT);
+        //game._rabbit.moveLeft();
+        //querySelector(".rabbit").classes.toggle("rabbit-left");
+        //new Timer(rabbitMoveCountdown, () => view.update(game));
+        break;
+      case KeyCode.RIGHT:
+        this._moveRabbit(Direction.RIGHT);
+        //game._rabbit.moveRight();
+        //querySelector(".rabbit").classes.toggle("rabbit-right");
+        //new Timer(rabbitMoveCountdown, () => view.update(game));
+        break;
+      case KeyCode.UP:
+        this._moveRabbit(Direction.UP);
+        //game._rabbit.moveUp();
+        //querySelector(".rabbit").classes.toggle("rabbit-up");
+        //new Timer(rabbitMoveCountdown, () => view.update(game));
+        break;
+      case KeyCode.DOWN:
+        this._moveRabbit(Direction.DOWN);
+        //game._rabbit.moveDown();
+        //querySelector(".rabbit").classes.toggle("rabbit-down");
+        //new Timer(rabbitMoveCountdown, () => view.update(game));
+    }
   }
 
-  void onDeviceMove(DeviceOrientationEvent e) {
-    if (e.beta == null || e.gamma == null) return;
+  /// Handles the movement on mobiles.
+  /// Uses the orientation sensor of the mobile.
+  void handleMobileDeviceMovement(DeviceOrientationEvent event) {
 
-    final int beta = e.beta.toInt();
-    final int gamma = e.gamma.toInt();
+    // If the device doesn't support device orientation, return.
+    if (event.beta == null || event.gamma == null) return;
 
-    if (!calibrated) {
-      betaOrientation = beta;
-      betaToggleUp = betaOrientation - deviceMotionToggleVerticalValue;
-      betaToggleDown = betaOrientation + deviceMotionToggleVerticalValue;
+    // Get the current beta value.
+    final int beta = event.beta.toInt();
+    // Get the current gamma value.
+    final int gamma = event.gamma.toInt();
 
-      gammaOrientation = gamma;
-      gammaToggleLeft = gammaOrientation - deviceMotionToggleHorizontalValue;
-      gammaToggleRight = gammaOrientation + deviceMotionToggleHorizontalValue;
+    // Calibrate until the game is calibrated and the game starts.
+    if (!_calibrated) {
 
-      if (game.stopped || game.level.gameOver || game.level.done) {
+      // Update the saved calibrated values.
+      _calibrate(gamma, beta);
+
+      // Only calibrate if the game is not running.
+      if (game.stopped || MazeGameModel.level.gameOver
+          || MazeGameModel.level.done) {
         return;
+
+        // Otherwise stop the calibration.
       } else {
-        calibrated = true;
+        _calibrated = true;
       }
     }
 
-    if (!hasMoved) {
-      if (beta <= betaToggleUp) { // Move UP
-        game._rabbit.moveUp();
-        querySelector(".rabbit").classes.toggle("rabbit-up");
-        new Timer(rabbitMoveCountdown, () => view.update(game));
-        //view.update(game);
+    // Check the rabbit is able to move. Checks if the rabbit timer
+    // has reset this boolean.
+    if (this.game.rabbit.isAbleToMove) {
 
-        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
-        hasMoved = true;
-      } else if(beta >= betaToggleDown){ //Move Down
-        game._rabbit.moveDown();
-        querySelector(".rabbit").classes.toggle("rabbit-down");
-        new Timer(rabbitMoveCountdown, () => view.update(game));
-        //view.update(game);
+      // Move the rabbit LEFT.
+      if (gamma <= this._gammaToggleLeft) {
+        this._moveRabbit(Direction.LEFT);
 
-        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
-        hasMoved = true;
-      } else if(gamma <= gammaToggleLeft) { //Move Left
-        game._rabbit.moveLeft();
-        querySelector(".rabbit").classes.toggle("rabbit-left");
-        new Timer(rabbitMoveCountdown, () => view.update(game));
-        //view.update(game);
+        // Move the rabbit RIGHT.
+      } else if (gamma >= this._gammaToggleRight) {
+        this._moveRabbit(Direction.RIGHT);
 
-        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
-        hasMoved = true;
-      } else if(gamma >= gammaToggleRight) { //Move Right
-        game._rabbit.moveRight();
-        querySelector(".rabbit").classes.toggle("rabbit-right");
-        new Timer(rabbitMoveCountdown, () => view.update(game));
-        //view.update(game);
+        // Move the rabbit UP.
+      } else if (beta <= this._betaToggleUp) {
+        this._moveRabbit(Direction.UP);
 
-        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
-        hasMoved = true;
+        // Move the rabbit down.
+      } else if (beta >= this._betaToggleDown) {
+        this._moveRabbit(Direction.DOWN);
       }
+
+//      // Move UP
+//      if (beta <= this._betaToggleUp) {
+//        game._rabbit.moveUp();
+//        querySelector(".rabbit").classes.toggle("rabbit-up");
+//        new Timer(rabbitMoveCountdown, () => view.update(game));
+//
+//        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
+//        hasMoved = true;
+//      } else if(beta >= _betaToggleDown){ //Move Down
+//        game._rabbit.moveDown();
+//        querySelector(".rabbit").classes.toggle("rabbit-down");
+//        new Timer(rabbitMoveCountdown, () => view.update(game));
+//        //view.update(game);
+//
+//        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
+//        hasMoved = true;
+//      } else if(gamma <= _gammaToggleLeft) { //Move Left
+//        game._rabbit.moveLeft();
+//        querySelector(".rabbit").classes.toggle("rabbit-left");
+//        new Timer(rabbitMoveCountdown, () => view.update(game));
+//        //view.update(game);
+//
+//        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
+//        hasMoved = true;
+//      } else if(gamma >= _gammaToggleRight) { //Move Right
+//        game._rabbit.moveRight();
+//        querySelector(".rabbit").classes.toggle("rabbit-right");
+//        new Timer(rabbitMoveCountdown, () => view.update(game));
+//        //view.update(game);
+//
+//        rabbitMoveTrigger = new Timer(rabbitMoveCountdown, resetRabbitMove);
+//        hasMoved = true;
+//      }
     }
+  }
+
+  /// Re-calibrates the device toggle values, if the screen is touched while
+  /// playing.
+  void handleTouchOnGameScreen(TouchEvent event) {
+
+    // Return, if the game is stopped.
+    if (game.stopped) return;
+
+    // Set mini info text.
+    view.miniInfo.text = "Device orientation re-calibrated!";
+
+    updateMiniInfoTimer();
+    _calibrated = false;
+    hasMoved = false;
   }
 
   onClickStartButton(MouseEvent e) async {
@@ -182,7 +240,7 @@ class MazeGameController {
 
     game.start();
 
-    calibrated = true;
+    _calibrated = true;
 
     levelCountdownTrigger = new Timer.periodic(levelCountdown, (_) {
       if (game.level.done || game.level.gameOver) {
@@ -227,11 +285,6 @@ class MazeGameController {
     print("Continue-Button clicked!");
   }
 
-  void onClickOverlayCloseButton(MouseEvent e) {
-    print("Overlay close button clicked!");
-    view.closeOverlay();
-  }
-
   Future onClickOverlayNextLevel(MouseEvent e) async {
     if (game.running || !game.level.done) return;
     game._enemies.clear();
@@ -248,7 +301,7 @@ class MazeGameController {
 
     game.start();
 
-    calibrated = true;
+    _calibrated = true;
 
     levelCountdownTrigger = new Timer.periodic(levelCountdown, (_) {
       if (game.level.done || game.level.gameOver) {
@@ -272,29 +325,38 @@ class MazeGameController {
     });
   }
 
-  void onOrientationChange(Event e) {
-    String type = window.screen.orientation.type;
+  /// Handles the change of the screen orientation and shows a warning in
+  /// landscape mode.
+  void handleLandscapeOrientationChange(final Event event) {
+    // Get the current screen orientation.
+    final String type = window.screen.orientation.type;
 
+    // If type is landscape, show the landscape warning.
     if (type.contains("landscape")) {
-      view.landscapeWarning.classes.toggle("invisible", false);
+      view.visible(view.landscapeWarning);
+
+      // Otherwise if type is portrait, hide the landscape warning.
     } else if (type.contains("portrait")) {
-      view.landscapeWarning.classes.toggle("invisible", true);
+      view.invisible(view.landscapeWarning);
     }
   }
 
-  void updateMiniInfo() {
-    if (miniInfoTrigger == null) {
-      miniInfoTrigger = new Timer(miniInfoDur, () => view.miniInfo.text = "");
+  /// Sets or updates the mini info timer.
+  /// The timer removes the text of the mini info.
+  void updateMiniInfoTimer() {
+    // If timer is null, create a new one.
+    if (_miniInfoTimer == null) {
+      _miniInfoTimer = new Timer(miniInfoCountdown, () => view.miniInfo.text = "");
+
+      // Otherwise cancel the current one and then create a new one.
     } else {
-      miniInfoTrigger.cancel();
-      miniInfoTrigger = new Timer(miniInfoDur, () => view.miniInfo.text = "");
+      _miniInfoTimer.cancel();
+      _miniInfoTimer = new Timer(miniInfoCountdown, () => view.miniInfo.text = "");
     }
   }
 
-  void resetRabbitMove() {
-    hasMoved = false;
-  }
-
+  /// Requests fullscreen.
+  /// Found on "Stack Overflow": https://stackoverflow.com/a/29715395
   void fullscreenWorkaround(Element element) {
     var elem = new JsObject.fromBrowserObject(element);
 
@@ -316,10 +378,37 @@ class MazeGameController {
     }
   }
 
+  /// Moves the rabbit into the given [direction].
+  void _moveRabbit(String direction) {
+
+    // Don't let the rabbit move again, until the rabbit timer has completed.
+    this.game.rabbit.isAbleToMove = false;
+
+    // Actually move the rabbit.
+    this.game.rabbit.move(direction);
+
+    //TODO: Toggle animation based on object's direction.
+    view.updateRabbit(this.game.rabbit);
+  }
+
+  /// Sets the calibrated values based on the current values.
+  void _calibrate(final int gamma, final int beta) {
+    // Set the gamma values.
+    this._gammaOrientation = gamma;
+    this._gammaToggleLeft = this._gammaOrientation - Constants.DEVICE_MOTION_TOGGLE_HORIZONTAL;
+    this._gammaToggleRight = this._gammaOrientation + Constants.DEVICE_MOTION_TOGGLE_HORIZONTAL;
+
+    // Set the beta values.
+    this._betaOrientation = beta;
+    this._betaToggleUp = this._betaOrientation - Constants.DEVICE_MOTION_TOGGLE_VERTICAL;
+    this._betaToggleDown = this._betaOrientation + Constants.DEVICE_MOTION_TOGGLE_VERTICAL;
+  }
+
+  //TODO: REMOVE!
   void inDevAddTimeCheat(Event e) {
     if (game.running) {
-      game.level.timeTotal += 10.0;
-      game.level.timeLeft += 10.0;
+      MazeGameModel.level.timeTotal += 10.0;
+      MazeGameModel.level.timeLeft += 10.0;
     }
   }
 }

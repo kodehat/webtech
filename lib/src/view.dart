@@ -68,9 +68,6 @@ class MazeGameView {
   /// Returns the main menu button in the overlay.
   HtmlElement get overlayMainMenuButton => querySelector("#btn_main_menu");
 
-  /// Returns the close button in the overlay.
-  HtmlElement get overlayCloseButton => querySelector("#btn_close_modal");
-
   /// A list of lists containing all game fields.
   List<List<HtmlElement>> fields;
 
