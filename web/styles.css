@@ -246,7 +246,7 @@ span > img {
     }
 }
 .rabbit-right {
-    animation: rabbit-right .4s ease-in normal;
+    animation: rabbit-right .425s ease-in normal;
 }
 
 @keyframes rabbit-left {
@@ -261,7 +261,7 @@ span > img {
     }
 }
 .rabbit-left {
-    animation: rabbit-left .4s ease-in normal;
+    animation: rabbit-left .425s ease-in normal;
 }
 
 @keyframes rabbit-up {
@@ -276,7 +276,7 @@ span > img {
     }
 }
 .rabbit-up {
-    animation: rabbit-up .4s ease-in normal;
+    animation: rabbit-up .425s ease-in normal;
 }
 
 @keyframes rabbit-down {
@@ -291,7 +291,7 @@ span > img {
     }
 }
 .rabbit-down {
-    animation: rabbit-down .4s ease-in normal;
+    animation: rabbit-down .425s ease-in normal;
 }
 
 /*

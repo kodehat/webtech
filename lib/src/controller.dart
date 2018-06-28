@@ -64,6 +64,9 @@ class MazeGameController {
     // Listen to mouse clicks on start button
     view.startButton.onClick.listen(onClickStartButton);
 
+    // Listen to mouse clicks on about button.
+    view.aboutButton.onClick.listen((_) => view.showAboutOverlay());
+
     // Listen to mouse clicks on next level button
     view.overlayNextLevelButton.onClick.listen(onClickOverlayNextLevel);
 
@@ -94,31 +97,33 @@ class MazeGameController {
     // If game is stopped, return.
     if (game.stopped) return;
 
-    // Switch all possible key codes (LEFT, RIGHT, UP, DOWN).
-    switch (event.keyCode) {
-      case KeyCode.LEFT:
-        this._moveRabbit(Direction.LEFT);
-        //game._rabbit.moveLeft();
-        //querySelector(".rabbit").classes.toggle("rabbit-left");
-        //new Timer(rabbitMoveCountdown, () => view.update(game));
-        break;
-      case KeyCode.RIGHT:
-        this._moveRabbit(Direction.RIGHT);
-        //game._rabbit.moveRight();
-        //querySelector(".rabbit").classes.toggle("rabbit-right");
-        //new Timer(rabbitMoveCountdown, () => view.update(game));
-        break;
-      case KeyCode.UP:
-        this._moveRabbit(Direction.UP);
-        //game._rabbit.moveUp();
-        //querySelector(".rabbit").classes.toggle("rabbit-up");
-        //new Timer(rabbitMoveCountdown, () => view.update(game));
-        break;
-      case KeyCode.DOWN:
-        this._moveRabbit(Direction.DOWN);
-        //game._rabbit.moveDown();
-        //querySelector(".rabbit").classes.toggle("rabbit-down");
-        //new Timer(rabbitMoveCountdown, () => view.update(game));
+    if (this.game.rabbit.isAbleToMove) {
+      // Switch all possible key codes (LEFT, RIGHT, UP, DOWN).
+      switch (event.keyCode) {
+        case KeyCode.LEFT:
+          this._moveRabbit(Direction.LEFT);
+          //game._rabbit.moveLeft();
+          //querySelector(".rabbit").classes.toggle("rabbit-left");
+          //new Timer(rabbitMoveCountdown, () => view.update(game));
+          break;
+        case KeyCode.RIGHT:
+          this._moveRabbit(Direction.RIGHT);
+          //game._rabbit.moveRight();
+          //querySelector(".rabbit").classes.toggle("rabbit-right");
+          //new Timer(rabbitMoveCountdown, () => view.update(game));
+          break;
+        case KeyCode.UP:
+          this._moveRabbit(Direction.UP);
+          //game._rabbit.moveUp();
+          //querySelector(".rabbit").classes.toggle("rabbit-up");
+          //new Timer(rabbitMoveCountdown, () => view.update(game));
+          break;
+        case KeyCode.DOWN:
+          this._moveRabbit(Direction.DOWN);
+      //game._rabbit.moveDown();
+      //querySelector(".rabbit").classes.toggle("rabbit-down");
+      //new Timer(rabbitMoveCountdown, () => view.update(game));
+      }
     }
   }
 
@@ -171,8 +176,6 @@ class MazeGameController {
       } else if (gamma >= this._gammaToggleRight) {
           this._moveRabbit(Direction.RIGHT);
       }
-
-
 
 //      // Move UP
 //      if (beta <= this._betaToggleUp) {
@@ -270,53 +273,15 @@ class MazeGameController {
 
     // Load and start the level.
     this._startLevel();
-
-//    if (game.running || !game.level.done) return;
-//    game._enemies.clear();
-//    view.closeOverlay();
-//    game.levelNumber++;
-//    window.localStorage['savedLevel'] = game.levelNumber.toString();
-//    await game.loadLevel(game.levelNumber);
-//
-//    view.generateGameField(game);
-//
-//    view.title.text = game.level.name;
-//    view.subtitle.text = game.level.description;
-//    view.progressbar.style.width = "100%";
-//
-//    game.start();
-//
-//    _calibrated = true;
-//
-//    levelCountdownTrigger = new Timer.periodic(levelCountdown, (_) {
-//      if (game.level.done || game.level.gameOver) {
-//        levelCountdownTrigger.cancel();
-//        enemyMoveTrigger.cancel();
-//        return;
-//      }
-//      game.level.timeLeft -= 0.2;
-//      if (game.level.timeLeft.floor() <= 0) {
-//        game.level.gameOver = true;
-//        levelCountdownTrigger.cancel();
-//        enemyMoveTrigger.cancel();
-//        game.stop();
-//      }
-//      view.update(game, true);
-//    });
-//
-//    enemyMoveTrigger = new Timer.periodic(enemyMoveCountdown, (_) {
-//      game._enemies.forEach((e) => e.move());
-//      view.update(game);
-//    });
   }
 
   /// Called, if the main menu button in the overlay is clicked.
   void onClickOverlayMainMenuButton(MouseEvent e) {
 
     // Stop the game, if not stopped yet.
-    this.game.stop();
-    this.game._enemies.clear();
-    this.game._rabbit = null;
+    //this.game.stop();
+    //this.game._enemies.clear();
+    //this.game._rabbit = null;
 
     // Reset elements.
     view.resetToMainMenu();
@@ -333,6 +298,9 @@ class MazeGameController {
 
     // Call the start button's callback method.
     onClickStartButton(event);
+
+    // Reset the saved level number reference.
+    this.savedLevelNumber = null;
   }
 
   /// Handles the change of the screen orientation and shows a warning in
@@ -365,7 +333,7 @@ class MazeGameController {
     }
   }
 
-  /// Requests fullscreen.
+  /// Requests full-screen.
   /// Found on "Stack Overflow": https://stackoverflow.com/a/29715395
   void fullscreenWorkaround(Element element) {
     var elem = new JsObject.fromBrowserObject(element);
@@ -451,6 +419,10 @@ class MazeGameController {
       this.game.rabbit.stopTimer();
       this.game.enemies.forEach((final Enemy enemy) => enemy.stopMoving());
 
+      // Reset remaining level time.
+      MazeGameModel.level.timeLeft = MazeGameModel.level.timeTotal;
+      //TODO: Load previous level after completion. Update "objects" list.
+
       // Show the correct overlay.
       if (MazeGameModel.level.gameOver) {
         view.showGameOverOverlay(this.game.levelNumber);
@@ -474,8 +446,9 @@ class MazeGameController {
     // Actually move the rabbit.
     this.game.rabbit.move(direction);
 
-    //TODO: Toggle animation based on object's direction.
-    view.updateRabbit(this.game.rabbit);
+    view.addRabbitAnimationBasedOnDirection(this.game.rabbit, () {
+      view.updateRabbit(this.game.rabbit);
+    });
   }
 
   /// Sets the calibrated values based on the current values.

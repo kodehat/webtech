@@ -251,6 +251,25 @@ class MazeGameView {
     this.openOverlay();
   }
 
+  /// Shows the about overlay, which contains some information about the game.
+  void showAboutOverlay() {
+    // Set title and description.
+    this.overlayTitle.text = "About";
+    this.overlayDescription.innerHtml = "This game was developed by<br>"
+        "Bengt Class Rhodgeß and Marc-Niclas Harm.<br><br>"
+        "It was written in Dartlang for a web technologies project.<br>"
+        "All graphics are painted by ourselves.";
+
+    // Show main menu button.
+    visible(this.overlayMainMenuButton);
+
+    // Hide next level button.
+    invisible(this.overlayNextLevelButton);
+
+    // Open the overlay.
+    this.openOverlay();
+  }
+
   /// Updates a specific game object in the DOM game field
   /// with the given position.
   void _updateElementInGameFieldWithPosition(final Position position) {
@@ -299,6 +318,35 @@ class MazeGameView {
         " to find its hole "
         "<span><img src='assets/img/goal.png' alt='Hole'></span>"
         " .";
+  }
+
+  /// Adds the rabbit's animation based on the its direction.
+  void addRabbitAnimationBasedOnDirection(Rabbit rabbit,
+      Function afterAnimation) {
+
+    String animationClass;
+
+    switch(rabbit.direction) {
+      case Direction.LEFT:
+        animationClass = "rabbit-left";
+        break;
+      case Direction.RIGHT:
+        animationClass = "rabbit-right";
+        break;
+      case Direction.UP:
+        animationClass = "rabbit-up";
+        break;
+      case Direction.DOWN:
+        animationClass = "rabbit-down";
+        break;
+      default:
+        throw
+          new UnknownDirectionException("The rabbit's direction is unknown!");
+    }
+
+    querySelector(".rabbit").classes.add(animationClass);
+
+    new Timer(new Duration(milliseconds: Constants.RABBIT_MOVEMENT_SPEED), afterAnimation);
   }
 
   /// Toggles the visibility of an element.
