@@ -21,4 +21,5 @@ part 'src/position.dart';
 part 'src/rabbit.dart';
 part 'src/tile.dart';
 part 'src/tiletype.dart';
+part 'src/constants.dart';
 part 'src/nosleep.dart';

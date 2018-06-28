@@ -35,6 +35,45 @@ class Level {
   /// The list of lists representing the game field.
   List<List<GameObject>> objects;
 
+  /// The countdown of the level in milliseconds.
+  Duration _levelCountdown = new Duration(milliseconds: 200);
+
+  /// The timer of the level, which updates the elapsed time.
+  Timer _levelTimer;
+
+  /// Starts the level countdown timer.
+  void start() {
+    // If the timer is already running, return.
+    if (_levelTimer.isActive) return;
+
+    // Set and start the timer and set the [_updateTime] as callback method.
+    this._levelTimer = new Timer.periodic(this._levelCountdown, _updateTime);
+  }
+
+  /// Stops the level countdown timer.
+  void stop() {
+    // If the timer isn't running, return.
+    if (!this._levelTimer.isActive) return;
+
+    // Cancel the level countdown timer.
+    this._levelTimer.cancel();
+  }
+
+  /// Updates the remaining time to complete the current level.
+  void _updateTime(Timer timer) {
+
+    // Stop the timer if the level has ended
+    // and set the game over state to true.
+    if (timeLeft.floor() <= 0.0) {
+      this._levelTimer.cancel();
+      this.gameOver = true;
+
+      // Otherwise update the remaining time.
+    } else {
+      timeLeft -= 0.2;
+    }
+  }
+
   /// Returns true, if the given [row] and [col] coordinate are in the bounds
   /// of the game field.
   bool isInBounds(final int row, final int col) {

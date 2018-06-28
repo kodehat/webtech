@@ -16,17 +16,24 @@ abstract class Enemy extends Creature {
 
   /// The duration for the movement trigger.
   /// Speed is based on [speed] in milliseconds.
-  Duration moveCountdown;
+  Duration _moveCountdown;
 
   /// Timer, which does the movement of the enemy.
-  /// Uses the [moveCountdown].
-  Timer moveTimer;
+  /// Uses the [_moveCountdown].
+  Timer _moveTimer;
+
+  /// Instance of the model.
+  MazeGameModel _game;
 
   /// Creates a new [Enemy] with a given [type], a [movementType]
   /// and a position consisting of a [row] and a [col] coordinate.
   /// The speed of the enemy can be set with the optional parameter [speed].
-  Enemy(String type, int row, int col, this._movementType, [this._speed = 750]) :
-        super(type, row, col);
+  Enemy(
+      final String type,
+      final int row,
+      final int col,
+      final this._movementType,
+      [final this._speed = Constants.ENEMY_MOVEMENT_SPEED]) : super(type, row, col);
 
   /// Stop the game, if colliding with the rabbit (the player).
   /// Can be overwritten for other functionality.
@@ -38,23 +45,26 @@ abstract class Enemy extends Creature {
   }
 
   /// Starts the movement of the enemy by starting the timer.
-  void startMoving() {
+  void startMoving(final MazeGameModel game) {
     // Return, if already moving.
-    if (moveTimer.isActive) return;
+    if (_moveTimer.isActive) return;
+
+    // Set the model for intelligent enemy movement.
+    this._game = game;
 
     // Create the countdown.
-    this.moveCountdown = new Duration(milliseconds: this._speed);
+    this._moveCountdown = new Duration(milliseconds: this._speed);
     // Create the periodic timer and set the [makeMove] method as callback.
-    this.moveTimer = new Timer.periodic(this.moveCountdown, makeMove);
+    this._moveTimer = new Timer.periodic(this._moveCountdown, makeMove);
   }
 
   /// Stops the movement of the enemy by cancelling the timer.
   void stopMoving() {
     // Return, if not moving yet.
-    if (!moveTimer.isActive) return;
+    if (!_moveTimer.isActive) return;
 
     // Stop the movement timer.
-    this.moveTimer.cancel();
+    this._moveTimer.cancel();
   }
 
   /// Moves the enemy based on his [movementType].
@@ -177,34 +187,63 @@ abstract class Enemy extends Creature {
 
   /// Method, which is called, if the enemy's movement type describes to
   /// move towards the rabbit (horizontal and vertical not diagonal),
-  /// if it's in the enemy's sight.
+  /// if it's in the enemy's sight (just terrain between them).
   void moveIfRabbitInSight() {
+    // Reference of the rabbit's position (just for shorter code).
+    Position rabbitPos = this._game.rabbit.position;
 
-    if (this.position.row == this._game._rabbit.position.row) { // On same row
-      for (int dCol = min(this.position.col, this._game._rabbit.position.col) + 1; dCol < max(this.position.col, this._game._rabbit.position.col); dCol++) {
-        GameObject obj = _game._level.objects[this.position.row][dCol];
-        if (obj.type != TileType.TERRAIN) {
+    // If the enemy and the rabbit are on the same row.
+    if (this.position.row == rabbitPos.row) {
+
+      // Iterate all game objects horizontally between the enemy and the rabbit.
+      // Check if no obstacles are in the way.
+      // Skips the first one, it's one of the involved.
+      for (int dCol = min(this.position.col, rabbitPos.col) + 1;
+        dCol < max(this.position.col, rabbitPos.col);
+        dCol++) {
+
+        // Get the current object in the way between the involved.
+        GameObject betweenObject =
+          MazeGameModel.level.getGameObjectAtRowAndCol(this.position.row, dCol);
+
+        // Return if type isn't terrain (ground).
+        if (betweenObject.type != TileType.TERRAIN) {
           return;
         }
       }
-      print("On sight enemy on: ${this.position} has rabbit in sight!");
-      if (this.position.col < this._game._rabbit.position.col) {
-        moveRight();
+
+      print("Enemy ${this.position} has rabbit in sight!");
+
+      // Decide in which direction the enemy has to move.
+      if (this.position.col < rabbitPos.col) {
+        super.move(Direction.RIGHT);
       } else {
-        moveLeft();
+        super.move(Direction.LEFT);
       }
-    } else if (this.position.col == this._game._rabbit.position.col) { // On same column
-      for (int dRow = min(this.position.row, this._game._rabbit.position.row) + 1; dRow < max(this.position.row, this._game._rabbit.position.row); dRow++) {
-        GameObject obj = _game._level.objects[dRow][this.position.col];
-        if (obj.type != TileType.TERRAIN) {
+
+      // If the enemy and the rabbit are on the same column.
+    } else if (this.position.col == rabbitPos.col) {
+      for (int dRow = min(this.position.row, rabbitPos.row) + 1;
+        dRow < max(this.position.row, rabbitPos.row);
+        dRow++) {
+
+        // Get the current object in the way between the involved.
+        GameObject betweenObject =
+          MazeGameModel.level.getGameObjectAtRowAndCol(dRow, this.position.col);
+
+        // Return if type isn't terrain (ground).
+        if (betweenObject.type != TileType.TERRAIN) {
           return;
         }
       }
-      print("On sight enemy on: ${this.position} has rabbit in sight!");
-      if (this.position.row < this._game._rabbit.position.row) {
-        moveDown();
+
+      print("Enemy ${this.position} has rabbit in sight!");
+
+      // Decide in which direction the enemy has to move.
+      if (this.position.row < rabbitPos.row) {
+        super.move(Direction.DOWN);
       } else {
-        moveUp();
+        super.move(Direction.UP);
       }
     }
   }
@@ -212,14 +251,27 @@ abstract class Enemy extends Creature {
   String get movementType => _movementType;
 }
 
+/// This class is meant as "Enum".
+/// Represents the different movement types an enemy can have.
+/// For instance there are HORIZONTAL FIRST LEFT or ON SIGHT.
 class EnemyMovementType {
 
+  /// Constant representing the HORIZONTAL FIRST LEFT movement type.
   static const String HOR_FIRST_LEFT = "HOR_FIRST_LEFT";
+
+  /// Constant representing the HORIZONTAL FIRST RIGHT movement type.
   static const String HOR_FIRST_RIGHT = "HOR_FIRST_RIGHT";
+
+  /// Constant representing the VERTICAL FIRST UP movement type.
   static const String VERT_FIRST_UP = "VERT_FIRST_UP";
+
+  /// Constant representing the VERTICAL FIRST DOWN movement type.
   static const String VERT_FIRST_DOWN = "VERT_FIRST_DOWN";
+
+  /// Constant representing the ON SIGHT movement type.
   static const String ON_SIGHT = "ON_SIGHT";
 
+  /// Returns a list of a possible enemy movement types.
   static List<String> get types => [
     HOR_FIRST_LEFT,
     HOR_FIRST_RIGHT,

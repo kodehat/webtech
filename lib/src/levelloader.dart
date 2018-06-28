@@ -6,9 +6,6 @@ part of mazegame;
 /// => Authors: Claas Bengt Rhodgeß, Marc-Niclas Harm
 class LevelLoader {
 
-  // Defines the level number of the last level in the game.
-  static const int MAX_LEVEL = 5;
-
   // Contains the pre-loaded levels mapped by their level number.
   static final Map<int, Level> CACHED_LEVELS = {};
 
@@ -16,11 +13,11 @@ class LevelLoader {
   /// After functions returned, pre-loaded levels can be found in
   /// [CACHED_LEVELS] map.
   static Future preloadAllLevels() async {
-    print("Pre-loading all $MAX_LEVEL levels...");
+    print("Pre-loading all ${Constants.MAX_LEVEL} levels...");
     final List<Future<Level>> futureLevels = [];
 
     // Start loading all levels.
-    for (int i = 1; i <= MAX_LEVEL; i++) {
+    for (int i = 1; i <= Constants.MAX_LEVEL; i++) {
       futureLevels.add(load(i));
     }
 

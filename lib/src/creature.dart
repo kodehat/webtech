@@ -108,6 +108,7 @@ abstract class Creature extends GameObject {
   void onCollideWithRabbit(GameObject collisionObject, int newRow, int newCol) {}
 }
 
+/// This class is meant as "Enum".
 /// Represents the direction an object can move to.
 /// These are LEFT, RIGHT, UP and DOWN.
 ///

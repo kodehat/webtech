@@ -1,23 +1,24 @@
 part of mazegame;
 
-const levelCountdown = const Duration(milliseconds: 200);
-const rabbitMoveCountdown = const Duration(milliseconds: 400);
-const enemyMoveCountdown = const Duration(milliseconds: 750);
 const miniInfoDur = const Duration(seconds: 3);
 
 const deviceMotionToggleVerticalValue = 16;
 const deviceMotionToggleHorizontalValue = 18;
 
+/// Represents the game controller.
+/// Handles various input and touch events as well as mouse events.
+///
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 class MazeGameController {
 
+  /// The model instance.
   MazeGameModel game = new MazeGameModel();
 
+  /// The view instance.
   MazeGameView view = new MazeGameView();
 
-  Timer levelCountdownTrigger;
   Timer miniInfoTrigger;
   Timer rabbitMoveTrigger;
-  Timer enemyMoveTrigger;
 
   int betaOrientation = null;
   int betaToggleUp = null;
@@ -169,7 +170,7 @@ class MazeGameController {
     game.levelNr = savedLevelNo ?? 1;
     await game.loadLevel(game.levelNumber);
 
-    view.generateField(game);
+    view.generateGameField(game);
 
     //querySelector(".button-group").classes.toggle("invisible", true);
     querySelectorAll(".button-wrapper > .button").classes.toggle("invisible", true);
@@ -239,7 +240,7 @@ class MazeGameController {
     window.localStorage['savedLevel'] = game.levelNumber.toString();
     await game.loadLevel(game.levelNumber);
 
-    view.generateField(game);
+    view.generateGameField(game);
 
     view.title.text = game.level.name;
     view.subtitle.text = game.level.description;
