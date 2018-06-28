@@ -118,6 +118,15 @@ span > img {
     transition-duration: .4s;
 }
 
+/*
+    Increase button minimum size on bigger screens.
+ */
+@media screen and (min-width: 800px) {
+    .button {
+        min-width: 300px;
+    }
+}
+
 .button.is-small {
     min-width: auto;
 }

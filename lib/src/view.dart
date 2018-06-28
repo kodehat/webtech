@@ -176,6 +176,15 @@ class MazeGameView {
     this.progressbarTitle.text = "${MazeGameModel.level.timeLeft.floor()} sec";
     this.progressbar.style.width = "$timeLeftInPercent%";
 
+    // Update progressbar color based on remaining time in percent.
+    if (timeLeftInPercent < 15) {
+      this.progressbar.style.backgroundColor = "#9e0404"; // Red tone.
+    } else if (timeLeftInPercent < 40) {
+      this.progressbar.style.backgroundColor = "#b1ad54"; // Yellow tone.
+    } else {
+      this.progressbar.style.backgroundColor = "#58B19F"; // Blue tone.
+    }
+
     // Update the brightness of all required fields.
 
     // Rabbit only.
