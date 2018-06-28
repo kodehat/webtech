@@ -1,25 +1,29 @@
 import 'dart:html';
 import 'package:rabbitrinth/mazegame.dart';
 
-final HtmlElement startBtn = querySelector("#btn_start");
-final HtmlElement continueBtn = querySelector("#btn_continue");
-final HtmlElement tutorialBtn = querySelector("#btn_tutorial");
-final HtmlElement aboutBtn = querySelector("#btn_about");
-
+/// Main method instantiating the controller.
+///
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 void main() {
+  // Listener waiting for the completion of rewriting Dart to JavaScript.
+  window.onLoad.listen((e) async {
+    print("Finished rewriting Dart to JS!");
+    MazeGameController mgc = new MazeGameController();
 
-  window.onLoad.listen((e) {
-    print("Finished converting Dart to JS!");
+    mgc.view.loadingDiv.text = "Loading levels...";
+    // Start pre-loading all levels.
+    await LevelLoader.preloadAllLevels();
 
-   MazeGameController mgc = new MazeGameController();
+    // Hide the loading text and make the main menu buttons visible.
+    mgc.view.invisible(mgc.view.loadingDiv);
+    mgc.view.visible(mgc.view.mainMenuButtonGroup);
 
-    startBtn.text = "Start";
-    startBtn.attributes.remove("disabled");
-    if(mgc.game.local.isNotEmpty) continueBtn.classes.toggle("invisible");
-    continueBtn.attributes.remove("disabled");
-    tutorialBtn.classes.toggle("invisible");
-    tutorialBtn.attributes.remove("disabled");
-    aboutBtn.classes.toggle("invisible");
-    aboutBtn.attributes.remove("disabled");
+    // Load the saved level from local storage into variable (can be null).
+    String savedLevel = window.localStorage["savedLevel"];
+
+    // Show the continue button if progress was saved in local storage.
+    if (savedLevel != null && savedLevel.isNotEmpty) { //if (mgc.game.local.isNotEmpty) {
+      mgc.view.visible(mgc.view.continueButton);
+    }
   });
 }

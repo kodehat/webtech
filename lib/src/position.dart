@@ -1,15 +1,22 @@
 part of mazegame;
 
+/// Represents a position on the game field.
+/// Consists of a row and a column coordinate.
+/// This object is immutable!
+///
+/// => Authors: Bengt Claas Rhodgeß, Marc-Niclas Harm
 class Position {
 
-  int row;
-  int col;
+  /// The row coordinate.
+  final int row;
 
-  Position();
+  /// The column coordinate.
+  final int col;
 
-  Position.fromCoordinates(this.row, this.col);
+  /// Creates a new position object with the given coordinates.
+  Position.fromCoordinates(final this.row, final this.col);
 
   String toString() {
-    return "Pos{ row: $row, col: $col }";
+    return "[Position{ row: $row, col: $col }]";
   }
 }
