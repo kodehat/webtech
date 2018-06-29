@@ -56,7 +56,7 @@ class Constants {
       "3. Controls (For Mobile Phones)",
         "(Skip if desktop device)<br>"
         "Tilt your device carefully into the direction the rabbit should move."
-        "To keep moving into the same direction, don't change the phones position.<br>"
+        "To keep moving into the same direction, don't change the phone's position.<br>"
         "Touch the game anywhere while playing to re-calibrate the tilt sensor."],
     const [
       "4. Controls (For Desktop Computer)",
@@ -66,7 +66,7 @@ class Constants {
         " move immediately."],
     const [
       "5. Have Fun",
-        "Now you known everything you need.<br>"
+        "Now you know everything you need.<br>"
         "So let's go and <strong>play</strong>!"]
   ];
 }

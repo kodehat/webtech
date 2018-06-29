@@ -157,11 +157,11 @@ class MazeGameView {
     game.enemies.forEach((final Enemy enemy) {
       _updateElementInGameFieldWithPosition(enemy.position);
 
-      if (enemy.belowGameObject.position != null) {
+      if (enemy.belowGameObject.position != null&&enemy.belowGameObject.type!=TileType.RABBIT) {
         _updateElementInGameFieldWithPosition(enemy.belowGameObject.position);
       }
 
-      if (enemy.previousPosition != null) {
+      if (enemy.previousPosition != null&&MazeGameModel.level.getGameObjectAtPosition(enemy.previousPosition).type!=TileType.RABBIT) {
         _updateElementInGameFieldWithPosition(enemy.previousPosition);
       }
     });
