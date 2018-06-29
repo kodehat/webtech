@@ -336,7 +336,7 @@ class MazeGameView {
     // Set title and description.
     this.overlayTitle.text = "About";
     this.overlayDescription.innerHtml = "This game was developed by<br>"
-        "Bengt Class Rhodgeß and Marc-Niclas Harm.<br><br>"
+        "Bengt Claas Rhodgeß and Marc-Niclas Harm.<br><br>"
         "It was written in Dartlang for a web technologies project.<br>"
         "All graphics are painted by ourselves.";
 
