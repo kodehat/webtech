@@ -4797,7 +4797,7 @@ i2:{"^":"d:0;a",
 $1:function(a){var z,y
 z=this.a.b
 z.e.textContent="About"
-J.ai(z.f,"This game was developed by<br>Bengt Class Rhodge\xdf and Marc-Niclas Harm.<br><br>It was written in Dartlang for a web technologies project.<br>All graphics are painted by ourselves.")
+J.ai(z.f,"This game was developed by<br>Bengt Claas Rhodge\xdf and Marc-Niclas Harm.<br><br>It was written in Dartlang for a web technologies project.<br>All graphics are painted by ourselves.")
 y=document
 J.m(y.querySelector("#btn_main_menu")).k(0,"invisible",!1)
 J.m(y.querySelector("#btn_next_level")).k(0,"invisible",!0)
