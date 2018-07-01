@@ -91,10 +91,6 @@ class MazeGameController {
     // Listen to 3D orientation movement of the mobile to move the rabbit.
     window.onDeviceOrientation.listen(handleMobileDeviceMovement);
 
-    //TODO: REMOVE!
-    //view.title.onTouchEnd.listen(inDevAddTimeCheat);
-    //view.title.onMouseDown.listen(inDevAddTimeCheat);
-
     // Listen on touch events to recalibrate the movement on mobiles.
     window.onTouchEnd.listen(handleTouchOnGameScreen);
 
@@ -199,6 +195,22 @@ class MazeGameController {
     _calibrated = false;
   }
 
+  /// Handles the change of the screen orientation and shows a warning in
+  /// landscape mode.
+  void handleLandscapeOrientationChange(final Event event) {
+    // Get the current screen orientation.
+    final String type = window.screen.orientation.type;
+
+    // If type is landscape, show the landscape warning.
+    if (type.contains("landscape")) {
+      view.visible(view.landscapeWarning);
+
+      // Otherwise if type is portrait, hide the landscape warning.
+    } else if (type.contains("portrait")) {
+      view.invisible(view.landscapeWarning);
+    }
+  }
+
   /// Handles the start of the game.
   /// Called by clicking on the start button in the main menu.
   void onClickStartButton(MouseEvent event) {
@@ -223,7 +235,7 @@ class MazeGameController {
     this._startLevel();
   }
 
-  Future onClickOverlayNextLevel(MouseEvent e) async {
+  Future onClickOverlayNextLevel(MouseEvent event) async {
     // If the game is already running, return.
     if (game.running) return;
 
@@ -245,13 +257,7 @@ class MazeGameController {
   }
 
   /// Called, if the main menu button in the overlay is clicked.
-  void onClickOverlayMainMenuButton(MouseEvent e) {
-
-    // Stop the game, if not stopped yet.
-    //this.game.stop();
-    //this.game._enemies.clear();
-    //this.game._rabbit = null;
-
+  void onClickOverlayMainMenuButton(MouseEvent event) {
     // Reset elements.
     view.resetToMainMenu();
 
@@ -270,22 +276,6 @@ class MazeGameController {
 
     // Reset the saved level number reference.
     this.savedLevelNumber = null;
-  }
-
-  /// Handles the change of the screen orientation and shows a warning in
-  /// landscape mode.
-  void handleLandscapeOrientationChange(final Event event) {
-    // Get the current screen orientation.
-    final String type = window.screen.orientation.type;
-
-    // If type is landscape, show the landscape warning.
-    if (type.contains("landscape")) {
-      view.visible(view.landscapeWarning);
-
-      // Otherwise if type is portrait, hide the landscape warning.
-    } else if (type.contains("portrait")) {
-      view.invisible(view.landscapeWarning);
-    }
   }
 
   /// Sets or updates the mini info timer.
@@ -373,11 +363,9 @@ class MazeGameController {
   /// Trigger for the view update timer.
   /// Updates the view periodically.
   void _updateViewTrigger(Timer timer) {
-    //print("Controller: Updating view!");
-
+    // Update all required elements.
     this.view.updateTitleAndSubtitle();
     this.view.updateTimerAndBrightness();
-    //this.view.updateNotLivingTiles();
     this.game.speedPowerups.removeWhere((final Powerup powerup) => powerup.used || !powerup.mayAppear);
     this.view.updatePowerups(this.game);
     this.view.updateEnemies(this.game);
@@ -455,14 +443,5 @@ class MazeGameController {
     this._betaOrientation = beta;
     this._betaToggleUp = this._betaOrientation - Constants.DEVICE_MOTION_TOGGLE_VERTICAL;
     this._betaToggleDown = this._betaOrientation + Constants.DEVICE_MOTION_TOGGLE_VERTICAL;
-  }
-
-  //TODO: REMOVE!
-  Future inDevAddTimeCheat(Event e) async {
-
-    if (game.running) {
-      MazeGameModel.level.timeTotal += 10.0;
-      MazeGameModel.level.timeLeft += 10.0;
-    }
   }
 }

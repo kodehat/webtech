@@ -176,31 +176,6 @@ class MazeGameView {
     });
   }
 
-  ///TODO: Corrupts the rabbit's animation.
-  /// Update all not living tiles in view. For instance hedge and terrain.
-  void updateNotLivingTiles() {
-    //print("View: Updating not living tiles!");
-
-    // Level reference for quicker access.
-    final level = MazeGameModel.level;
-
-    // Iterate each row.
-    for (int row = 0; row < level.rows; row++) {
-      // Iterate each column.
-      for (int col = 0; col < level.cols; col++) {
-
-        // The current game object.
-        final GameObject gameObject = level.getGameObjectAtRowAndCol(row, col);
-
-        // Just update the tile if it's not a living tile.
-        if (gameObject.type != TileType.RABBIT
-            && gameObject.type != TileType.FOX) {
-          _updateElementInGameField(row, col);
-        }
-      }
-    }
-  }
-
   /// Updates the title and the subtitle.
   void updateTitleAndSubtitle() {
     // Update the title and the subtitle.
@@ -350,32 +325,6 @@ class MazeGameView {
     this.openOverlay();
   }
 
-  /// Updates a specific game object in the DOM game field
-  /// with the given position.
-  void _updateElementInGameFieldWithPosition(final Position position) {
-    this._updateElementInGameField(position.row, position.col);
-  }
-
-  /// Updates a specific game object in the DOM game field.
-  void _updateElementInGameField(final int row, final int col) {
-
-    // Get the game object at the given position.
-    final GameObject gameObject =
-      MazeGameModel.level.getGameObjectAtRowAndCol(row, col);
-
-    // Get the table cell element at the given position.
-    final Element tableCell = this.fields[row][col];
-
-    // Check if table cell exists.
-    if (tableCell != null) {
-
-      // Clear previous classes.
-      tableCell.classes.clear();
-      // Add new classes.
-      tableCell.classes.addAll([gameObject.type.toLowerCase()]);
-    }
-  }
-
   /// Resets the title, the subtitle and the game containers to
   /// the initial state.
   void resetToMainMenu() {
@@ -461,18 +410,13 @@ class MazeGameView {
   /// Increments the current tutorial page in a cyclic behavior.
   void incrementTutorialPage() {
     this.currentTutorialPage =
-      (this.currentTutorialPage + 1) % Constants.MAX_TUTORIAL_PAGES;
+        (this.currentTutorialPage + 1) % Constants.MAX_TUTORIAL_PAGES;
   }
 
   /// Decrements the current tutorial page in a cyclic behavior.
   void decrementTutorialPage() {
     this.currentTutorialPage =
-      (this.currentTutorialPage - 1) % Constants.MAX_TUTORIAL_PAGES;
-  }
-
-  /// Toggles the visibility of an element.
-  void _visibility(Element element, bool shouldAdd) {
-    element.classes.toggle("invisible", shouldAdd);
+        (this.currentTutorialPage - 1) % Constants.MAX_TUTORIAL_PAGES;
   }
 
   /// Makes the given [element] visible.
@@ -491,4 +435,34 @@ class MazeGameView {
   /// Opens the overlay.
   openOverlay() => this.visible(this.overlay);
 
+  /// Updates a specific game object in the DOM game field
+  /// with the given position.
+  void _updateElementInGameFieldWithPosition(final Position position) {
+    this._updateElementInGameField(position.row, position.col);
+  }
+
+  /// Updates a specific game object in the DOM game field.
+  void _updateElementInGameField(final int row, final int col) {
+
+    // Get the game object at the given position.
+    final GameObject gameObject =
+      MazeGameModel.level.getGameObjectAtRowAndCol(row, col);
+
+    // Get the table cell element at the given position.
+    final Element tableCell = this.fields[row][col];
+
+    // Check if table cell exists.
+    if (tableCell != null) {
+
+      // Clear previous classes.
+      tableCell.classes.clear();
+      // Add new classes.
+      tableCell.classes.addAll([gameObject.type.toLowerCase()]);
+    }
+  }
+
+  /// Toggles the visibility of an element.
+  void _visibility(Element element, bool shouldAdd) {
+    element.classes.toggle("invisible", shouldAdd);
+  }
 }

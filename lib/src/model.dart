@@ -53,9 +53,6 @@ class MazeGameModel {
     });
   }
 
-  /// Returns the currently loaded level.
-  static Level get level => _level;
-
   /// Returns true if game is stopped, otherwise false.
   bool get stopped => _gamestate == #stopped;
 
@@ -76,4 +73,7 @@ class MazeGameModel {
 
   /// Returns a list of power-ups in the current level.
   List<Powerup> get speedPowerups => this._speedPowerups;
+
+  /// Returns the currently loaded level.
+  static Level get level => _level;
 }
