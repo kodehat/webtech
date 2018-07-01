@@ -59,21 +59,6 @@ class Level {
     this._levelTimer.cancel();
   }
 
-  /// Updates the remaining time to complete the current level.
-  void _updateTime(Timer timer) {
-
-    // Stop the timer if the level has ended
-    // and set the game over state to true.
-    if (timeLeft.floor() <= 0.0) {
-      this._levelTimer.cancel();
-      this.gameOver = true;
-
-      // Otherwise update the remaining time.
-    } else {
-      timeLeft -= 0.2;
-    }
-  }
-
   /// Returns true, if the given [row] and [col] coordinate are in the bounds
   /// of the game field.
   bool isInBounds(final int row, final int col) {
@@ -184,6 +169,21 @@ class Level {
 
     // Update position in the game object itself.
     gameObject.position = new Position.fromCoordinates(row, col);
+  }
+
+  /// Updates the remaining time to complete the current level.
+  void _updateTime(Timer timer) {
+
+    // Stop the timer if the level has ended
+    // and set the game over state to true.
+    if (timeLeft.floor() <= 0.0) {
+      this._levelTimer.cancel();
+      this.gameOver = true;
+
+      // Otherwise update the remaining time.
+    } else {
+      timeLeft -= 0.2;
+    }
   }
 }
 
